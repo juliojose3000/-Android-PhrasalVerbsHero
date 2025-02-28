@@ -1,40 +1,52 @@
 package com.loaizasoftware.phrasalverbshero
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.loaizasoftware.phrasalverbshero.presentation.ui.home.HomeView
+import androidx.lifecycle.ViewModelProvider
+import com.loaizasoftware.phrasalverbshero.data.api.ApiClient
+import com.loaizasoftware.phrasalverbshero.data.repository.VerbRepository
+import com.loaizasoftware.phrasalverbshero.presentation.ui.home.HomeScreen
 import com.loaizasoftware.phrasalverbshero.presentation.ui.theme.PhrasalVerbsHeroTheme
+import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
+import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModelFactory
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var verbViewModel: VerbViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val repository = VerbRepository(ApiClient.getInstance().retrofit)
+
+        val factory = VerbViewModelFactory(repository)
+        verbViewModel = ViewModelProvider(this, factory)[VerbViewModel::class.java]
+
+        verbViewModel.error.observe(this) { errorMessage ->
+            Log.e("MyTAG", errorMessage)
+        }
+
+        // Fetch verbs when activity starts
+        verbViewModel.fetchVerbs()
+
         enableEdgeToEdge()
         setContent {
             PhrasalVerbsHeroTheme {
-                HomeView()
+                HomeScreen(verbViewModel)
             }
         }
     }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     PhrasalVerbsHeroTheme {
-        HomeView()
+        //HomeScreen(verbViewModel)
     }
 }

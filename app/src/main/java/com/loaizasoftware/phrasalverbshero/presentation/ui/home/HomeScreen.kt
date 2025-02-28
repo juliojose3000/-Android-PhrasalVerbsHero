@@ -15,12 +15,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.loaizasoftware.phrasalverbshero.R
-import com.loaizasoftware.phrasalverbshero.data.local.DummyData
 import com.loaizasoftware.phrasalverbshero.presentation.ui.general.AppBar
 import com.loaizasoftware.phrasalverbshero.presentation.ui.general.SearchBar
+import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
 
 @Composable
-fun HomeView() {
+fun HomeScreen(viewModel: VerbViewModel) {
 
     Scaffold(modifier = Modifier.fillMaxSize(), containerColor = Color.White, topBar = {
 
@@ -45,7 +45,8 @@ fun HomeView() {
                 columns = GridCells.Fixed(2), // Two columns
                 modifier = Modifier.fillMaxSize()
             ) {
-                items(DummyData.getVerbs()) { verb ->
+
+                items(viewModel.verbsState.value) { verb ->
 
                     VerbCardView(verbName = verb.name)
 
@@ -61,5 +62,5 @@ fun HomeView() {
 @Preview
 @Composable
 fun PreviewHomeView() {
-    HomeView()
+    HomeScreen(VerbViewModel())
 }
