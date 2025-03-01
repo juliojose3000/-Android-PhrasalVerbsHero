@@ -20,7 +20,10 @@ class MainActivity : ComponentActivity() {
     private lateinit var verbViewModel: VerbViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
+        ApiClient.getInstance().createRetrofit(this)
 
         val repository = VerbRepository(ApiClient.getInstance().retrofit)
 

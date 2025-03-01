@@ -54,6 +54,10 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 
+    //Chucker -> https://github.com/ChuckerTeam/chucker
+    debugImplementation (libs.chucker.library)
+    releaseImplementation (libs.library.no.op)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
