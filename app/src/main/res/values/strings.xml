@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PhrasalVerbsHero</string>
+    <string name="app_name">Phrasal Verbs Hero</string>
 
     <!-- Home View -->
     <string name="app_bar_title_home_view">Phrasal Verbs Hero</string>
