@@ -22,10 +22,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.loaizasoftware.phrasalverbshero" />
+                  <option name="mobileSdkAppId" value="1:238622179168:android:24853bdfaec1206d776805" />
+                  <option name="projectId" value="phrasal-verbs-hero" />
+                  <option name="projectNumber" value="238622179168" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

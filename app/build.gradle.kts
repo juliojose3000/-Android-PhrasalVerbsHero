@@ -2,6 +2,10 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+
+    //Firebase Crashlytics
+    id("com.google.firebase.crashlytics")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -50,13 +54,21 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
-    //Retrofit
+    //Retrofit -> https://github.com/square/retrofit
     implementation(libs.retrofit)
+
+    //Gson -> https://github.com/google/gson
     implementation(libs.converter.gson)
 
     //Chucker -> https://github.com/ChuckerTeam/chucker
     debugImplementation (libs.chucker.library)
     releaseImplementation (libs.library.no.op)
+
+    //--------- Firebase ---------//
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    //Crashlytics -> https://firebase.google.com/docs/crashlytics/get-started?platform=android#add-sdk
+    implementation(libs.firebase.crashlytics)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

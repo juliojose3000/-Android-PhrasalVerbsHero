@@ -29,6 +29,7 @@ class VerbViewModel(private val getVerbsUseCase: GetVerbsUseCase? = null) : View
 
         getVerbsUseCase?.execute()?.enqueue(object : Callback<List<Verb>> {
             override fun onResponse(call: Call<List<Verb>>, response: Response<List<Verb>>) {
+
                 if (response.isSuccessful) {
                     verbsState.value = response.body() ?: emptyList()
                     Log.v("MyTAG", "${response.body()}")
@@ -40,6 +41,7 @@ class VerbViewModel(private val getVerbsUseCase: GetVerbsUseCase? = null) : View
             override fun onFailure(call: Call<List<Verb>>, t: Throwable) {
                 _error.value = "Network error: ${t.message}"
             }
+
         })
     }
 }

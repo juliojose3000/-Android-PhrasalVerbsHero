@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "238622179168",
+    "project_id": "phrasal-verbs-hero",
+    "storage_bucket": "phrasal-verbs-hero.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238622179168:android:24853bdfaec1206d776805",
+        "android_client_info": {
+          "package_name": "com.loaizasoftware.phrasalverbshero"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRrat1_a1DHoNgpqaK-hzCaVKRJM7vGuc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
