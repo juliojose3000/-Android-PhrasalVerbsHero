@@ -54,11 +54,14 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
-    //Retrofit -> https://github.com/square/retrofit
-    implementation(libs.retrofit)
+    //Retrofit + Gson -> https://github.com/square/retrofit | https://github.com/google/gson
+    //implementation(libs.retrofit)
+    //implementation(libs.converter.gson)
 
-    //Gson -> https://github.com/google/gson
-    implementation(libs.converter.gson)
+    //Retrofit + Moshi -> https://github.com/square/moshi
+    implementation (libs.moshi.v1150)
+    implementation (libs.moshi.kotlin)
+    implementation (libs.converter.moshi)
 
     //Chucker -> https://github.com/ChuckerTeam/chucker
     debugImplementation (libs.chucker.library)

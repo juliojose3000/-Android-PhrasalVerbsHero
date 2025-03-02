@@ -2,9 +2,12 @@ package com.loaizasoftware.phrasalverbshero.data.api
 
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
+//import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiClient {
 
@@ -13,6 +16,10 @@ class ApiClient {
 
     fun createRetrofit(context: Context) {
 
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory()) // Allows Moshi to handle Kotlin classes properly
+            .build()
+
         val client = OkHttpClient.Builder()
             .addInterceptor(ChuckerInterceptor(context)) // Add Chucker interceptor
             .build()
@@ -20,7 +27,8 @@ class ApiClient {
         retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
+            //.addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(ApiService::class.java)
 
