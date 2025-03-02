@@ -2,6 +2,7 @@ package com.loaizasoftware.phrasalverbshero.data.api
 
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.loaizasoftware.phrasalverbshero.BuildConfig
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -11,7 +12,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 class ApiClient {
 
-    private val BASE_URL = "https://phrasalverbshero.fly.dev/phrasalverbshero/"  // For emulator; use "http://your_ip:8080" for real device
+    private val BASE_URL = BuildConfig.BASE_URL
     lateinit var retrofit: ApiService
 
     fun createRetrofit(context: Context) {

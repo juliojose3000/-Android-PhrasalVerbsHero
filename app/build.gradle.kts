@@ -31,6 +31,24 @@ android {
             )
         }
     }
+
+    flavorDimensions += "environment"  // Defines the dimension for flavors
+
+    productFlavors {
+        create("qa") {
+            dimension = "environment"
+            //applicationIdSuffix = ".qa"  // App ID will be different for QA
+            versionNameSuffix = "-QA"
+            buildConfigField ("String", "BASE_URL", "\"https://phrasalverbshero.fly.dev/phrasalverbshero/\"")
+        }
+
+        create("prod") {
+            dimension = "environment"
+            buildConfigField ("String", "BASE_URL", "\"https://phrasalverbshero.fly.dev/phrasalverbshero/\"")
+        }
+    }
+
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -39,6 +57,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true //it allows us to implement the product flavors in the build.gradle.kts file
         compose = true
     }
 }
