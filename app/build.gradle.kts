@@ -1,3 +1,6 @@
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -16,7 +19,7 @@ android {
         applicationId = "com.loaizasoftware.phrasalverbshero"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
+        versionCode = 1 //This is set by the CI/CD tool, Bitrise
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
