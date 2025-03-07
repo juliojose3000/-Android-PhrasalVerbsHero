@@ -1,4 +1,5 @@
 [versions]
+adapterRxjava2 = "2.11.0"
 agp = "8.8.1"
 converterGson = "2.9.0"
 firebaseBom = "33.10.0"
@@ -15,8 +16,12 @@ moshi = "1.15.2"
 moshiKotlin = "1.15.0"
 moshiVersion = "1.15.0"
 retrofit = "2.9.0"
+rxandroid = "2.1.1"
+rxjava = "2.2.21"
+timber = "5.0.1"
 
 [libraries]
+adapter-rxjava2 = { module = "com.squareup.retrofit2:adapter-rxjava2", version.ref = "adapterRxjava2" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 chucker-library = { module = "com.github.chuckerteam.chucker:library", version.ref = "libraryVersion" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
@@ -42,6 +47,9 @@ moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshi" }
 moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshiKotlin" }
 moshi-v1150 = { module = "com.squareup.moshi:moshi", version.ref = "moshiVersion" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+rxandroid = { module = "io.reactivex.rxjava2:rxandroid", version.ref = "rxandroid" }
+rxjava = { module = "io.reactivex.rxjava2:rxjava", version.ref = "rxjava" }
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

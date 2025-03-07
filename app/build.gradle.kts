@@ -95,6 +95,14 @@ dependencies {
     //Crashlytics -> https://firebase.google.com/docs/crashlytics/get-started?platform=android#add-sdk
     implementation(libs.firebase.crashlytics)
 
+    //RxJava -> https://github.com/ReactiveX/RxJava
+    implementation(libs.rxandroid)
+    implementation(libs.rxjava)
+    implementation(libs.adapter.rxjava2) //To use RxJava with Retrofit
+
+    //Timber -> https://github.com/JakeWharton/timber
+    implementation (libs.timber)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
         }
 
         // Fetch verbs when activity starts
-        verbViewModel.fetchVerbs()
+        verbViewModel.loadVerbs()
 
         enableEdgeToEdge()
         setContent {

@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.loaizasoftware.phrasalverbshero.R
 import com.loaizasoftware.phrasalverbshero.presentation.ui.general.AppBar
+import com.loaizasoftware.phrasalverbshero.presentation.ui.general.LoadingIndicator
 import com.loaizasoftware.phrasalverbshero.presentation.ui.general.SearchBar
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
 
@@ -39,17 +40,22 @@ fun HomeScreen(viewModel: VerbViewModel) {
                 .padding(contentPadding)
         ) {
 
-            SearchBar("", {}, {})
+            Column(modifier = Modifier.fillMaxSize()) {
 
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2), // Two columns
-                modifier = Modifier.fillMaxSize()
-            ) {
+                SearchBar("", {}, {})
 
-                items(viewModel.verbsState.value) { verb ->
+                if (viewModel.isLoading.value) {
+                    LoadingIndicator()
+                } else {
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2), // Two columns
+                        modifier = Modifier.fillMaxSize()
+                    ) {
 
-                    VerbCardView(verbName = verb.name)
-
+                        items(viewModel.verbsState.value) { verb ->
+                            VerbCardView(verbName = verb.name)
+                        }
+                    }
                 }
             }
 
