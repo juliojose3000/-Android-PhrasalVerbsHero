@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.loaizasoftware.phrasalverbshero.core.None
 import com.loaizasoftware.phrasalverbshero.data.local.DummyData
 import com.loaizasoftware.phrasalverbshero.domain.model.Verb
 import com.loaizasoftware.phrasalverbshero.domain.usecase.GetVerbsUseCase
@@ -33,7 +34,7 @@ class VerbViewModel(private val getVerbsUseCase: GetVerbsUseCase? = null) : View
     fun loadVerbs() {
 
         //Get verbs from API using RxJava
-        getVerbsUseCase!!.run()
+        getVerbsUseCase!!.run(None())
             .subscribeOn(Schedulers.io()) // Perform network operation on IO thread
             .observeOn(AndroidSchedulers.mainThread()) // Update UI on main thread
             .doOnSubscribe{
