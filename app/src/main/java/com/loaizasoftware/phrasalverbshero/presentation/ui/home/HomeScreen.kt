@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.loaizasoftware.phrasalverbshero.R
 import com.loaizasoftware.phrasalverbshero.presentation.ui.general.AppBar
 import com.loaizasoftware.phrasalverbshero.presentation.ui.general.LoadingIndicator
@@ -65,8 +64,8 @@ fun HomeScreen(viewModel: VerbViewModel) {
 
 }
 
-@Preview
+/*@Preview
 @Composable
 fun PreviewHomeView() {
     HomeScreen(VerbViewModel())
-}
+}*/

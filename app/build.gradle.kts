@@ -9,6 +9,7 @@ plugins {
     //Firebase Crashlytics
     id("com.google.firebase.crashlytics")
     id("com.google.gms.google-services")
+    id("kotlin-kapt")
 }
 
 android {
@@ -102,6 +103,10 @@ dependencies {
 
     //Timber -> https://github.com/JakeWharton/timber
     implementation (libs.timber)
+
+    //Dagger 2 -> https://github.com/google/dagger
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler) //It configures the Kotlin Annotation Processing Tool (kapt) to use the Dagger compiler.
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

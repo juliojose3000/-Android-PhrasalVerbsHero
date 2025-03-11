@@ -2,6 +2,7 @@
 adapterRxjava2 = "2.11.0"
 agp = "8.8.1"
 converterGson = "2.9.0"
+dagger = "2.48.1"
 firebaseBom = "33.10.0"
 kotlin = "2.0.0"
 coreKtx = "1.15.0"
@@ -26,6 +27,8 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 chucker-library = { module = "com.github.chuckerteam.chucker:library", version.ref = "libraryVersion" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "converterGson" }
+dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
+dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }

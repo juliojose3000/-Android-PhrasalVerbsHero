@@ -7,14 +7,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.loaizasoftware.phrasalverbshero.core.None
-import com.loaizasoftware.phrasalverbshero.data.local.DummyData
 import com.loaizasoftware.phrasalverbshero.domain.model.Verb
 import com.loaizasoftware.phrasalverbshero.domain.usecase.GetVerbsUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class VerbViewModel(private val getVerbsUseCase: GetVerbsUseCase? = null) : ViewModel() {
+@Singleton
+class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVerbsUseCase) : ViewModel() {
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
@@ -25,16 +27,14 @@ class VerbViewModel(private val getVerbsUseCase: GetVerbsUseCase? = null) : View
     val isLoading = _isLoading
 
     init {
-        if(getVerbsUseCase == null) {
-            verbsState.value = DummyData.getVerbs()
-        }
+        loadVerbs()
     }
 
     @SuppressLint("CheckResult")
     fun loadVerbs() {
 
         //Get verbs from API using RxJava
-        getVerbsUseCase!!.run(None())
+        getVerbsUseCase.run(None())
             .subscribeOn(Schedulers.io()) // Perform network operation on IO thread
             .observeOn(AndroidSchedulers.mainThread()) // Update UI on main thread
             .doOnSubscribe{

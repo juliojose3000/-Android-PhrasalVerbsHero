@@ -6,8 +6,9 @@ import com.loaizasoftware.phrasalverbshero.data.repository.VerbRepository
 import com.loaizasoftware.phrasalverbshero.domain.model.Verb
 import io.reactivex.Single
 import retrofit2.Call
+import javax.inject.Inject
 
-class GetVerbsUseCase(private val repository: VerbRepository): UseCase<Single<List<Verb>>, None>() {
+class GetVerbsUseCase @Inject constructor(private val repository: VerbRepository): UseCase<Single<List<Verb>>, None>() {
 
     fun execute(): Call<List<Verb>> {
         return repository.getVerbs()
