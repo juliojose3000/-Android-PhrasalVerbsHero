@@ -16,15 +16,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVerbsUseCase) : ViewModel() {
-
-    private val _error = MutableLiveData<String>()
-    val error: LiveData<String> = _error
+class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVerbsUseCase) : BaseViewModel() {
 
     val verbsState = mutableStateOf(emptyList<Verb>())
-
-    private val _isLoading: MutableState<Boolean> = mutableStateOf(false)
-    val isLoading = _isLoading
 
     init {
         loadVerbs()
@@ -36,7 +30,7 @@ class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVerbsUse
         //Get verbs from API using RxJava
         getVerbsUseCase.run(None())
             .subscribeOn(Schedulers.io()) // Perform network operation on IO thread
-            .observeOn(AndroidSchedulers.mainThread()) // Update UI on main thread
+            //.observeOn(AndroidSchedulers.mainThread()) // Update UI on main thread
             .doOnSubscribe{
                 isLoading.value = true  
             }
@@ -46,7 +40,7 @@ class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVerbsUse
             .subscribe({
                 verbsState.value = it
             }, {
-                _error.value = it.message ?: "Unknown error"
+                error.value = it
                 Timber.e(it.cause)
             })
 
