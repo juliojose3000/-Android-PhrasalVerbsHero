@@ -1,5 +1,6 @@
-package com.loaizasoftware.phrasalverbshero.presentation.ui.home
+package com.loaizasoftware.phrasalverbshero.presentation.ui.verbs
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -13,14 +14,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavHostController
 import com.loaizasoftware.phrasalverbshero.R
 import com.loaizasoftware.phrasalverbshero.presentation.ui.general.AppBar
 import com.loaizasoftware.phrasalverbshero.presentation.ui.general.LoadingIndicator
 import com.loaizasoftware.phrasalverbshero.presentation.ui.general.SearchBar
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
+import timber.log.Timber
 
 @Composable
-fun HomeScreen(viewModel: VerbViewModel) {
+fun HomeScreen(viewModel: VerbViewModel, navController: NavHostController) {
 
     Scaffold(modifier = Modifier.fillMaxSize(), containerColor = Color.White, topBar = {
 
@@ -28,36 +31,33 @@ fun HomeScreen(viewModel: VerbViewModel) {
             title = stringResource(R.string.app_bar_title_home_view),
             iconAppBar = Icons.Default.Home
         ) {
-            //navController?.navigateUp()
+            navController.navigateUp()
         }
 
     }) { contentPadding ->
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(contentPadding)
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(contentPadding)
         ) {
 
-            Column(modifier = Modifier.fillMaxSize()) {
+            SearchBar("", {}, {})
 
-                SearchBar("", {}, {})
+            if (viewModel.isLoading.value) {
+                LoadingIndicator()
+            } else {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2), // Two columns
+                    modifier = Modifier.fillMaxSize()
+                ) {
 
-                if (viewModel.isLoading.value) {
-                    LoadingIndicator()
-                } else {
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(2), // Two columns
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-
-                        items(viewModel.verbsState.value) { verb ->
-                            VerbCardView(verbName = verb.name)
+                    items(viewModel.verbsState.value) { verb ->
+                        VerbCardView(verb = verb) { verbId ->
+                            navController.navigate("phrasal_verbs/$verbId")
                         }
                     }
                 }
             }
-
         }
 
     }

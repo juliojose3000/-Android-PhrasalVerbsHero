@@ -23,4 +23,17 @@ open class BaseActivity : ComponentActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        instance = this
+    }
+
+    companion object {
+        private var instance: BaseActivity? = null
+        fun getInstance(): BaseActivity {
+            if(instance == null) instance = BaseActivity()
+            return instance as BaseActivity
+        }
+    }
+
 }

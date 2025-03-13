@@ -18,19 +18,20 @@ import javax.inject.Singleton
 @Singleton
 class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVerbsUseCase) : BaseViewModel() {
 
-    val verbsState = mutableStateOf(emptyList<Verb>())
+    private val _verbsState = mutableStateOf(emptyList<Verb>())
+    val verbsState: MutableState<List<Verb>> = _verbsState
 
     init {
         loadVerbs()
     }
-
+//9739982
     @SuppressLint("CheckResult")
     fun loadVerbs() {
 
         //Get verbs from API using RxJava
         getVerbsUseCase.run(None())
             .subscribeOn(Schedulers.io()) // Perform network operation on IO thread
-            //.observeOn(AndroidSchedulers.mainThread()) // Update UI on main thread
+            .observeOn(AndroidSchedulers.mainThread()) // Update UI on main thread
             .doOnSubscribe{
                 isLoading.value = true  
             }
@@ -63,4 +64,9 @@ class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVerbsUse
         })*/
 
     }
+
+    fun getVerbById(verbId: Long): Verb? {
+        return verbsState.value.find { it.id == verbId }
+    }
+
 }

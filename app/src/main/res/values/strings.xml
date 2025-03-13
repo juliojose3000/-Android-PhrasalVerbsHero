@@ -8,4 +8,9 @@
     <!-- Home View -->
     <string name="app_bar_title_home_view">Phrasal Verbs Hero</string>
 
+    <!-- Phrasal Verbs Screen -->
+    <string name="pv_screen_title">Phrasal Verbs with </string>
+    <string name="pv_button_practice">Practice</string>
+    <string name="pv_button_quiz">Quiz</string>
+
 </resources>

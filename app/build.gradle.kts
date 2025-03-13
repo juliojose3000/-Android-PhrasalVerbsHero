@@ -39,6 +39,14 @@ android {
     flavorDimensions += "environment"  // Defines the dimension for flavors
 
     productFlavors {
+
+        create("local") {
+            dimension = "environment"
+            //applicationIdSuffix = ".qa"  // App ID will be different for QA
+            versionNameSuffix = "-LOCAL"
+            buildConfigField ("String", "BASE_URL", "\"http://192.168.0.228:8080/phrasalverbshero/\"")
+        }
+
         create("qa") {
             dimension = "environment"
             //applicationIdSuffix = ".qa"  // App ID will be different for QA
@@ -76,6 +84,9 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
+    //Compose Navigation
+    implementation("androidx.navigation:navigation-compose:2.8.6")
 
     //Retrofit + Gson -> https://github.com/square/retrofit | https://github.com/google/gson
     //implementation(libs.retrofit)

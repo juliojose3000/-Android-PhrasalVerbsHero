@@ -2,6 +2,7 @@ package com.loaizasoftware.phrasalverbshero.di.module
 
 import android.content.Context
 import com.loaizasoftware.phrasalverbshero.data.api.ApiClient
+import com.loaizasoftware.phrasalverbshero.data.repository.PhrasalVerbRepository
 import com.loaizasoftware.phrasalverbshero.data.repository.VerbRepository
 import dagger.Module
 import dagger.Provides
@@ -20,8 +21,14 @@ class AppModule(private val context: Context) { // Pass the context in the const
 
     @Singleton //Ensures that only one instance of VerbRepository is created
     @Provides //Provides an instance of VerbRepository
-    fun provideRepository(apiClient: ApiClient): VerbRepository {
+    fun provideVerbRepository(apiClient: ApiClient): VerbRepository {
         return VerbRepository(apiClient.retrofit)
+    }
+
+    @Singleton //Ensures that only one instance of VerbRepository is created
+    @Provides //Provides an instance of VerbRepository
+    fun providePhrasalVerbRepository(apiClient: ApiClient): PhrasalVerbRepository {
+        return PhrasalVerbRepository(apiClient.retrofit)
     }
 
 }
