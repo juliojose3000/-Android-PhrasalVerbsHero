@@ -23,6 +23,22 @@ open class BaseActivity : ComponentActivity() {
 
     }
 
+    protected fun showError(error: String) {
+
+        alertDialog = AlertDialog.Builder(this)
+            .setTitle(R.string.error)
+            .setMessage("${getString(R.string.error_description)} \n\n $error")
+            .setPositiveButton(android.R.string.ok) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setCancelable(false)
+            .create()
+
+        alertDialog?.show()
+
+    }
+
+
     override fun onResume() {
         super.onResume()
         instance = this

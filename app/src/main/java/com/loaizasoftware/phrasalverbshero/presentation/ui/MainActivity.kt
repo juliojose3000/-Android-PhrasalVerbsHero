@@ -18,6 +18,10 @@ import com.loaizasoftware.phrasalverbshero.presentation.ui.verbs.HomeScreen
 import com.loaizasoftware.phrasalverbshero.presentation.ui.theme.PhrasalVerbsHeroTheme
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.PhrasalVerbsViewModel
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 import javax.inject.Inject
 
 class MainActivity: BaseActivity() {
@@ -49,8 +53,14 @@ class MainActivity: BaseActivity() {
 
     private fun initObservables() {
 
-        verbViewModel.error.observe(this) { errorMessage ->
+        /*verbViewModel.error.observe(this) { errorMessage ->
             showError(errorMessage)
+        }*/
+
+        CoroutineScope(Dispatchers.Main).launch {
+            verbViewModel.events.collect { message ->
+                showError(message)
+            }
         }
 
         phrasalVerbsViewModel.error.observe(this) { errorMessage ->

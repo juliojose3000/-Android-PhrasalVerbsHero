@@ -6,11 +6,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.loaizasoftware.phrasalverbshero.core.None
 import com.loaizasoftware.phrasalverbshero.domain.model.Verb
 import com.loaizasoftware.phrasalverbshero.domain.usecase.GetVerbsUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -41,7 +43,8 @@ class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVerbsUse
             .subscribe({
                 verbsState.value = it
             }, {
-                error.value = it
+                //error.value = it
+                sendEvent("Error: ${it.message}")
                 Timber.e(it.cause)
             })
 
