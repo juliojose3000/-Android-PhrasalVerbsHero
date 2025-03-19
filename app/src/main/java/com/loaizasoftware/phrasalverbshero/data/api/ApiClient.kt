@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
 class ApiClient {
 
     private val BASE_URL = BuildConfig.BASE_URL
-    lateinit var retrofit: ApiService
+    lateinit var apiService: ApiService
 
     fun createRetrofit(context: Context) {
 
@@ -31,7 +31,7 @@ class ApiClient {
             .addInterceptor(ChuckerInterceptor(context)) // Add Chucker interceptor
             .build()
 
-        retrofit = Retrofit.Builder()
+        apiService = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
             //.addConverterFactory(GsonConverterFactory.create())

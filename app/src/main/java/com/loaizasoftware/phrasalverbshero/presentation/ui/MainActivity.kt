@@ -79,6 +79,14 @@ fun PhrasalVerbsApplication(verbViewModel: VerbViewModel, phrasalVerbsViewModel:
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "verbs_screen") {
         composable("verbs_screen") {
+
+            //The loadPhrasalVerbs call is a side effect. It should not be called directly within
+            //the composable. Use LaunchedEffect to ensure it's called only once when the composable
+            //is first composed or when a specific key changes
+            LaunchedEffect(key1 = true) {
+                verbViewModel.loadVerbs()
+            }
+
             HomeScreen(verbViewModel, navController)
         }
         composable(route = "phrasal_verbs/{verbId}", arguments = listOf(navArgument("verbId") {

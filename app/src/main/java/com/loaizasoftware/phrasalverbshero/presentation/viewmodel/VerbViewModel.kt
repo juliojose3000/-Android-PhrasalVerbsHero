@@ -24,7 +24,7 @@ class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVerbsUse
     val verbsState: MutableState<List<Verb>> = _verbsState
 
     init {
-        loadVerbs()
+        //loadVerbs()
     }
 //9739982
     @SuppressLint("CheckResult")

@@ -9,6 +9,8 @@ plugins {
     //Firebase Crashlytics
     id("com.google.firebase.crashlytics")
     id("com.google.gms.google-services")
+
+    //This line allows us to use the Kotlin Compiler Plugin
     id("kotlin-kapt")
 }
 
@@ -86,7 +88,7 @@ dependencies {
     implementation(libs.androidx.material3)
 
     //Compose Navigation
-    implementation("androidx.navigation:navigation-compose:2.8.6")
+    implementation(libs.androidx.navigation.compose)
 
     //Retrofit + Gson -> https://github.com/square/retrofit | https://github.com/google/gson
     //implementation(libs.retrofit)
@@ -96,6 +98,7 @@ dependencies {
     implementation (libs.moshi.v1150)
     implementation (libs.moshi.kotlin)
     implementation (libs.converter.moshi)
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.15.0") // ✅ Required for Moshi serialization
 
     //Chucker -> https://github.com/ChuckerTeam/chucker
     debugImplementation (libs.chucker.library)
@@ -126,4 +129,19 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Unit testing dependencies
+    testImplementation(libs.mockito.core) // Main Mockito library
+    testImplementation(libs.mockito.inline) // Mockito inline
+    testImplementation(libs.mockito.kotlin) // ✅ Mockito Kotlin extensions
+    testImplementation(libs.mockito.core.v531) // ✅ Mocking
+
+    testImplementation(libs.androidx.core) // ✅ Android Test Core
+    testImplementation(libs.androidx.core.testing) // For testing LiveData and other Architecture Components
+
+    testImplementation(libs.kotlinx.coroutines.test) // For testing coroutines
+    testImplementation(libs.kotlin.test) // ✅ For assertEquals, assertNotNull, assertTrue
+
+    testImplementation(libs.mockwebserver) // ✅ Mock API Server
+
 }

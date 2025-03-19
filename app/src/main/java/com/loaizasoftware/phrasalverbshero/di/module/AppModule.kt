@@ -22,13 +22,13 @@ class AppModule(private val context: Context) { // Pass the context in the const
     @Singleton //Ensures that only one instance of VerbRepository is created
     @Provides //Provides an instance of VerbRepository
     fun provideVerbRepository(apiClient: ApiClient): VerbRepository {
-        return VerbRepository(apiClient.retrofit)
+        return VerbRepository(apiClient.apiService)
     }
 
     @Singleton //Ensures that only one instance of VerbRepository is created
     @Provides //Provides an instance of VerbRepository
     fun providePhrasalVerbRepository(apiClient: ApiClient): PhrasalVerbRepository {
-        return PhrasalVerbRepository(apiClient.retrofit)
+        return PhrasalVerbRepository(apiClient.apiService)
     }
 
 }
