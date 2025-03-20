@@ -98,6 +98,14 @@ class MainActivity: BaseActivity() {
 
     }
 
+    /**
+     * StrictMode is not required for LeakCanary to work, because LeakCanary automatically detects memory leaks in Activities, Fragments, and Views without additional configuration.
+     *
+     * However, using StrictMode together with LeakCanary can help detect more issues like:
+     * - Leaked BroadcastReceiver or Service
+     * - Incorrect disk or network operations on the main thread
+     * - Leaked Cursor objects
+     */
     private fun initStrictMode() {
         if (BuildConfig.DEBUG) {
             StrictMode.setVmPolicy(
