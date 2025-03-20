@@ -122,6 +122,10 @@ dependencies {
     implementation(libs.dagger)
     kapt(libs.dagger.compiler) //It configures the Kotlin Annotation Processing Tool (kapt) to use the Dagger compiler.
 
+    //Leak Canary -> https://square.github.io/leakcanary/getting_started/
+    // debugImplementation because LeakCanary should only run in debug builds.
+    debugImplementation(libs.leakcanary.android)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

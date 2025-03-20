@@ -4,6 +4,8 @@
     <!-- General -->
     <string name="error">Error</string>
     <string name="error_description">An unexpected error has happened, please try again later.</string>
+    <string name="airplane_mode_on">Airplane mode on ✈️</string>
+    <string name="airplane_mode_off">Airplane mode off 📶</string>
 
     <!-- Home View -->
     <string name="app_bar_title_home_view">Phrasal Verbs Hero</string>

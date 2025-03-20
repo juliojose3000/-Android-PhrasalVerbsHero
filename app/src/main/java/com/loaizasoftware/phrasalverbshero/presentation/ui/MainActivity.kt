@@ -1,7 +1,12 @@
 package com.loaizasoftware.phrasalverbshero.presentation.ui
 
 //import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModelFactory
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
+import android.os.StrictMode
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
@@ -11,7 +16,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.loaizasoftware.phrasalverbshero.BuildConfig
 import com.loaizasoftware.phrasalverbshero.PhrasalVerbsHeroApplication
+import com.loaizasoftware.phrasalverbshero.core.receiver.AirplaneModeReceiver
 import com.loaizasoftware.phrasalverbshero.presentation.ui.core.BaseActivity
 import com.loaizasoftware.phrasalverbshero.presentation.ui.phrasalverbs.PhrasalVerbsScreen
 import com.loaizasoftware.phrasalverbshero.presentation.ui.verbs.HomeScreen
@@ -20,8 +27,12 @@ import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.PhrasalVerbsVi
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.Dispatcher
+import okhttp3.internal.wait
 import javax.inject.Inject
 
 class MainActivity: BaseActivity() {
@@ -35,6 +46,8 @@ class MainActivity: BaseActivity() {
     @Inject
     lateinit var phrasalVerbsViewModel: PhrasalVerbsViewModel
 
+    private lateinit var receiver: AirplaneModeReceiver
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,7 +60,23 @@ class MainActivity: BaseActivity() {
             }
         }
 
+        initStrictMode()
+        initReceivers()
         initObservables()
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(receiver) // ✅ Important, always unregister the receivers
+    }
+
+    private fun initReceivers() {
+
+        receiver = AirplaneModeReceiver()
+        val filter = IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED) // Event
+
+        registerReceiver(receiver, filter) // Register the receiver to receive the events
 
     }
 
@@ -69,6 +98,18 @@ class MainActivity: BaseActivity() {
 
     }
 
+    private fun initStrictMode() {
+        if (BuildConfig.DEBUG) {
+            StrictMode.setVmPolicy(
+                StrictMode.VmPolicy.Builder()
+                    .detectLeakedClosableObjects()
+                    .detectActivityLeaks()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build()
+            )
+        }
+    }
 
 
 }
