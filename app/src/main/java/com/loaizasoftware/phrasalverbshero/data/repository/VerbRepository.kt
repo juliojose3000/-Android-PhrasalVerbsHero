@@ -5,7 +5,7 @@ import com.loaizasoftware.phrasalverbshero.domain.model.Verb
 import io.reactivex.Single
 import retrofit2.Call
 
-class VerbRepository(private val apiService: ApiService) {
+open class VerbRepository(private val apiService: ApiService) {
     fun getVerbs(): Call<List<Verb>> {
         return apiService.getVerbs()  // Just delegates to ApiService
     }

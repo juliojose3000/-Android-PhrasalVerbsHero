@@ -1,8 +1,6 @@
 package com.loaizasoftware.phrasalverbshero.presentation.ui
 
 //import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModelFactory
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
@@ -21,18 +19,13 @@ import com.loaizasoftware.phrasalverbshero.PhrasalVerbsHeroApplication
 import com.loaizasoftware.phrasalverbshero.core.receiver.AirplaneModeReceiver
 import com.loaizasoftware.phrasalverbshero.presentation.ui.core.BaseActivity
 import com.loaizasoftware.phrasalverbshero.presentation.ui.phrasalverbs.PhrasalVerbsScreen
-import com.loaizasoftware.phrasalverbshero.presentation.ui.verbs.HomeScreen
+import com.loaizasoftware.phrasalverbshero.presentation.ui.verbs.VerbsScreen
 import com.loaizasoftware.phrasalverbshero.presentation.ui.theme.PhrasalVerbsHeroTheme
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.PhrasalVerbsViewModel
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
-import okhttp3.internal.wait
 import javax.inject.Inject
 
 class MainActivity: BaseActivity() {
@@ -136,7 +129,7 @@ fun PhrasalVerbsApplication(verbViewModel: VerbViewModel, phrasalVerbsViewModel:
                 verbViewModel.loadVerbs()
             }
 
-            HomeScreen(verbViewModel, navController)
+            VerbsScreen(verbViewModel, navController)
         }
         composable(route = "phrasal_verbs/{verbId}", arguments = listOf(navArgument("verbId") {
             type = NavType.LongType

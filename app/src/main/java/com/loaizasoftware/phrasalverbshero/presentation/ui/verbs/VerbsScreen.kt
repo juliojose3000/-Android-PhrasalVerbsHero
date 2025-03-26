@@ -1,6 +1,5 @@
 package com.loaizasoftware.phrasalverbshero.presentation.ui.verbs
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,10 +19,9 @@ import com.loaizasoftware.phrasalverbshero.presentation.ui.general.AppBar
 import com.loaizasoftware.phrasalverbshero.presentation.ui.general.LoadingIndicator
 import com.loaizasoftware.phrasalverbshero.presentation.ui.general.SearchBar
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
-import timber.log.Timber
 
 @Composable
-fun HomeScreen(viewModel: VerbViewModel, navController: NavHostController) {
+fun VerbsScreen(viewModel: VerbViewModel, navController: NavHostController) {
 
     Scaffold(modifier = Modifier.fillMaxSize(), containerColor = Color.White, topBar = {
 

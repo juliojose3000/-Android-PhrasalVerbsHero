@@ -18,7 +18,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVerbsUseCase) : BaseViewModel() {
+open class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVerbsUseCase) : BaseViewModel() {
 
     private val _verbsState = mutableStateOf(emptyList<Verb>())
     val verbsState: MutableState<List<Verb>> = _verbsState

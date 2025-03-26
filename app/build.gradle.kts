@@ -78,6 +78,9 @@ android {
 
 dependencies {
 
+    // ----------------------------
+    // 🔷 ANDROIDX + COMPOSE CORE
+    // ----------------------------
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -86,66 +89,112 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-
-    //Compose Navigation
     implementation(libs.androidx.navigation.compose)
+
+
+    // ----------------------------
+    // 🌐 NETWORKING
+    // ----------------------------
+
+    // Retrofit + Moshi -> https://github.com/square/moshi
+    implementation(libs.moshi.v1150)
+    implementation(libs.moshi.kotlin)
+    implementation(libs.converter.moshi)
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.15.0") // ✅ Moshi annotation processor
 
     //Retrofit + Gson -> https://github.com/square/retrofit | https://github.com/google/gson
     //implementation(libs.retrofit)
     //implementation(libs.converter.gson)
 
-    //Retrofit + Moshi -> https://github.com/square/moshi
-    implementation (libs.moshi.v1150)
-    implementation (libs.moshi.kotlin)
-    implementation (libs.converter.moshi)
-    kapt("com.squareup.moshi:moshi-kotlin-codegen:1.15.0") // ✅ Required for Moshi serialization
-
-    //Chucker -> https://github.com/ChuckerTeam/chucker
-    debugImplementation (libs.chucker.library)
-    releaseImplementation (libs.library.no.op)
-
-    //--------- Firebase ---------//
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics)
-    //Crashlytics -> https://firebase.google.com/docs/crashlytics/get-started?platform=android#add-sdk
-    implementation(libs.firebase.crashlytics)
-
-    //RxJava -> https://github.com/ReactiveX/RxJava
+    // RxJava + Retrofit integration -> https://github.com/square/retrofit | https://github.com/ReactiveX/RxJava
     implementation(libs.rxandroid)
     implementation(libs.rxjava)
-    implementation(libs.adapter.rxjava2) //To use RxJava with Retrofit
+    implementation(libs.adapter.rxjava2)
 
-    //Timber -> https://github.com/JakeWharton/timber
-    implementation (libs.timber)
+    // Chucker (for network debugging) -> https://github.com/ChuckerTeam/chucker
+    debugImplementation(libs.chucker.library)
+    releaseImplementation(libs.library.no.op)
+
+
+    // ----------------------------
+    // 🔐 DEPENDENCY INJECTION
+    // ----------------------------
 
     //Dagger 2 -> https://github.com/google/dagger
     implementation(libs.dagger)
-    kapt(libs.dagger.compiler) //It configures the Kotlin Annotation Processing Tool (kapt) to use the Dagger compiler.
+    kapt(libs.dagger.compiler)
+
+
+    // ----------------------------
+    // 📈 LOGGING & ANALYTICS
+    // ----------------------------
+
+    //Timber -> https://github.com/JakeWharton/timber
+    implementation(libs.timber)
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
+
+
+    // ----------------------------
+    // 🕵️ MEMORY + DEBUGGING TOOLS
+    // ----------------------------
 
     //Leak Canary -> https://square.github.io/leakcanary/getting_started/
     // debugImplementation because LeakCanary should only run in debug builds.
     debugImplementation(libs.leakcanary.android)
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+
+    // ----------------------------
+    // 🧪 UI Testing (Compose)
+    // ----------------------------
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // Unit testing dependencies
-    testImplementation(libs.mockito.core) // Main Mockito library
-    testImplementation(libs.mockito.inline) // Mockito inline
-    testImplementation(libs.mockito.kotlin) // ✅ Mockito Kotlin extensions
-    testImplementation(libs.mockito.core.v531) // ✅ Mocking
+    // Optional: Compose test helpers mistakenly added to implementation (fix 👇)
+    implementation(libs.androidx.ui.test.junit4.android) // ❌ move to androidTestImplementation
 
-    testImplementation(libs.androidx.core) // ✅ Android Test Core
-    testImplementation(libs.androidx.core.testing) // For testing LiveData and other Architecture Components
+    // Navigation testing
+    androidTestImplementation(libs.androidx.navigation.testing)
 
-    testImplementation(libs.kotlinx.coroutines.test) // For testing coroutines
-    testImplementation(libs.kotlin.test) // ✅ For assertEquals, assertNotNull, assertTrue
 
-    testImplementation(libs.mockwebserver) // ✅ Mock API Server
+    // ----------------------------
+    // ✅ JVM UNIT TESTS (test/)
+    // ----------------------------
+
+    // JUnit
+    testImplementation(libs.junit)
+
+    // Mockito
+    testImplementation(libs.mockito.inline.v520)
+    testImplementation(libs.mockito.kotlin.v510)
+
+    // Architecture & Coroutines
+    testImplementation(libs.androidx.core.testing)
+    testImplementation(libs.kotlinx.coroutines.test.v173)
+
+    // Kotlin assertions
+    testImplementation(libs.jetbrains.kotlin.test)
+
+    // Mock HTTP server
+    testImplementation(libs.mockwebserver.v4120)
+
+
+    // ----------------------------
+    // ✅ ANDROID INSTRUMENTED TESTS (androidTest/)
+    // ----------------------------
+
+    // Espresso + JUnit + Rules
+    //androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.rules.v150)
+
+    // Mockito for androidTest
+    androidTestImplementation(libs.mockito.android)
+
+
 
 }
