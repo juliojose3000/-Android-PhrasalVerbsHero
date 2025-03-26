@@ -11,7 +11,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PhrasalVerbsViewModel @Inject constructor(private val getPhrasalVerbsUseCase: GetPhrasalVerbsUseCase): BaseViewModel() {
+open class PhrasalVerbsViewModel @Inject constructor(private val getPhrasalVerbsUseCase: GetPhrasalVerbsUseCase): BaseViewModel() {
 
     val phrasalVerbsState = mutableStateOf(emptyList<PhrasalVerb>())
 

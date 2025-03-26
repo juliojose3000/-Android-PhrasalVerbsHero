@@ -1,4 +1,4 @@
-package com.loaizasoftware.phrasalverbshero.presentation.ui.verbs
+package com.loaizasoftware.phrasalverbshero.presentation.ui.phrasalverbs
 
 
 import androidx.compose.ui.test.assertCountEquals
@@ -17,10 +17,15 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.loaizasoftware.phrasalverbshero.core.None
 import com.loaizasoftware.phrasalverbshero.data.api.ApiService
+import com.loaizasoftware.phrasalverbshero.data.repository.PhrasalVerbRepository
 import com.loaizasoftware.phrasalverbshero.data.repository.VerbRepository
 import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
 import com.loaizasoftware.phrasalverbshero.domain.model.Verb
+import com.loaizasoftware.phrasalverbshero.domain.usecase.GetPhrasalVerbsUseCase
 import com.loaizasoftware.phrasalverbshero.domain.usecase.GetVerbsUseCase
+import com.loaizasoftware.phrasalverbshero.presentation.ui.verbs.FakeApiService
+import com.loaizasoftware.phrasalverbshero.presentation.ui.verbs.VerbsScreen
+import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.PhrasalVerbsViewModel
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
 import io.reactivex.Single
 import org.junit.Assert.assertEquals
@@ -32,41 +37,46 @@ import retrofit2.Call
 
 
 @RunWith(AndroidJUnit4::class)
-class VerbsScreenTest {
+class PhrasalVerbsScreenTest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private lateinit var fakeViewModel: FakeVerbViewModel
+    private lateinit var fakeViewModel: FakePhrasalVerbViewModel
 
     private lateinit var navController: TestNavHostController
 
     @Before
     fun setup() {
-        fakeViewModel = FakeVerbViewModel()
+        fakeViewModel = FakePhrasalVerbViewModel()
         navController = TestNavHostController(ApplicationProvider.getApplicationContext())
         navController.navigatorProvider.addNavigator(ComposeNavigator())
     }
 
     @Test
-    fun verbs_are_displayed_correctly() {
+    fun phrasal_verbs_are_displayed_correctly() {
         composeTestRule.setContent {
             navController.setLifecycleOwner(LocalLifecycleOwner.current)
-            VerbsScreen(viewModel = fakeViewModel, navController = navController)
+            PhrasalVerbsScreen(
+                viewModel = fakeViewModel,
+                verb = "go",
+                navHostController = navController,
+                getString = { _ -> "" }
+            )
         }
 
-        composeTestRule.onAllNodesWithText("Go").assertCountEquals(1)
-        composeTestRule.onAllNodesWithText("Come").assertCountEquals(1)
+        composeTestRule.onAllNodesWithText("Go off").assertCountEquals(1)
+        composeTestRule.onAllNodesWithText("Go on").assertCountEquals(1)
     }
 
-    @Test
+    /*@Test
     fun navigate_to_phrasal_verbs_screen() {
         composeTestRule.setContent {
             navController.setLifecycleOwner(LocalLifecycleOwner.current)
 
             NavHost(navController = navController, startDestination = "verbs_screen") {
                 composable("verbs_screen") {
-                    VerbsScreen(viewModel = fakeViewModel, navController = navController)
+                    //VerbsScreen(viewModel = fakeViewModel, navController = navController)
                 }
                 composable(
                     "phrasal_verbs/{verbId}",
@@ -83,38 +93,24 @@ class VerbsScreenTest {
         // ✅ Fix: assert the destination pattern AND check actual value passed
         assertEquals("phrasal_verbs/{verbId}", navController.currentBackStackEntry?.destination?.route)
         assertEquals(1L, navController.currentBackStackEntry?.arguments?.getLong("verbId"))
-    }
+    }*/
 }
 
 
-class FakeApiService : ApiService {
-    override fun getVerbs(): Call<List<Verb>> {
-        throw UnsupportedOperationException("Not used in UI test")
-    }
+class FakePhrasalVerbRepository : PhrasalVerbRepository(FakeApiService())
 
-    override fun getVerbsSingle(): Single<List<Verb>> {
-        throw UnsupportedOperationException("Not used in UI test")
-    }
-
-    override fun getPhrasalVerbs(verbId: Long): Single<List<PhrasalVerb>> {
-        throw UnsupportedOperationException("Not used in this test")
-    }
-}
-
-class FakeVerbRepository : VerbRepository(FakeApiService())
-
-class FakeGetVerbsUseCase : GetVerbsUseCase(FakeVerbRepository()) {
-    override fun run(params: None): Single<List<Verb>> {
+class FakeGetPhrasalVerbsUseCase : GetPhrasalVerbsUseCase(FakePhrasalVerbRepository()) {
+    override fun run(params: Long): Single<List<PhrasalVerb>> {
         return Single.just(emptyList()) // Not used in UI test
     }
 }
 
-class FakeVerbViewModel : VerbViewModel(FakeGetVerbsUseCase()) {
+class FakePhrasalVerbViewModel : PhrasalVerbsViewModel(FakeGetPhrasalVerbsUseCase()) {
     init {
         isLoading.value = false
-        verbsState.value = listOf(
-            Verb(id = 1L, name = "Go", phrasalVerbs = emptyList()),
-            Verb(id = 2L, name = "Come", phrasalVerbs = emptyList())
+        phrasalVerbsState.value = listOf(
+            PhrasalVerb(id = 1L, phrasalVerb = "Go off", meanings = emptyList()),
+            PhrasalVerb(id = 2L, phrasalVerb = "Go on", meanings = emptyList())
         )
     }
 }

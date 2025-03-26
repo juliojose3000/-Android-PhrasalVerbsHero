@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph_test"
+    app:startDestination="@+id/verbsScreen">
+
+    <composable android:id="@+id/verbsScreen"
+        android:name="com.loaizasoftware.phrasalverbshero.presentation.ui.verbs.VerbsScreen" />
+    <composable android:id="@+id/phrasal_verbs"
+        android:name="com.loaizasoftware.phrasalverbshero.presentation.ui.verbs.PhrasalVerbsScreen">
+        <argument android:name="verbId" app:argType="long" />
+        <deepLink android:id="@+id/deepLink" app:uri="app://phrasal_verbs/{verbId}" />
+    </composable>
+
+</navigation>
