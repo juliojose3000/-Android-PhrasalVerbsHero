@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- General -->
+    <string name="airplane_mode_on">Airplane mode on ✈️</string>
+    <string name="airplane_mode_off">Airplane mode off 📶</string>
+</resources>

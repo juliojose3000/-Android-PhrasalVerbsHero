@@ -78,6 +78,8 @@ android {
 
 dependencies {
 
+    implementation(project(":core"))
+
     // ----------------------------
     // 🔷 ANDROIDX + COMPOSE CORE
     // ----------------------------

@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import com.loaizasoftware.phrasalverbshero.R
+import com.loaizasoftware.phrasalverbshero.core.R
 
 class AirplaneModeReceiver: BroadcastReceiver() {
 
