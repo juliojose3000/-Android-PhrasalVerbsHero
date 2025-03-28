@@ -1,4 +1,4 @@
-package com.loaizasoftware.phrasalverbshero.presentation.ui.phrasalverbs
+package com.loaizasoftware.core_ui.composables
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,11 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
-import com.loaizasoftware.phrasalverbshero.presentation.ui.theme.Purple80
+import com.loaizasoftware.core_ui.theme.Purple80
 
 @Composable
-fun PhrasalVerbCardView(phrasalVerb: PhrasalVerb, onClick: (verbId: Long) -> Unit = {}) {
+fun VerbCardView(text: String, verbId: Long, onClick: (verbId: Long) -> Unit = {}) {
 
     val cardSize = 100.dp
 
@@ -30,7 +29,7 @@ fun PhrasalVerbCardView(phrasalVerb: PhrasalVerb, onClick: (verbId: Long) -> Uni
             .padding(16.dp)
             .width(cardSize)
             .height(cardSize),
-        onClick = { onClick(phrasalVerb.id) }
+        onClick = { onClick(verbId) }
     ) {
 
         Box(
@@ -41,7 +40,7 @@ fun PhrasalVerbCardView(phrasalVerb: PhrasalVerb, onClick: (verbId: Long) -> Uni
             Text(
                 modifier = Modifier
                     .padding(16.dp),
-                text = phrasalVerb.phrasalVerb,
+                text = text,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.titleLarge
             )
@@ -55,5 +54,5 @@ fun PhrasalVerbCardView(phrasalVerb: PhrasalVerb, onClick: (verbId: Long) -> Uni
 @Preview
 @Composable
 fun PreviewVerbCardView() {
-    PhrasalVerbCardView(PhrasalVerb(1, "Hello World", emptyList()))
+    VerbCardView(text = "Hello World", verbId = 1)
 }

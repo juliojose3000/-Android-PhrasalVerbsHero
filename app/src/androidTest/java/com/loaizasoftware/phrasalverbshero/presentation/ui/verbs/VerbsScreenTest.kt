@@ -21,6 +21,7 @@ import com.loaizasoftware.phrasalverbshero.data.repository.VerbRepository
 import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
 import com.loaizasoftware.phrasalverbshero.domain.model.Verb
 import com.loaizasoftware.phrasalverbshero.domain.usecase.GetVerbsUseCase
+import com.loaizasoftware.phrasalverbshero.presentation.ui.screens.VerbsScreen
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
 import io.reactivex.Single
 import org.junit.Assert.assertEquals

@@ -1,4 +1,4 @@
-package com.loaizasoftware.phrasalverbshero.presentation.ui.theme
+package com.loaizasoftware.core_ui.theme
 
 import android.app.Activity
 import android.os.Build

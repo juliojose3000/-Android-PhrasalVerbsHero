@@ -1,4 +1,4 @@
-package com.loaizasoftware.phrasalverbshero.presentation.ui.general
+package com.loaizasoftware.core_ui.general
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
@@ -16,8 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.loaizasoftware.phrasalverbshero.presentation.ui.theme.Purple40
-import com.loaizasoftware.phrasalverbshero.presentation.ui.theme.Purple80
+import com.loaizasoftware.core_ui.theme.Purple40
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

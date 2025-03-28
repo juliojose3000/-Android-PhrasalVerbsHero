@@ -2,6 +2,7 @@ package com.loaizasoftware.phrasalverbshero.presentation.viewmodel
 
 import android.annotation.SuppressLint
 import androidx.compose.runtime.mutableStateOf
+import com.loaizasoftware.core_ui.base.BaseViewModel
 import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
 import com.loaizasoftware.phrasalverbshero.domain.usecase.GetPhrasalVerbsUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers

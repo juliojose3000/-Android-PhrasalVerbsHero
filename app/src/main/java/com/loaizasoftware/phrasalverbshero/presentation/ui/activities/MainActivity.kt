@@ -1,4 +1,4 @@
-package com.loaizasoftware.phrasalverbshero.presentation.ui
+package com.loaizasoftware.phrasalverbshero.presentation.ui.activities
 
 //import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModelFactory
 import android.content.Intent
@@ -14,13 +14,13 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.loaizasoftware.core_ui.base.BaseActivity
 import com.loaizasoftware.phrasalverbshero.BuildConfig
 import com.loaizasoftware.phrasalverbshero.PhrasalVerbsHeroApplication
 import com.loaizasoftware.phrasalverbshero.core.receiver.AirplaneModeReceiver
-import com.loaizasoftware.phrasalverbshero.presentation.ui.core.BaseActivity
-import com.loaizasoftware.phrasalverbshero.presentation.ui.phrasalverbs.PhrasalVerbsScreen
-import com.loaizasoftware.phrasalverbshero.presentation.ui.verbs.VerbsScreen
-import com.loaizasoftware.phrasalverbshero.presentation.ui.theme.PhrasalVerbsHeroTheme
+import com.loaizasoftware.phrasalverbshero.presentation.ui.screens.PhrasalVerbsScreen
+import com.loaizasoftware.phrasalverbshero.presentation.ui.screens.VerbsScreen
+import com.loaizasoftware.core_ui.theme.PhrasalVerbsHeroTheme
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.PhrasalVerbsViewModel
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
 import kotlinx.coroutines.CoroutineScope

@@ -17,7 +17,7 @@
         android:theme="@style/Theme.PhrasalVerbsHero"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.ui.MainActivity"
+            android:name=".presentation.ui.activities.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.PhrasalVerbsHero">
             <intent-filter>

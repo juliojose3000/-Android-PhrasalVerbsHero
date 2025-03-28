@@ -1,4 +1,4 @@
-package com.loaizasoftware.phrasalverbshero.presentation.ui.general
+package com.loaizasoftware.core_ui.general
 
 import android.widget.Button
 import androidx.compose.foundation.layout.padding
@@ -13,8 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.loaizasoftware.phrasalverbshero.presentation.ui.theme.Pink40
-import com.loaizasoftware.phrasalverbshero.presentation.ui.theme.Pink80
+import com.loaizasoftware.core_ui.theme.Pink80
 
 @Composable
 fun PHButton(text: String, onClick: () -> Unit) {

@@ -1,4 +1,4 @@
-package com.loaizasoftware.phrasalverbshero.presentation.ui.general
+package com.loaizasoftware.core_ui.general
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

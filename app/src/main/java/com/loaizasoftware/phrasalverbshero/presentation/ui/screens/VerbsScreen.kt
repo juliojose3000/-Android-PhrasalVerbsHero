@@ -1,4 +1,4 @@
-package com.loaizasoftware.phrasalverbshero.presentation.ui.verbs
+package com.loaizasoftware.phrasalverbshero.presentation.ui.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,9 +15,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.loaizasoftware.phrasalverbshero.R
-import com.loaizasoftware.phrasalverbshero.presentation.ui.general.AppBar
-import com.loaizasoftware.phrasalverbshero.presentation.ui.general.LoadingIndicator
-import com.loaizasoftware.phrasalverbshero.presentation.ui.general.SearchBar
+import com.loaizasoftware.core_ui.general.AppBar
+import com.loaizasoftware.core_ui.general.LoadingIndicator
+import com.loaizasoftware.core_ui.general.SearchBar
+import com.loaizasoftware.core_ui.composables.VerbCardView
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
 
 @Composable
@@ -50,7 +51,7 @@ fun VerbsScreen(viewModel: VerbViewModel, navController: NavHostController) {
                 ) {
 
                     items(viewModel.verbsState.value) { verb ->
-                        VerbCardView(verb = verb) { verbId ->
+                        VerbCardView(text = verb.name, verbId = verb.id) { verbId ->
                             navController.navigate("phrasal_verbs/$verbId")
                         }
                     }

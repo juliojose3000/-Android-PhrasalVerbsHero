@@ -4,36 +4,22 @@ package com.loaizasoftware.phrasalverbshero.presentation.ui.phrasalverbs
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
-import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.navigation.NavType
 import androidx.navigation.compose.ComposeNavigator
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.loaizasoftware.phrasalverbshero.core.None
-import com.loaizasoftware.phrasalverbshero.data.api.ApiService
 import com.loaizasoftware.phrasalverbshero.data.repository.PhrasalVerbRepository
-import com.loaizasoftware.phrasalverbshero.data.repository.VerbRepository
 import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
-import com.loaizasoftware.phrasalverbshero.domain.model.Verb
 import com.loaizasoftware.phrasalverbshero.domain.usecase.GetPhrasalVerbsUseCase
-import com.loaizasoftware.phrasalverbshero.domain.usecase.GetVerbsUseCase
+import com.loaizasoftware.phrasalverbshero.presentation.ui.screens.PhrasalVerbsScreen
 import com.loaizasoftware.phrasalverbshero.presentation.ui.verbs.FakeApiService
-import com.loaizasoftware.phrasalverbshero.presentation.ui.verbs.VerbsScreen
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.PhrasalVerbsViewModel
-import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
 import io.reactivex.Single
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import retrofit2.Call
 
 
 @RunWith(AndroidJUnit4::class)

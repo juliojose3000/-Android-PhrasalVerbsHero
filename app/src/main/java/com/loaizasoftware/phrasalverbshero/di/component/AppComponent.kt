@@ -1,6 +1,6 @@
 package com.loaizasoftware.phrasalverbshero.di.component
 
-import com.loaizasoftware.phrasalverbshero.presentation.ui.MainActivity
+import com.loaizasoftware.phrasalverbshero.presentation.ui.activities.MainActivity
 import com.loaizasoftware.phrasalverbshero.di.module.AppModule
 import dagger.Component
 import javax.inject.Singleton

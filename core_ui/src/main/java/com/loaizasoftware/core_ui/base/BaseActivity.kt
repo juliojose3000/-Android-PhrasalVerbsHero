@@ -1,8 +1,8 @@
-package com.loaizasoftware.phrasalverbshero.presentation.ui.core
+package com.loaizasoftware.core_ui.base
 
 import android.app.AlertDialog
 import androidx.activity.ComponentActivity
-import com.loaizasoftware.phrasalverbshero.R
+import com.loaizasoftware.core_ui.R
 
 open class BaseActivity : ComponentActivity() {
 
