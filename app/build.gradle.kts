@@ -1,10 +1,7 @@
-import java.util.regex.Matcher
-import java.util.regex.Pattern
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.compose) //Starting in Kotlin 2.0, the Compose Compiler Gradle plugin is required
 
     //Firebase Crashlytics
     id("com.google.firebase.crashlytics")

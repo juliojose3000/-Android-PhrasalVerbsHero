@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.compose) //Starting in Kotlin 2.0, the Compose Compiler Gradle plugin is required
 }
 
 android {
@@ -53,5 +53,9 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+
+    //----- Instrumented Tests ----- //
+    implementation(libs.androidx.monitor)
+    implementation(libs.androidx.junit.ktx)
 
 }
