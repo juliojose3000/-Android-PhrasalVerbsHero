@@ -9,4 +9,6 @@ plugins {
     id("com.google.firebase.crashlytics") version "3.0.3" apply false
     alias(libs.plugins.android.library) apply false
 
+    id("com.google.dagger.hilt.android") version "2.51.1" apply false
+
 }

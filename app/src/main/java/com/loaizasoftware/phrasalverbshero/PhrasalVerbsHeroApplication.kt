@@ -1,9 +1,10 @@
 package com.loaizasoftware.phrasalverbshero
 
 import android.app.Application
-import com.loaizasoftware.phrasalverbshero.di.component.AppComponent
-import com.loaizasoftware.phrasalverbshero.di.component.DaggerAppComponent
+//import com.loaizasoftware.phrasalverbshero.di.component.AppComponent
+// com.loaizasoftware.phrasalverbshero.di.component.DaggerAppComponent
 import com.loaizasoftware.phrasalverbshero.di.module.AppModule
+import dagger.hilt.android.HiltAndroidApp
 
 /**
  * The Application class for the Phrasal Verbs Hero app.
@@ -40,19 +41,21 @@ import com.loaizasoftware.phrasalverbshero.di.module.AppModule
  * }
  * ```
  */
+
+@HiltAndroidApp
 class PhrasalVerbsHeroApplication : Application() {
 
     /**
      * The Dagger component that provides dependencies to the application.
      */
-    lateinit var appComponent: AppComponent
+    //lateinit var appComponent: AppComponent
 
     override fun onCreate() {
         super.onCreate()
 
         // Initialize Dagger component and provide the application context
-        appComponent = DaggerAppComponent.builder()
+        /*appComponent = DaggerAppComponent.builder()
             .appModule(AppModule(this)) // Pass the application context here
-            .build()
+            .build()*/
     }
 }

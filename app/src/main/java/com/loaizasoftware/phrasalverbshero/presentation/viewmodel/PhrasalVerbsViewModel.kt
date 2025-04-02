@@ -5,13 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import com.loaizasoftware.core_ui.base.BaseViewModel
 import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
 import com.loaizasoftware.phrasalverbshero.domain.usecase.GetPhrasalVerbsUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
+@HiltViewModel
 open class PhrasalVerbsViewModel @Inject constructor(private val getPhrasalVerbsUseCase: GetPhrasalVerbsUseCase): BaseViewModel() {
 
     val phrasalVerbsState = mutableStateOf(emptyList<PhrasalVerb>())

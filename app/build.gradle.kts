@@ -9,6 +9,9 @@ plugins {
 
     //This line allows us to use the Kotlin Compiler Plugin
     id("kotlin-kapt")
+
+    //This line is to use the Hilt Gradle Plugin
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -121,9 +124,13 @@ dependencies {
     // ----------------------------
 
     //Dagger 2 -> https://github.com/google/dagger
-    implementation(libs.dagger)
-    kapt(libs.dagger.compiler)
+    //implementation(libs.dagger)
+    //kapt(libs.dagger.compiler)
 
+    //Hilt
+    kapt(libs.hilt.compiler)  // Replace
+    implementation(libs.hilt.android) // Replace with the latest version
+    implementation(libs.androidx.hilt.navigation.compose) // If you are using ViewModels
 
     // ----------------------------
     // 📈 LOGGING & ANALYTICS

@@ -6,14 +6,18 @@ import com.loaizasoftware.phrasalverbshero.data.repository.PhrasalVerbRepository
 import com.loaizasoftware.phrasalverbshero.data.repository.VerbRepository
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module //A module is a class that provides dependencies to the application
-class AppModule(private val context: Context) { // Pass the context in the constructor
+@InstallIn(SingletonComponent::class)
+class AppModule { // Pass the context in the constructor
 
     @Singleton
     @Provides
-    fun provideApiClient(): ApiClient {
+    fun provideApiClient(@ApplicationContext context: Context): ApiClient {
         val apiClient = ApiClient.getInstance()
         apiClient.createRetrofit(context)
         return apiClient

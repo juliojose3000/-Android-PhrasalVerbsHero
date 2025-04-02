@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.StrictMode
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.compose.NavHost
@@ -23,28 +24,30 @@ import com.loaizasoftware.phrasalverbshero.presentation.ui.screens.VerbsScreen
 import com.loaizasoftware.core_ui.theme.PhrasalVerbsHeroTheme
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.PhrasalVerbsViewModel
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity: BaseActivity() {
 
     //When an object is annotated with @Inject it means that it will be provided by Dagger
     //verbViewModel is a dependency of the MainActivity class
     //The MainActivity class depends on verbViewModel to handle the data and UI logic
-    @Inject
-    lateinit var verbViewModel: VerbViewModel
+    //@Inject
+    private val verbViewModel: VerbViewModel by viewModels()
 
-    @Inject
-    lateinit var phrasalVerbsViewModel: PhrasalVerbsViewModel
+    //@Inject
+    private val phrasalVerbsViewModel: PhrasalVerbsViewModel by viewModels()
 
     private lateinit var receiver: AirplaneModeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (application as PhrasalVerbsHeroApplication).appComponent.inject(this)// Get the application component and inject the MainActivity's dependencies
+        //(application as PhrasalVerbsHeroApplication).appComponent.inject(this)// Get the application component and inject the MainActivity's dependencies
 
         enableEdgeToEdge()
         setContent {
