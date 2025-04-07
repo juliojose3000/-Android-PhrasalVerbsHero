@@ -3,7 +3,6 @@ package com.loaizasoftware.phrasalverbshero.presentation.viewmodel
 import android.annotation.SuppressLint
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import com.loaizasoftware.core_ui.base.BaseViewModel
 import com.loaizasoftware.phrasalverbshero.core.None
 import com.loaizasoftware.phrasalverbshero.domain.model.Verb
 import com.loaizasoftware.phrasalverbshero.domain.usecase.GetVerbsUseCase
@@ -15,7 +14,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @HiltViewModel
 open class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVerbsUseCase) :
