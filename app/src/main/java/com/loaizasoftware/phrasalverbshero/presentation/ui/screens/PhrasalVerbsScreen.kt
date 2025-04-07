@@ -19,11 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.loaizasoftware.core_ui.composables.CardView
 import com.loaizasoftware.phrasalverbshero.R
 import com.loaizasoftware.core_ui.general.AppBar
 import com.loaizasoftware.core_ui.general.LoadingIndicator
 import com.loaizasoftware.core_ui.general.PHButton
-import com.loaizasoftware.core_ui.composables.PhrasalVerbCardView
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.PhrasalVerbsViewModel
 
 @Composable
@@ -62,7 +62,7 @@ fun PhrasalVerbsScreen(
                         .padding(top = 16.dp)
                 ) {
                     items(viewModel.phrasalVerbsState.value) { phrasalVerb ->
-                        PhrasalVerbCardView(text = phrasalVerb.phrasalVerb, id = phrasalVerb.id)
+                        CardView(text = phrasalVerb.phrasalVerb, id = phrasalVerb.id)
                     }
                 }
 

@@ -14,11 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
+import com.loaizasoftware.core_ui.composables.CardView
 import com.loaizasoftware.phrasalverbshero.R
 import com.loaizasoftware.core_ui.general.AppBar
 import com.loaizasoftware.core_ui.general.LoadingIndicator
 import com.loaizasoftware.core_ui.general.SearchBar
-import com.loaizasoftware.core_ui.composables.VerbCardView
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
 
 @Composable
@@ -51,7 +51,7 @@ fun VerbsScreen(viewModel: VerbViewModel, navController: NavHostController) {
                 ) {
 
                     items(viewModel.verbsState.value) { verb ->
-                        VerbCardView(text = verb.name, verbId = verb.id) { verbId ->
+                        CardView(text = verb.name, id = verb.id) { verbId ->
                             navController.navigate("phrasal_verbs/$verbId")
                         }
                     }

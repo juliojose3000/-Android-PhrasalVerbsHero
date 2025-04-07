@@ -13,14 +13,12 @@ import javax.inject.Singleton
 
 @Module //A module is a class that provides dependencies to the application
 @InstallIn(SingletonComponent::class)
-class AppModule { // Pass the context in the constructor
+class AppModule {
 
     @Singleton
     @Provides
     fun provideApiClient(@ApplicationContext context: Context): ApiClient {
-        val apiClient = ApiClient.getInstance()
-        apiClient.createRetrofit(context)
-        return apiClient
+        return ApiClient().also { it.createRetrofit(context) }
     }
 
     @Singleton //Ensures that only one instance of VerbRepository is created

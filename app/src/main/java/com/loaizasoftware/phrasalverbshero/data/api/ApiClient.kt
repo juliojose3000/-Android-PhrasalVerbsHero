@@ -42,16 +42,4 @@ class ApiClient {
 
     }
 
-
-    companion object {
-        private var instance: ApiClient? = null
-
-        fun getInstance(): ApiClient {
-            if (instance == null) {
-                instance = ApiClient()
-            }
-            return instance!!
-        }
-    }
-
 }

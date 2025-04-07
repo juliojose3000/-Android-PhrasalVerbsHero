@@ -17,8 +17,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.loaizasoftware.core_ui.theme.Purple80
 
+
 @Composable
-fun PhrasalVerbCardView(text: String, id: Long, onClick: (verbId: Long) -> Unit = {}) {
+fun CardView(text: String, id: Long, onClick: (id: Long) -> Unit = {}) {
 
     val cardSize = 100.dp
 
@@ -53,6 +54,6 @@ fun PhrasalVerbCardView(text: String, id: Long, onClick: (verbId: Long) -> Unit 
 
 @Preview
 @Composable
-fun PreviewPhrasalVerbCardView() {
-    PhrasalVerbCardView("Hello World", 1)
+fun PreviewCardView() {
+    CardView(text = "Hello World", id = 1)
 }
