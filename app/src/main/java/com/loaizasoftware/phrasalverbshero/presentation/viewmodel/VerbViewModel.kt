@@ -10,32 +10,37 @@ import com.loaizasoftware.phrasalverbshero.domain.usecase.GetVerbsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @HiltViewModel
-open class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVerbsUseCase) : BaseViewModel() {
+open class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVerbsUseCase) :
+    BaseViewModel() {
 
     private val _verbsState = mutableStateOf(emptyList<Verb>())
     val verbsState: MutableState<List<Verb>> = _verbsState
 
-    init {
-        //loadVerbs()
-    }
-//9739982
-    @SuppressLint("CheckResult")
     fun loadVerbs() {
+        //loadVerbsUsingRxJava()
+        loadVerbsUsingRetrofit()
+    }
+
+    @SuppressLint("CheckResult")
+    private fun loadVerbsUsingRxJava() {
 
         //Get verbs from API using RxJava
         getVerbsUseCase.run(None())
             .subscribeOn(Schedulers.io()) // Perform network operation on IO thread
             .observeOn(AndroidSchedulers.mainThread()) // Update UI on main thread
             .doOnSubscribe{
-                isLoading.value = true  
+                isLoading.value = true
             }
             .doFinally {
-                isLoading.value = false 
+                isLoading.value = false
             }
             .subscribe({
                 verbsState.value = it
@@ -45,23 +50,34 @@ open class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVer
                 Timber.e(it.cause)
             })
 
+    }
+
+    private fun loadVerbsUsingRetrofit() {
+
         //Get verbs from API using Retrofit
-        /*getVerbsUseCase?.execute()?.enqueue(object : Callback<List<Verb>> {
+        getVerbsUseCase.execute().enqueue(object : Callback<List<Verb>> {
+
+            init {
+                isLoading.value = true
+            }
+
             override fun onResponse(call: Call<List<Verb>>, response: Response<List<Verb>>) {
+
+                isLoading.value = false
 
                 if (response.isSuccessful) {
                     verbsState.value = response.body() ?: emptyList()
-                    Log.v("MyTAG", "${response.body()}")
                 } else {
-                    _error.value = "Error: ${response.code()}"
+                    sendEvent("Error: ${response.code()}")
                 }
             }
 
             override fun onFailure(call: Call<List<Verb>>, t: Throwable) {
-                _error.value = "Network error: ${t.message}"
+                isLoading.value = true
+                sendEvent("Error: ${t.message}")
             }
 
-        })*/
+        })
 
     }
 

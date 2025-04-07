@@ -6,6 +6,7 @@ import io.reactivex.Single
 import retrofit2.Call
 
 open class VerbRepository(private val apiService: ApiService) {
+
     fun getVerbs(): Call<List<Verb>> {
         return apiService.getVerbs()  // Just delegates to ApiService
     }
