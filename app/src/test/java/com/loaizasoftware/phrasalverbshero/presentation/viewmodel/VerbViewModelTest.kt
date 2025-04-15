@@ -1,11 +1,8 @@
 package com.loaizasoftware.phrasalverbshero.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.loaizasoftware.phrasalverbshero.data.repository.VerbRepository
-import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
-import com.loaizasoftware.phrasalverbshero.domain.model.Verb
+import com.loaizasoftware.phrasalverbshero.data.repository.VerbRepositoryImpl
 import com.loaizasoftware.phrasalverbshero.domain.usecase.GetVerbsUseCase
-import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
@@ -14,16 +11,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
-import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
 @ExperimentalCoroutinesApi
@@ -33,7 +25,7 @@ class VerbViewModelTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var repository: VerbRepository
+    private lateinit var repository: VerbRepositoryImpl
 
     //@Mock
     private lateinit var getVerbsUseCase: GetVerbsUseCase

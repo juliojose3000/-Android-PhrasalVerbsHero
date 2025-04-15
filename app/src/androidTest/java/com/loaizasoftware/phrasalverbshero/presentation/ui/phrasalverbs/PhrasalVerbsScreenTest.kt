@@ -9,13 +9,20 @@ import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.loaizasoftware.phrasalverbshero.data.repository.PhrasalVerbRepository
+import com.loaizasoftware.phrasalverbshero.core.network.ApiResult
+import com.loaizasoftware.phrasalverbshero.core.network.safeApiCall
+import com.loaizasoftware.phrasalverbshero.data.api.ApiService
+import com.loaizasoftware.phrasalverbshero.data.repository.FakePhrasalVerbRepositoryImpl
+import com.loaizasoftware.phrasalverbshero.data.repository.PhrasalVerbRepositoryImpl
 import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
+import com.loaizasoftware.phrasalverbshero.domain.repository.PhrasalVerbRepository
 import com.loaizasoftware.phrasalverbshero.domain.usecase.GetPhrasalVerbsUseCase
 import com.loaizasoftware.phrasalverbshero.presentation.ui.screens.PhrasalVerbsScreen
 import com.loaizasoftware.phrasalverbshero.presentation.ui.verbs.FakeApiService
+import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.FakePhrasalVerbViewModel
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.PhrasalVerbsViewModel
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -80,23 +87,4 @@ class PhrasalVerbsScreenTest {
         assertEquals("phrasal_verbs/{verbId}", navController.currentBackStackEntry?.destination?.route)
         assertEquals(1L, navController.currentBackStackEntry?.arguments?.getLong("verbId"))
     }*/
-}
-
-
-class FakePhrasalVerbRepository : PhrasalVerbRepository(FakeApiService())
-
-class FakeGetPhrasalVerbsUseCase : GetPhrasalVerbsUseCase(FakePhrasalVerbRepository()) {
-    override fun run(params: Long): Single<List<PhrasalVerb>> {
-        return Single.just(emptyList()) // Not used in UI test
-    }
-}
-
-class FakePhrasalVerbViewModel : PhrasalVerbsViewModel(FakeGetPhrasalVerbsUseCase()) {
-    init {
-        isLoading.value = false
-        phrasalVerbsState.value = listOf(
-            PhrasalVerb(id = 1L, phrasalVerb = "Go off", meanings = emptyList()),
-            PhrasalVerb(id = 2L, phrasalVerb = "Go on", meanings = emptyList())
-        )
-    }
 }

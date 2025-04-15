@@ -2,8 +2,9 @@ package com.loaizasoftware.phrasalverbshero.domain.usecase
 
 import com.loaizasoftware.phrasalverbshero.core.None
 import com.loaizasoftware.phrasalverbshero.core.UseCase
-import com.loaizasoftware.phrasalverbshero.data.repository.VerbRepository
+import com.loaizasoftware.phrasalverbshero.data.repository.VerbRepositoryImpl
 import com.loaizasoftware.phrasalverbshero.domain.model.Verb
+import com.loaizasoftware.phrasalverbshero.domain.repository.VerbRepository
 import io.reactivex.Single
 import retrofit2.Call
 import javax.inject.Inject

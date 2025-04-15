@@ -17,7 +17,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.loaizasoftware.phrasalverbshero.core.None
 import com.loaizasoftware.phrasalverbshero.data.api.ApiService
-import com.loaizasoftware.phrasalverbshero.data.repository.VerbRepository
+import com.loaizasoftware.phrasalverbshero.data.repository.VerbRepositoryImpl
 import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
 import com.loaizasoftware.phrasalverbshero.domain.model.Verb
 import com.loaizasoftware.phrasalverbshero.domain.usecase.GetVerbsUseCase
@@ -102,9 +102,9 @@ class FakeApiService : ApiService {
     }
 }
 
-class FakeVerbRepository : VerbRepository(FakeApiService())
+class FakeVerbRepositoryImpl : VerbRepositoryImpl(FakeApiService())
 
-class FakeGetVerbsUseCase : GetVerbsUseCase(FakeVerbRepository()) {
+class FakeGetVerbsUseCase : GetVerbsUseCase(FakeVerbRepositoryImpl()) {
     override fun run(params: None): Single<List<Verb>> {
         return Single.just(emptyList()) // Not used in UI test
     }
