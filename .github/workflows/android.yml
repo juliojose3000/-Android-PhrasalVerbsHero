@@ -60,9 +60,9 @@ jobs:
         with:
           appId: 1:238622179168:android:24853bdfaec1206d776805
           token: ${{ secrets.FIREBASE_TOKEN }}
-          groups: qa-testers
+          groups: development
           releaseNotes: ${{ github.event.head_commit.message }}
-          file: ${{ env.PROJECT_LOCATION }}/${{ env.MODULE }}/build/outputs/apk/qaRelease/app-qa-release.apk
+          file: ${{ env.PROJECT_LOCATION }}/${{ env.MODULE }}/build/outputs/apk/qa/release/app-qa-release.apk
 
   run_tests:
     name: 🧪 Run Tests
