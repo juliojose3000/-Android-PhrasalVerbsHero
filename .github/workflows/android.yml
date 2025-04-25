@@ -52,7 +52,7 @@ jobs:
           echo $KEYSTORE_BASE64 | base64 -d > my-keystore.jks
           jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
             -keystore my-keystore.jks -storepass $KEYSTORE_PASSWORD -keypass $KEY_PASSWORD \
-            ${{ env.PROJECT_LOCATION }}/${{ env.MODULE }}/build/outputs/apk/qaRelease/app-qa-release-unsigned.apk \
+            ${{ env.PROJECT_LOCATION }}/${{ env.MODULE }}/build/outputs/apk/qa/release/app-qa-release-unsigned.apk \
             $KEY_ALIAS
 
       - name: 🚀 Upload to Firebase App Distribution
