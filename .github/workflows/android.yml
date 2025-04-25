@@ -62,7 +62,7 @@ jobs:
           token: ${{ secrets.FIREBASE_TOKEN }}
           groups: development
           releaseNotes: ${{ github.event.head_commit.message }}
-          file: ${{ env.PROJECT_LOCATION }}/${{ env.MODULE }}/qa/release/app-qa-release.apk
+          file: ${{ env.PROJECT_LOCATION }}/${{ env.MODULE }}/build/outputs/apk/qa/release/app-qa-release-unsigned.apk
 
   run_tests:
     name: 🧪 Run Tests
