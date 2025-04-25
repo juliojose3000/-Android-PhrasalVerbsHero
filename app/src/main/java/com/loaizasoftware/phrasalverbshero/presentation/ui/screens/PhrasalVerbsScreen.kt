@@ -62,7 +62,9 @@ fun PhrasalVerbsScreen(
                         .padding(top = 16.dp)
                 ) {
                     items(viewModel.phrasalVerbsState.value) { phrasalVerb ->
-                        CardView(text = phrasalVerb.phrasalVerb, id = phrasalVerb.id)
+                        CardView(text = phrasalVerb.phrasalVerb, id = phrasalVerb.id) {
+                            navHostController.navigate("phrasal_verbs/${phrasalVerb.id}/meanings")
+                        }
                     }
                 }
 

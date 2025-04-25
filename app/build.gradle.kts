@@ -133,6 +133,12 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose) // If you are using ViewModels
 
     // ----------------------------
+    // IMAGES
+    // ----------------------------
+    implementation(libs.coil.compose)
+
+
+    // ----------------------------
     // 📈 LOGGING & ANALYTICS
     // ----------------------------
 

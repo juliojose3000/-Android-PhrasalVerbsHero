@@ -3,7 +3,9 @@ package com.loaizasoftware.phrasalverbshero.presentation.viewmodel
 import android.annotation.SuppressLint
 import androidx.compose.runtime.mutableStateOf
 import com.loaizasoftware.phrasalverbshero.core.network.ApiResult
+import com.loaizasoftware.phrasalverbshero.domain.model.Meaning
 import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
+import com.loaizasoftware.phrasalverbshero.domain.usecase.GetMeaningsUseCase
 import com.loaizasoftware.phrasalverbshero.domain.usecase.GetPhrasalVerbsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -12,9 +14,14 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-open class PhrasalVerbsViewModel @Inject constructor(private val getPhrasalVerbsUseCase: GetPhrasalVerbsUseCase): BaseViewModel() {
+open class PhrasalVerbsViewModel
+@Inject constructor(
+    private val getPhrasalVerbsUseCase: GetPhrasalVerbsUseCase,
+    private val getMeaningsUseCase: GetMeaningsUseCase
+): BaseViewModel() {
 
     val phrasalVerbsState = mutableStateOf(emptyList<PhrasalVerb>())
+    val phrasalVerbMeanings = mutableStateOf(emptyList<Meaning>())
 
     fun loadPhrasalVerbs(verbId: Long) {
         //loadPhrasalVerbsNormal(verbId)
@@ -37,7 +44,7 @@ open class PhrasalVerbsViewModel @Inject constructor(private val getPhrasalVerbs
                 phrasalVerbsState.value = it
             }, {
                 error.value = it
-                Timber.e(it.cause)
+                Timber.e(it)
             })
 
     }
@@ -65,8 +72,31 @@ open class PhrasalVerbsViewModel @Inject constructor(private val getPhrasalVerbs
 
             }, {
                 error.value = it
-                Timber.e(it.cause)
+                Timber.e(it)
             })
+
+    }
+
+    @SuppressLint("CheckResult")
+    fun loadPhrasalVerbMeanings(phrasalVerbId: Long) {
+
+        getMeaningsUseCase.run(phrasalVerbId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { isLoading.value = true }
+            .doFinally { isLoading.value = false }
+            .subscribe({
+                phrasalVerbMeanings.value = it
+            }, {
+                error.value = it
+                Timber.e(it)
+            })
+
+    }
+
+    fun getPhrasalVerbById(phrasalVerbId: Long): PhrasalVerb? {
+
+        return phrasalVerbsState.value.find { it.id == phrasalVerbId }
 
     }
 

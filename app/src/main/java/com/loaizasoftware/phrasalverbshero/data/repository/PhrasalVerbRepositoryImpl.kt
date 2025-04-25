@@ -3,6 +3,7 @@ package com.loaizasoftware.phrasalverbshero.data.repository
 import com.loaizasoftware.phrasalverbshero.core.network.ApiResult
 import com.loaizasoftware.phrasalverbshero.core.network.safeApiCall
 import com.loaizasoftware.phrasalverbshero.data.api.ApiService
+import com.loaizasoftware.phrasalverbshero.domain.model.Meaning
 import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
 import com.loaizasoftware.phrasalverbshero.domain.repository.PhrasalVerbRepository
 import io.reactivex.Single
@@ -20,6 +21,10 @@ class PhrasalVerbRepositoryImpl(private val apiService: ApiService): PhrasalVerb
                 apiService.getPhrasalVerbs(verbId).blockingGet()
             }
         }.subscribeOn(Schedulers.io())
+    }
+
+    override fun getPhrasalVerbMeanings(phrasalVerbId: Long): Single<List<Meaning>> {
+        return apiService.getPhrasalVerbMeanings(phrasalVerbId)
     }
 
 }

@@ -1,10 +1,11 @@
 package com.loaizasoftware.phrasalverbshero.presentation.viewmodel
 
 import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
+import com.loaizasoftware.phrasalverbshero.domain.usecase.FakeGetMeaningsUseCase
 import com.loaizasoftware.phrasalverbshero.domain.usecase.FakeGetPhrasalVerbsUseCase
 
 
-class FakePhrasalVerbViewModel : PhrasalVerbsViewModel(FakeGetPhrasalVerbsUseCase()) {
+class FakePhrasalVerbViewModel : PhrasalVerbsViewModel(FakeGetPhrasalVerbsUseCase(), FakeGetMeaningsUseCase()) {
     init {
         isLoading.value = false
         phrasalVerbsState.value = listOf(

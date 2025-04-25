@@ -17,18 +17,17 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.loaizasoftware.core_ui.base.BaseActivity
 import com.loaizasoftware.phrasalverbshero.BuildConfig
-import com.loaizasoftware.phrasalverbshero.PhrasalVerbsHeroApplication
 import com.loaizasoftware.phrasalverbshero.core.receiver.AirplaneModeReceiver
 import com.loaizasoftware.phrasalverbshero.presentation.ui.screens.PhrasalVerbsScreen
 import com.loaizasoftware.phrasalverbshero.presentation.ui.screens.VerbsScreen
 import com.loaizasoftware.core_ui.theme.PhrasalVerbsHeroTheme
+import com.loaizasoftware.phrasalverbshero.presentation.ui.screens.DefinitionsScreen
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.PhrasalVerbsViewModel
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint //Allows Dagger to inject dependencies into Android classes such as Activities, Fragments, and Services
 class MainActivity: BaseActivity() {
@@ -152,6 +151,27 @@ fun PhrasalVerbsApplication(verbViewModel: VerbViewModel, phrasalVerbsViewModel:
                 BaseActivity.getInstance().getString(stringId)
             }
         }
+
+        composable(route = "phrasal_verbs/{phrasalVerbId}/meanings", arguments = listOf(navArgument("phrasalVerbId") {
+            type = NavType.LongType
+        })) {
+
+            val phrasalVerbId = it.arguments!!.getLong("phrasalVerbId")
+            val phrasalVerb = phrasalVerbsViewModel.getPhrasalVerbById(phrasalVerbId)!!
+
+            //The loadPhrasalVerbs call is a side effect. It should not be called directly within
+            //the composable. Use LaunchedEffect to ensure it's called only once when the composable
+            //is first composed or when a specific key changes
+            LaunchedEffect(key1 = phrasalVerbId) {
+                phrasalVerbsViewModel.loadPhrasalVerbMeanings(phrasalVerb.id)
+            }
+
+            DefinitionsScreen(phrasalVerbsViewModel, phrasalVerb, navController) { stringId ->
+                BaseActivity.getInstance().getString(stringId)
+            }
+        }
+
+
     }
 }
 

@@ -18,6 +18,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.loaizasoftware.phrasalverbshero.core.None
 import com.loaizasoftware.phrasalverbshero.data.api.ApiService
 import com.loaizasoftware.phrasalverbshero.data.repository.VerbRepositoryImpl
+import com.loaizasoftware.phrasalverbshero.domain.model.Meaning
 import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
 import com.loaizasoftware.phrasalverbshero.domain.model.Verb
 import com.loaizasoftware.phrasalverbshero.domain.usecase.GetVerbsUseCase
@@ -98,6 +99,10 @@ class FakeApiService : ApiService {
     }
 
     override fun getPhrasalVerbs(verbId: Long): Single<List<PhrasalVerb>> {
+        throw UnsupportedOperationException("Not used in this test")
+    }
+
+    override fun getPhrasalVerbMeanings(phrasalVerbId: Long): Single<List<Meaning>> {
         throw UnsupportedOperationException("Not used in this test")
     }
 }
