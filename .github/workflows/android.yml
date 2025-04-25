@@ -1,0 +1,95 @@
+name: Android CI/CD
+
+on:
+  push:
+    branches:
+      - main
+      - release/v*
+      - tests/v*
+  pull_request:
+    branches: [ "*" ]
+
+jobs:
+  build_apk:
+    name: 🔧 Build APK
+    runs-on: ubuntu-latest
+
+    env:
+      PROJECT_LOCATION: .
+      MODULE: app
+      QA_VARIANT: qaRelease
+
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v4
+
+      - name: ☕ Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: 🛠️ Make Gradle executable
+        run: chmod +x ${{ env.PROJECT_LOCATION }}/gradlew
+
+      - name: 📦 Build APK
+        run: ./gradlew :${{ env.MODULE }}:assemble${{ env.QA_VARIANT }}
+
+      - name: ✅ Run Lint
+        run: ./gradlew lint${{ env.QA_VARIANT }}
+
+      - name: 🧪 Run Unit Tests
+        run: ./gradlew :${{ env.MODULE }}:test${{ env.QA_VARIANT }}UnitTest
+
+      - name: 🔏 Sign APK (if needed)
+        if: env.KEYSTORE_BASE64 != ''
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          echo $KEYSTORE_BASE64 | base64 -d > my-keystore.jks
+          jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
+            -keystore my-keystore.jks -storepass $KEYSTORE_PASSWORD -keypass $KEY_PASSWORD \
+            ${{ env.PROJECT_LOCATION }}/${{ env.MODULE }}/build/outputs/apk/qaRelease/app-qa-release-unsigned.apk \
+            $KEY_ALIAS
+
+      - name: 🚀 Upload to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: 1:238622179168:android:24853bdfaec1206d776805
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: qa-testers
+          releaseNotes: ${{ github.event.head_commit.message }}
+          file: ${{ env.PROJECT_LOCATION }}/${{ env.MODULE }}/build/outputs/apk/qaRelease/app-qa-release.apk
+
+  run_tests:
+    name: 🧪 Run Tests
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_LOCATION: .
+      MODULE: app
+      VARIANT: qaDebug
+
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v4
+
+      - name: ☕ Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: 🛠️ Make Gradle executable
+        run: chmod +x ${{ env.PROJECT_LOCATION }}/gradlew
+
+      - name: 🧪 Run Unit Tests
+        run: ./gradlew :${{ env.MODULE }}:test${{ env.VARIANT }}UnitTest
+
+      - name: 📤 Upload Test Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-report
+          path: ${{ env.PROJECT_LOCATION }}/${{ env.MODULE }}/build/reports/tests/

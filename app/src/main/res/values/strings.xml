@@ -1,7 +1,16 @@
 <resources>
     <string name="app_name">Phrasal Verbs Hero</string>
 
+    <!-- General -->
+    <string name="airplane_mode_on">Airplane mode on ✈️</string>
+    <string name="airplane_mode_off">Airplane mode off 📶</string>
+
     <!-- Home View -->
     <string name="app_bar_title_home_view">Phrasal Verbs Hero</string>
+
+    <!-- Phrasal Verbs Screen -->
+    <string name="pv_screen_title">Phrasal Verbs with </string>
+    <string name="pv_button_practice">Practice</string>
+    <string name="pv_button_quiz">Quiz</string>
 
 </resources>

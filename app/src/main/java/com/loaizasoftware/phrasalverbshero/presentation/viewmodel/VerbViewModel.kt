@@ -1,47 +1,86 @@
 package com.loaizasoftware.phrasalverbshero.presentation.viewmodel
 
-import android.util.Log
+import android.annotation.SuppressLint
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.loaizasoftware.phrasalverbshero.data.local.DummyData
+import com.loaizasoftware.phrasalverbshero.core.None
 import com.loaizasoftware.phrasalverbshero.domain.model.Verb
 import com.loaizasoftware.phrasalverbshero.domain.usecase.GetVerbsUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
+import javax.inject.Inject
 
-class VerbViewModel(private val getVerbsUseCase: GetVerbsUseCase? = null) : ViewModel() {
+@HiltViewModel
+open class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVerbsUseCase) :
+    BaseViewModel() {
 
-    private val _error = MutableLiveData<String>()
-    val error: LiveData<String> = _error
+    private val _verbsState = mutableStateOf(emptyList<Verb>())
+    val verbsState: MutableState<List<Verb>> = _verbsState
 
-    val verbsState = mutableStateOf(emptyList<Verb>())
-
-    init {
-        if(getVerbsUseCase == null) {
-            verbsState.value = DummyData.getVerbs()
-        }
+    fun loadVerbs() {
+        //loadVerbsUsingRxJava()
+        loadVerbsUsingRetrofit()
     }
 
-    fun fetchVerbs() {
+    @SuppressLint("CheckResult")
+    private fun loadVerbsUsingRxJava() {
 
-        getVerbsUseCase?.execute()?.enqueue(object : Callback<List<Verb>> {
+        //Get verbs from API using RxJava
+        getVerbsUseCase.run(None())
+            .subscribeOn(Schedulers.io()) // Perform network operation on IO thread
+            .observeOn(AndroidSchedulers.mainThread()) // Update UI on main thread
+            .doOnSubscribe{
+                isLoading.value = true
+            }
+            .doFinally {
+                isLoading.value = false
+            }
+            .subscribe({
+                verbsState.value = it
+            }, {
+                //error.value = it
+                sendEvent("Error: ${it.message}")
+                Timber.e(it.cause)
+            })
+
+    }
+
+    private fun loadVerbsUsingRetrofit() {
+
+        //Get verbs from API using Retrofit
+        getVerbsUseCase.execute().enqueue(object : Callback<List<Verb>> {
+
+            init {
+                isLoading.value = true
+            }
+
             override fun onResponse(call: Call<List<Verb>>, response: Response<List<Verb>>) {
+
+                isLoading.value = false
 
                 if (response.isSuccessful) {
                     verbsState.value = response.body() ?: emptyList()
-                    Log.v("MyTAG", "${response.body()}")
                 } else {
-                    _error.value = "Error: ${response.code()}"
+                    sendEvent("Error: ${response.code()}")
                 }
             }
 
             override fun onFailure(call: Call<List<Verb>>, t: Throwable) {
-                _error.value = "Network error: ${t.message}"
+                isLoading.value = true
+                sendEvent("Error: ${t.message}")
             }
 
         })
+
     }
+
+    fun getVerbById(verbId: Long): Verb? {
+        return verbsState.value.find { it.id == verbId }
+    }
+
 }

@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "PhrasalVerbsHero"
 include(":app")
- 
+include(":core")
+include(":core_ui")
