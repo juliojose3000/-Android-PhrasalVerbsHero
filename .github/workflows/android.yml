@@ -55,6 +55,13 @@ jobs:
             ${{ env.PROJECT_LOCATION }}/${{ env.MODULE }}/build/outputs/apk/qa/release/app-qa-release-unsigned.apk \
             $KEY_ALIAS
 
+      # zipalign optimizes the APK for memory efficiency on the device. Before uploading to Firebase (or publishing), APK must be signed and zipaligned ✅.
+      - name: 📦 Zipalign APK
+        run: |
+          # Create a new aligned APK
+          zipalign -v -p 4 ${{ env.PROJECT_LOCATION }}/${{ env.MODULE }}/build/outputs/apk/qa/release/app-qa-release-unsigned.apk app-qa-release-signed-aligned.apk
+
+
       - name: 🚀 Upload to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
@@ -62,7 +69,7 @@ jobs:
           token: ${{ secrets.FIREBASE_TOKEN }}
           groups: development
           releaseNotes: ${{ github.event.head_commit.message }}
-          file: ${{ env.PROJECT_LOCATION }}/${{ env.MODULE }}/build/outputs/apk/qa/release/app-qa-release-unsigned.apk
+          file: ${{ env.PROJECT_LOCATION }}/${{ env.MODULE }}/build/outputs/apk/qa/release/app-qa-release-signed-aligned.apk
 
   run_tests:
     name: 🧪 Run Tests
