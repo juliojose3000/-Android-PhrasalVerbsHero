@@ -60,8 +60,7 @@ jobs:
         run: |
           ZIPALIGN_PATH=$(find /usr/local/lib/android/sdk/build-tools -name zipalign | sort | tail -n 1)
           echo "Using zipalign from: $ZIPALIGN_PATH"
-          $ZIPALIGN_PATH -v -p 4 ./app/build/outputs/apk/qa/release/app-qa-release-unsigned.apk app-qa-release-signed-aligned.apk
-
+          $ZIPALIGN_PATH -v -p 4 ./app/build/outputs/apk/qa/release/app-qa-release-unsigned.apk ./app/build/outputs/apk/qa/release/app-qa-release-signed-aligned.apk
 
 
       - name: 🚀 Upload to Firebase App Distribution
