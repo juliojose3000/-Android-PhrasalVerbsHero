@@ -55,11 +55,13 @@ jobs:
             ${{ env.PROJECT_LOCATION }}/${{ env.MODULE }}/build/outputs/apk/qa/release/app-qa-release-unsigned.apk \
             $KEY_ALIAS
 
-      # zipalign optimizes the APK for memory efficiency on the device. Before uploading to Firebase (or publishing), APK must be signed and zipaligned ✅.
-      - name: 📦 Zipalign APK
+      # This step optimizes the APK for memory efficiency on the device. Before uploading to Firebase (or publishing), APK must be signed and zipaligned ✅.
+      - name: 📦 Align APK
         run: |
-          # Create a new aligned APK
-          zipalign -v -p 4 ${{ env.PROJECT_LOCATION }}/${{ env.MODULE }}/build/outputs/apk/qa/release/app-qa-release-unsigned.apk app-qa-release-signed-aligned.apk
+          ZIPALIGN_PATH=$(find /usr/local/lib/android/sdk/build-tools -name zipalign | sort | tail -n 1)
+          echo "Using zipalign from: $ZIPALIGN_PATH"
+          $ZIPALIGN_PATH -v -p 4 ./app/build/outputs/apk/qa/release/app-qa-release-unsigned.apk app-qa-release-signed-aligned.apk
+
 
 
       - name: 🚀 Upload to Firebase App Distribution
