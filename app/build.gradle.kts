@@ -22,8 +22,8 @@ android {
         applicationId = "com.loaizasoftware.phrasalverbshero"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1 //This is set by the CI/CD tool, Bitrise
-        versionName = "1.0"
+        versionCode = project.findProperty("versionCode")?.toString()?.toInt() ?: 1 //This is set by the CI/CD tool, Bitrise / Actions
+        versionName = project.findProperty("versionName")?.toString() ?: "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

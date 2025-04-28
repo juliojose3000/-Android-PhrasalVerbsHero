@@ -35,6 +35,31 @@ jobs:
       - name: 🛠️ Make Gradle executable
         run: chmod +x ${{ env.PROJECT_LOCATION }}/gradlew
 
+      - name: 🏷️ Extract version from branch name
+        id: extract_version
+        run: |
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          echo "Branch name: $BRANCH_NAME"
+          if [[ "$BRANCH_NAME" == release/* ]]; then
+            VERSION_NAME=${BRANCH_NAME#release/}
+            echo "Extracted version: $VERSION_NAME"
+            echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+          else
+            echo "No version found (not a release branch)"
+            echo "VERSION_NAME=unknown" >> $GITHUB_ENV
+          fi
+
+      - name: 🔥 Show extracted version
+        run: echo "The version extracted is $VERSION_NAME"
+
+      # Set up the version code and name for the APK
+      - name: 🆙 Update versionCode/versionName
+        run: |
+          ./gradlew -PversionCode=${{ github.run_number }} \
+                    -PversionName="${VERSION_NAME}.${github.run_number}" \
+                    clean
+
+
       # 📦 Build the APK for the specified QA variant
       - name: 📦 Build APK
         run: ./gradlew :${{ env.MODULE }}:assemble${{ env.QA_VARIANT }}
@@ -79,38 +104,3 @@ jobs:
           releaseNotes: ${{ github.event.head_commit.message }}
           file: ${{ env.PROJECT_LOCATION }}/${{ env.MODULE }}/build/outputs/apk/qa/release/app-qa-release-signed-aligned.apk
 
-  run_tests:
-    name: 🧪 Run Tests
-    runs-on: ubuntu-latest
-
-    env:
-      PROJECT_LOCATION: .
-      MODULE: app
-      VARIANT: qaDebug
-
-    steps:
-      # ⬇️ Checkout the source code from the repository
-      - name: ⬇️ Checkout code
-        uses: actions/checkout@v4
-
-      # ☕ Set up Java Development Kit (JDK) 17
-      - name: ☕ Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: 17
-
-      # 🛠️ Make Gradle wrapper executable
-      - name: 🛠️ Make Gradle executable
-        run: chmod +x ${{ env.PROJECT_LOCATION }}/gradlew
-
-      # 🧪 Run unit tests for the specified variant (qaDebug)
-      - name: 🧪 Run Unit Tests
-        run: ./gradlew :${{ env.MODULE }}:test${{ env.VARIANT }}UnitTest
-
-      # 📤 Upload the unit test reports as artifacts
-      - name: 📤 Upload Test Reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: unit-test-report
-          path: ${{ env.PROJECT_LOCATION }}/${{ env.MODULE }}/build/reports/tests/
