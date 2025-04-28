@@ -56,7 +56,7 @@ jobs:
       - name: 🆙 Update versionCode/versionName
         run: |
           ./gradlew -PversionCode=${{ github.run_number }} \
-                    -PversionName="${VERSION_NAME}.${github.run_number}" \
+                    -PversionName="${{VERSION_NAME}}.${{github.run_number}}" \
                     clean
 
 
