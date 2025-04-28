@@ -52,23 +52,19 @@ jobs:
       - name: 🔥 Show extracted version
         run: echo "The version extracted is $VERSION_NAME"
 
-      # Set up the version code and name for the APK
-      - name: 🆙 Update versionCode/versionName
+      # ✅ Build the APK with the specified QA variant
+      - name: 🔥 Build APK with version info
         run: |
-          
           echo "GITHUB_RUN_NUMBER: $GITHUB_RUN_NUMBER"
           echo "VERSION_NAME: $VERSION_NAME"
           
           FINAL_VERSION_NAME="${VERSION_NAME}.${GITHUB_RUN_NUMBER}"
+          echo "FINAL_VERSION_NAME=$FINAL_VERSION_NAME" >> $GITHUB_ENV
           
-          ./gradlew -PversionCode=$GITHUB_RUN_NUMBER \
-                    -PversionName=$FINAL_VERSION_NAME \
-                    clean
-
-
-      # 📦 Build the APK for the specified QA variant
-      - name: 📦 Build APK
-        run: ./gradlew :${{ env.MODULE }}:assemble${{ env.QA_VARIANT }}
+          ./gradlew clean
+          ./gradlew :${{ env.MODULE }}:assemble${{ env.QA_VARIANT }} \
+            -PversionCode=$GITHUB_RUN_NUMBER \
+            -PversionName=$FINAL_VERSION_NAME
 
       # ✅ Run Android Lint checks for code quality
       - name: ✅ Run Lint
