@@ -20,27 +20,34 @@ jobs:
       QA_VARIANT: qaRelease
 
     steps:
+      # ⬇️ Checkout the source code from the repository
       - name: ⬇️ Checkout code
         uses: actions/checkout@v4
 
+      # ☕ Set up Java Development Kit (JDK) 17 for building the Android app
       - name: ☕ Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: 17
 
+      # 🛠️ Give Gradle permission to execute (important for Linux runners)
       - name: 🛠️ Make Gradle executable
         run: chmod +x ${{ env.PROJECT_LOCATION }}/gradlew
 
+      # 📦 Build the APK for the specified QA variant
       - name: 📦 Build APK
         run: ./gradlew :${{ env.MODULE }}:assemble${{ env.QA_VARIANT }}
 
+      # ✅ Run Android Lint checks for code quality
       - name: ✅ Run Lint
         run: ./gradlew lint${{ env.QA_VARIANT }}
 
+      # 🧪 Run unit tests for the specified QA variant
       - name: 🧪 Run Unit Tests
         run: ./gradlew :${{ env.MODULE }}:test${{ env.QA_VARIANT }}UnitTest
 
+      # 🔏 Decode the base64-encoded keystore and sign the unsigned APK
       - name: 🔏 Sign APK (if needed)
         if: env.KEYSTORE_BASE64 != ''
         env:
@@ -55,14 +62,14 @@ jobs:
             ${{ env.PROJECT_LOCATION }}/${{ env.MODULE }}/build/outputs/apk/qa/release/app-qa-release-unsigned.apk \
             $KEY_ALIAS
 
-      # This step optimizes the APK for memory efficiency on the device. Before uploading to Firebase (or publishing), APK must be signed and zipaligned ✅.
+      # 📦 Align the APK using zipalign to optimize it for memory efficiency and upload compatibility
       - name: 📦 Align APK
         run: |
           ZIPALIGN_PATH=$(find /usr/local/lib/android/sdk/build-tools -name zipalign | sort | tail -n 1)
           echo "Using zipalign from: $ZIPALIGN_PATH"
           $ZIPALIGN_PATH -v -p 4 ./app/build/outputs/apk/qa/release/app-qa-release-unsigned.apk ./app/build/outputs/apk/qa/release/app-qa-release-signed-aligned.apk
 
-
+      # 🚀 Upload the final APK to Firebase App Distribution for internal testing
       - name: 🚀 Upload to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
@@ -75,27 +82,33 @@ jobs:
   run_tests:
     name: 🧪 Run Tests
     runs-on: ubuntu-latest
+
     env:
       PROJECT_LOCATION: .
       MODULE: app
       VARIANT: qaDebug
 
     steps:
+      # ⬇️ Checkout the source code from the repository
       - name: ⬇️ Checkout code
         uses: actions/checkout@v4
 
+      # ☕ Set up Java Development Kit (JDK) 17
       - name: ☕ Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: 17
 
+      # 🛠️ Make Gradle wrapper executable
       - name: 🛠️ Make Gradle executable
         run: chmod +x ${{ env.PROJECT_LOCATION }}/gradlew
 
+      # 🧪 Run unit tests for the specified variant (qaDebug)
       - name: 🧪 Run Unit Tests
         run: ./gradlew :${{ env.MODULE }}:test${{ env.VARIANT }}UnitTest
 
+      # 📤 Upload the unit test reports as artifacts
       - name: 📤 Upload Test Reports
         uses: actions/upload-artifact@v4
         with:
