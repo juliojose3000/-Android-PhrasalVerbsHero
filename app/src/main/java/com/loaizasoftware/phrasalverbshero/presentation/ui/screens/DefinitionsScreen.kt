@@ -70,7 +70,7 @@ fun DefinitionsScreen(
         }
     ) { contentPadding ->
 
-        if (viewModel.isLoading.value) {
+        if (viewModel.isLoadingMeanings.value) {
             LoadingIndicator()
         } else {
             DefinitionCard(

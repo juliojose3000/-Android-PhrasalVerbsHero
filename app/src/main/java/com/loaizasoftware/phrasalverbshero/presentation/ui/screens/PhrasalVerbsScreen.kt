@@ -52,7 +52,7 @@ fun PhrasalVerbsScreen(
                 .padding(contentPadding),
             verticalArrangement = Arrangement.SpaceBetween // ✅ Ensures the buttons stay at the bottom
         ) {
-            if (viewModel.isLoading.value) {
+            if (viewModel.isLoadingPhrasalVerbs.value) {
                 LoadingIndicator()
             } else {
                 LazyVerticalGrid(
@@ -68,7 +68,6 @@ fun PhrasalVerbsScreen(
                     }
                 }
 
-                // ✅ Buttons Row (Now Visible!)
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()

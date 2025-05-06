@@ -22,6 +22,11 @@ open class PhrasalVerbsViewModel
 
     val phrasalVerbsState = mutableStateOf(emptyList<PhrasalVerb>())
     val phrasalVerbMeanings = mutableStateOf(emptyList<Meaning>())
+    var selectedPhrasalVerb: PhrasalVerb? = null
+    var selectedVerbId: Long? = null
+
+    val isLoadingPhrasalVerbs = mutableStateOf(false)
+    val isLoadingMeanings = mutableStateOf(false)
 
     fun loadPhrasalVerbs(verbId: Long) {
         //loadPhrasalVerbsNormal(verbId)
@@ -52,18 +57,20 @@ open class PhrasalVerbsViewModel
     @SuppressLint("CheckResult")
     fun loadPhrasalVerbsSafely(verbId: Long) {
 
+        selectedVerbId = verbId
+
         getPhrasalVerbsUseCase.get(verbId)
             .subscribeOn(Schedulers.io()) // Perform network operation on IO thread
             .observeOn(AndroidSchedulers.mainThread()) // Update UI on main thread
             .doOnSubscribe{
-                isLoading.value = true
+                isLoadingPhrasalVerbs.value = true
             }
             .doFinally {
-                isLoading.value = false
+                isLoadingPhrasalVerbs.value = false
             }
             .subscribe({ result ->
 
-                when(result) {
+                when (result) {
                     is ApiResult.Success -> phrasalVerbsState.value = result.data
                     is ApiResult.HttpError -> httpError.value = result
                     is ApiResult.NetworkError -> error.value = result.throwable
@@ -80,11 +87,13 @@ open class PhrasalVerbsViewModel
     @SuppressLint("CheckResult")
     fun loadPhrasalVerbMeanings(phrasalVerbId: Long) {
 
+        selectedPhrasalVerb = getPhrasalVerbById(phrasalVerbId)
+
         getMeaningsUseCase.run(phrasalVerbId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { isLoading.value = true }
-            .doFinally { isLoading.value = false }
+            .doOnSubscribe { isLoadingMeanings.value = true }
+            .doFinally { isLoadingMeanings.value = false }
             .subscribe({
                 phrasalVerbMeanings.value = it
             }, {

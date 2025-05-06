@@ -128,7 +128,11 @@ fun PhrasalVerbsApplication(verbViewModel: VerbViewModel, phrasalVerbsViewModel:
             //the composable. Use LaunchedEffect to ensure it's called only once when the composable
             //is first composed or when a specific key changes
             LaunchedEffect(key1 = true) {
-                verbViewModel.loadVerbs()
+
+                if(verbViewModel.verbsState.value.isEmpty()) {
+                    verbViewModel.loadVerbs()
+                }
+
             }
 
             VerbsScreen(verbViewModel, navController)
@@ -144,7 +148,11 @@ fun PhrasalVerbsApplication(verbViewModel: VerbViewModel, phrasalVerbsViewModel:
             //the composable. Use LaunchedEffect to ensure it's called only once when the composable
             //is first composed or when a specific key changes
             LaunchedEffect(key1 = verbId) {
-                phrasalVerbsViewModel.loadPhrasalVerbs(verbId)
+
+                if(phrasalVerbsViewModel.selectedVerbId != verbId) {
+                    phrasalVerbsViewModel.loadPhrasalVerbs(verbId)
+                }
+
             }
 
             PhrasalVerbsScreen(phrasalVerbsViewModel, verbName, navController) { stringId ->
@@ -163,7 +171,11 @@ fun PhrasalVerbsApplication(verbViewModel: VerbViewModel, phrasalVerbsViewModel:
             //the composable. Use LaunchedEffect to ensure it's called only once when the composable
             //is first composed or when a specific key changes
             LaunchedEffect(key1 = phrasalVerbId) {
-                phrasalVerbsViewModel.loadPhrasalVerbMeanings(phrasalVerb.id)
+
+                if(phrasalVerbsViewModel.selectedPhrasalVerb?.id != phrasalVerbId) {
+                    phrasalVerbsViewModel.loadPhrasalVerbMeanings(phrasalVerb.id)
+                }
+
             }
 
             DefinitionsScreen(phrasalVerbsViewModel, phrasalVerb, navController) { stringId ->
