@@ -2,6 +2,7 @@ package com.loaizasoftware.phrasalverbshero.presentation.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,6 +25,7 @@ import com.loaizasoftware.phrasalverbshero.R
 import com.loaizasoftware.core_ui.general.AppBar
 import com.loaizasoftware.core_ui.general.LoadingIndicator
 import com.loaizasoftware.core_ui.general.PHButton
+import com.loaizasoftware.core_ui.composables.ContainerWithAnim
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.PhrasalVerbsViewModel
 
 @Composable
@@ -46,43 +48,66 @@ fun PhrasalVerbsScreen(
         }
     ) { contentPadding ->
 
+        LoadingIndicator(isVisible = viewModel.isLoadingPhrasalVerbs.value)
+
+        if (!viewModel.isLoadingPhrasalVerbs.value) {
+            PhrasalVerbCards(contentPadding, viewModel, navHostController, getString)
+        }
+
+    }
+
+
+}
+
+
+@Composable
+fun PhrasalVerbCards(
+    contentPadding: PaddingValues,
+    viewModel: PhrasalVerbsViewModel,
+    navHostController: NavHostController,
+    getString: (Int) -> String
+) {
+
+    ContainerWithAnim {
+
         Column(
             modifier = Modifier
                 .fillMaxSize() // ✅ Fix: Use fillMaxSize() instead of fillMaxHeight()
                 .padding(contentPadding),
             verticalArrangement = Arrangement.SpaceBetween // ✅ Ensures the buttons stay at the bottom
         ) {
-            if (viewModel.isLoadingPhrasalVerbs.value) {
-                LoadingIndicator()
-            } else {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    modifier = Modifier
-                        .weight(1f) // ✅ Fix: Allows buttons to take remaining space
-                        .padding(top = 16.dp)
-                ) {
-                    items(viewModel.phrasalVerbsState.value) { phrasalVerb ->
-                        CardView(text = phrasalVerb.phrasalVerb, id = phrasalVerb.id) {
-                            navHostController.navigate("phrasal_verbs/${phrasalVerb.id}/meanings")
-                        }
-                    }
-                }
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    PHButton(text = getString(R.string.pv_button_practice)) {
-
-                    }
-                    Spacer(modifier = Modifier.width(16.dp))
-                    PHButton(text = getString(R.string.pv_button_quiz)) {
-
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = Modifier
+                    .weight(1f) // ✅ Fix: Allows buttons to take remaining space
+                    .padding(top = 16.dp)
+            ) {
+                items(viewModel.phrasalVerbsState.value) { phrasalVerb ->
+                    CardView(text = phrasalVerb.phrasalVerb, id = phrasalVerb.id) {
+                        navHostController.navigate("phrasal_verbs/${phrasalVerb.id}/meanings")
                     }
                 }
             }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                PHButton(text = getString(R.string.pv_button_practice)) {
+
+                }
+                Spacer(modifier = Modifier.width(16.dp))
+                PHButton(text = getString(R.string.pv_button_quiz)) {
+
+                }
+            }
+
         }
+
     }
+
 }
+

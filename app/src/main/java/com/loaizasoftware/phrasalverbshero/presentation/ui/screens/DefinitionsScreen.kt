@@ -46,6 +46,7 @@ import com.loaizasoftware.phrasalverbshero.R
 import com.loaizasoftware.phrasalverbshero.domain.model.Example
 import com.loaizasoftware.phrasalverbshero.domain.model.Meaning
 import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
+import com.loaizasoftware.core_ui.composables.ContainerWithAnim
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.PhrasalVerbsViewModel
 
 
@@ -70,10 +71,10 @@ fun DefinitionsScreen(
         }
     ) { contentPadding ->
 
-        if (viewModel.isLoadingMeanings.value) {
-            LoadingIndicator()
-        } else {
-            DefinitionCard(
+        LoadingIndicator(isVisible = viewModel.isLoadingMeanings.value)
+
+        if (!viewModel.isLoadingMeanings.value) {
+            DefinitionCards(
                 contentPadding = contentPadding,
                 meaningList = viewModel.phrasalVerbMeanings.value
             )
@@ -84,145 +85,154 @@ fun DefinitionsScreen(
 }
 
 @Composable
-fun DefinitionCard(
+fun DefinitionCards(
     contentPadding: PaddingValues,
     meaningList: List<Meaning>,
     isPreview: Boolean = false
 ) {
 
-    val pagerState = rememberPagerState(pageCount = {
-        meaningList.size
-    })
+    ContainerWithAnim {
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center
-    ) {
+        val pagerState = rememberPagerState(pageCount = {
+            meaningList.size
+        })
 
-        BoxWithConstraints(
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .background(color = Color.White)
-                .padding(contentPadding),
-            contentAlignment = Alignment.Center
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.Center
         ) {
 
-            HorizontalPager(
+            BoxWithConstraints(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .background(color = Color.White)
+                    .padding(contentPadding),
+                contentAlignment = Alignment.Center
+            ) {
+
+                HorizontalPager(
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     //.background(color = Color.LightGray),
-                state = pagerState,
-            ) { page ->
-                // Our page content
+                    state = pagerState,
+                ) { page ->
+                    // Our page content
 
-                val meaning = meaningList[page]
+                    val meaning = meaningList[page]
 
-                Card(
-                    Modifier
-                        .padding(32.dp)
-                        .height(maxHeight * 0.7f)
-                        .width(maxWidth * 1f),
-                    colors = CardDefaults.cardColors(
-                        containerColor = Color(Color.White.value)
-                    ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-                ) {
+                    Card(
+                        Modifier
+                            .padding(32.dp)
+                            .height(maxHeight * 0.75f)
+                            .width(maxWidth * 1f),
+                        colors = CardDefaults.cardColors(
+                            containerColor = Color(Color.White.value)
+                        ),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+                    ) {
 
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 32.dp, bottom = 16.dp)
-                            .background(Color.White),
-                        text = "Definition ${page + 1}",
-                        style = TextStyle(
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center
-                        )
-                    )
-
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
-                            .background(Color.White),
-                        text = meaning.meaning,
-                        style = TextStyle(
-                            fontSize = 16.sp,
-                            textAlign = TextAlign.Center
-                        )
-                    )
-
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 16.dp, bottom = 16.dp)
-                            .background(Color.White),
-                        text = "Example",
-                        style = TextStyle(
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center
-                        )
-                    )
-
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
-                            .background(Color.White),
-                        text = meaning.examples?.getOrNull(0)?.exampleText
-                            ?: "No example available",
-                        style = TextStyle(
-                            fontSize = 16.sp,
-                            textAlign = TextAlign.Center
-                        )
-                    )
-
-                    if (isPreview) {
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_launcher_background),
-                            contentDescription = "Preview Image",
-                            modifier = Modifier
-                                .height(250.dp)
-                                .width(250.dp)
-                                .padding(16.dp)
-                                .background(Color.White)
-                                .align(Alignment.CenterHorizontally)
-                        )
-                    } else {
-
-                        AsyncImage(
-                            model = meaning.examples?.getOrNull(0)?.imageUrl,
-                            contentDescription = "Image",
-                            contentScale = ContentScale.Crop, //To make the image fit inside the clip bounds
+                        Text(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 16.dp, bottom = 32.dp, start = 16.dp, end = 16.dp)
-                                .background(Color.White)
-                                .clip(RoundedCornerShape(16.dp)) //Rounded corners
+                                .padding(top = 32.dp, bottom = 16.dp)
+                                .background(Color.White),
+                            text = "Definition ${page + 1}",
+                            style = TextStyle(
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center
+                            )
                         )
-                    }
 
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
+                                .background(Color.White),
+                            text = meaning.meaning,
+                            style = TextStyle(
+                                fontSize = 16.sp,
+                                textAlign = TextAlign.Center
+                            )
+                        )
+
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 16.dp, bottom = 16.dp)
+                                .background(Color.White),
+                            text = "Example",
+                            style = TextStyle(
+                                fontSize = 24.sp,
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center
+                            )
+                        )
+
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
+                                .background(Color.White),
+                            text = meaning.examples?.getOrNull(0)?.exampleText
+                                ?: "No example available",
+                            style = TextStyle(
+                                fontSize = 16.sp,
+                                textAlign = TextAlign.Center
+                            )
+                        )
+
+                        if (isPreview) {
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_launcher_background),
+                                contentDescription = "Preview Image",
+                                modifier = Modifier
+                                    .height(250.dp)
+                                    .width(250.dp)
+                                    .padding(16.dp)
+                                    .background(Color.White)
+                                    .align(Alignment.CenterHorizontally)
+                            )
+                        } else {
+
+                            AsyncImage(
+                                model = meaning.examples?.getOrNull(0)?.imageUrl,
+                                contentDescription = "Image",
+                                contentScale = ContentScale.Crop, //To make the image fit inside the clip bounds
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(
+                                        top = 16.dp,
+                                        bottom = 32.dp,
+                                        start = 16.dp,
+                                        end = 16.dp
+                                    )
+                                    .background(Color.White)
+                                    .clip(RoundedCornerShape(16.dp)) //Rounded corners
+                            )
+                        }
+
+
+                    }
 
                 }
 
+
             }
 
+            if (meaningList.size > 1) {
 
-        }
+                DotsIndicator(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally),
+                    totalDots = meaningList.size,
+                    selectedIndex = pagerState.currentPage,
+                )
 
-        if(meaningList.size > 1) {
-
-            DotsIndicator(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally),
-                totalDots = meaningList.size,
-                selectedIndex = pagerState.currentPage,
-            )
+            }
 
         }
 
@@ -273,7 +283,7 @@ fun PreviewDefinitionsScreen() {
         ), Meaning(2L, "Meaning 2")
     )
 
-    DefinitionCard(
+    DefinitionCards(
         contentPadding = PaddingValues(0.dp),
         meaningList = meaningList,
         isPreview = true

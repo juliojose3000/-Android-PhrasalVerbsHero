@@ -19,6 +19,7 @@ import com.loaizasoftware.phrasalverbshero.R
 import com.loaizasoftware.core_ui.general.AppBar
 import com.loaizasoftware.core_ui.general.LoadingIndicator
 import com.loaizasoftware.core_ui.general.SearchBar
+import com.loaizasoftware.core_ui.composables.ContainerWithAnim
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
 
 @Composable
@@ -35,28 +36,36 @@ fun VerbsScreen(viewModel: VerbViewModel, navController: NavHostController) {
 
     }) { contentPadding ->
 
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(contentPadding)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(contentPadding)
         ) {
 
             SearchBar("", {}, {})
 
-            if (viewModel.isLoading.value) {
-                LoadingIndicator()
-            } else {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2), // Two columns
-                    modifier = Modifier.fillMaxSize()
-                ) {
+            LoadingIndicator(isVisible = viewModel.isLoading.value)
 
-                    items(viewModel.verbsState.value) { verb ->
-                        CardView(text = verb.name, id = verb.id) { verbId ->
-                            navController.navigate("phrasal_verbs/$verbId")
+            if (!viewModel.isLoading.value) {
+
+                ContainerWithAnim {
+
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2), // Two columns
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+
+                        items(viewModel.verbsState.value) { verb ->
+                            CardView(text = verb.name, id = verb.id) { verbId ->
+                                navController.navigate("phrasal_verbs/$verbId")
+                            }
                         }
                     }
+
                 }
+
             }
+
         }
 
     }

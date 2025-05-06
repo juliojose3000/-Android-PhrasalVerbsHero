@@ -94,6 +94,9 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
 
+    //Animations
+    implementation(libs.androidx.animation)
+
 
     // ----------------------------
     // 🌐 NETWORKING

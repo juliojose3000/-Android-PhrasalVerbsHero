@@ -23,8 +23,8 @@ open class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVer
     val verbsState: MutableState<List<Verb>> = _verbsState
 
     fun loadVerbs() {
-        //loadVerbsUsingRxJava()
-        loadVerbsUsingRetrofit()
+        loadVerbsUsingRxJava()
+        //loadVerbsUsingRetrofit()
     }
 
     @SuppressLint("CheckResult")
