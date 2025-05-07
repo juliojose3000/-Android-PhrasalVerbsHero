@@ -1,6 +1,7 @@
 package com.loaizasoftware.core_ui.base
 
 import android.app.AlertDialog
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import com.loaizasoftware.core_ui.R
 
@@ -36,6 +37,10 @@ open class BaseActivity : ComponentActivity() {
 
         alertDialog?.show()
 
+    }
+
+    fun showFunctionNotImplementedYetToast() {
+        Toast.makeText(this, R.string.function_not_implemented_yet, Toast.LENGTH_LONG).show()
     }
 
 

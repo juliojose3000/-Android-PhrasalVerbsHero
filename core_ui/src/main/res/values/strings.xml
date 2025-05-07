@@ -2,4 +2,6 @@
 <resources>
     <string name="error">Error</string>
     <string name="error_description">An unexpected error has happened, please try again later.</string>
+    <string name="function_not_implemented_yet">Not implemented yet. We are working on this!</string>
+    <string name="retry_button">Retry</string>
 </resources>

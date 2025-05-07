@@ -25,9 +25,9 @@ class ApiClient {
             .build()
 
         val client = OkHttpClient.Builder()
-            .connectTimeout(20, TimeUnit.SECONDS) // Connection timeout
-            .readTimeout(20, TimeUnit.SECONDS)    // Read timeout
-            .writeTimeout(20, TimeUnit.SECONDS)   // Write timeout
+            .connectTimeout(30, TimeUnit.SECONDS) // Connection timeout
+            .readTimeout(30, TimeUnit.SECONDS)    // Read timeout
+            .writeTimeout(30, TimeUnit.SECONDS)   // Write timeout
             .addInterceptor(ChuckerInterceptor(context)) // Add Chucker interceptor
             .build()
 

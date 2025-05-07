@@ -33,7 +33,9 @@ fun PhrasalVerbsScreen(
     viewModel: PhrasalVerbsViewModel,
     verb: String,
     navHostController: NavHostController,
-    getString: (Int) -> String
+    getString: (Int) -> String,
+    practiceBtnOnClick: () -> Unit,
+    quizBtnOnClick: () -> Unit
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -51,7 +53,16 @@ fun PhrasalVerbsScreen(
         LoadingIndicator(isVisible = viewModel.isLoadingPhrasalVerbs.value)
 
         if (!viewModel.isLoadingPhrasalVerbs.value) {
-            PhrasalVerbCards(contentPadding, viewModel, navHostController, getString)
+
+            PhrasalVerbCards(
+                contentPadding,
+                viewModel,
+                navHostController,
+                getString,
+                practiceBtnOnClick,
+                quizBtnOnClick
+            )
+
         }
 
     }
@@ -65,7 +76,9 @@ fun PhrasalVerbCards(
     contentPadding: PaddingValues,
     viewModel: PhrasalVerbsViewModel,
     navHostController: NavHostController,
-    getString: (Int) -> String
+    getString: (Int) -> String,
+    practiceBtnOnClick: () -> Unit,
+    quizBtnOnClick: () -> Unit
 ) {
 
     ContainerWithAnim {
@@ -97,11 +110,11 @@ fun PhrasalVerbCards(
                 horizontalArrangement = Arrangement.Center
             ) {
                 PHButton(text = getString(R.string.pv_button_practice)) {
-
+                    practiceBtnOnClick()
                 }
                 Spacer(modifier = Modifier.width(16.dp))
                 PHButton(text = getString(R.string.pv_button_quiz)) {
-
+                    quizBtnOnClick()
                 }
             }
 

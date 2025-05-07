@@ -21,6 +21,7 @@ open class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVer
 
     private val _verbsState = mutableStateOf(emptyList<Verb>())
     val verbsState: MutableState<List<Verb>> = _verbsState
+    val onErrorResponse: MutableState<String?> = mutableStateOf(null)
 
     fun loadVerbs() {
         loadVerbsUsingRxJava()
@@ -44,6 +45,7 @@ open class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVer
                 verbsState.value = it
             }, {
                 //error.value = it
+                onErrorResponse.value = it.message
                 sendEvent("Error: ${it.message}")
                 Timber.e(it.cause)
             })

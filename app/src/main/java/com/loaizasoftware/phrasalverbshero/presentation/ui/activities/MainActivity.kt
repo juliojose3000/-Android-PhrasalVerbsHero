@@ -155,10 +155,23 @@ fun PhrasalVerbsApplication(verbViewModel: VerbViewModel, phrasalVerbsViewModel:
 
             }
 
-            PhrasalVerbsScreen(phrasalVerbsViewModel, verbName, navController) { stringId ->
-                BaseActivity.getInstance().getString(stringId)
-            }
+            PhrasalVerbsScreen(
+                viewModel = phrasalVerbsViewModel,
+                verb = verbName,
+                navHostController = navController,
+                getString = { stringId ->
+                    BaseActivity.getInstance().getString(stringId)
+                },
+                practiceBtnOnClick = {
+                    BaseActivity.getInstance().showFunctionNotImplementedYetToast()
+                },
+                quizBtnOnClick = {
+                    BaseActivity.getInstance().showFunctionNotImplementedYetToast()
+                }
+            )
+
         }
+
 
         composable(route = "phrasal_verbs/{phrasalVerbId}/meanings", arguments = listOf(navArgument("phrasalVerbId") {
             type = NavType.LongType

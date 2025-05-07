@@ -20,6 +20,7 @@ import com.loaizasoftware.core_ui.general.AppBar
 import com.loaizasoftware.core_ui.general.LoadingIndicator
 import com.loaizasoftware.core_ui.general.SearchBar
 import com.loaizasoftware.core_ui.composables.ContainerWithAnim
+import com.loaizasoftware.core_ui.composables.RetryButton
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
 
 @Composable
@@ -46,7 +47,7 @@ fun VerbsScreen(viewModel: VerbViewModel, navController: NavHostController) {
 
             LoadingIndicator(isVisible = viewModel.isLoading.value)
 
-            if (!viewModel.isLoading.value) {
+            if (!viewModel.isLoading.value && viewModel.verbsState.value.isNotEmpty()) {
 
                 ContainerWithAnim {
 
@@ -63,6 +64,13 @@ fun VerbsScreen(viewModel: VerbViewModel, navController: NavHostController) {
                     }
 
                 }
+
+            } else if(viewModel.onErrorResponse.value != null) {
+
+                RetryButton(action = {
+                    viewModel.loadVerbs()
+                    viewModel.onErrorResponse.value = null
+                })
 
             }
 
