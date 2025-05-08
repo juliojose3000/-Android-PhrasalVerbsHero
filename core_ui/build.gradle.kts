@@ -58,4 +58,7 @@ dependencies {
     implementation(libs.androidx.monitor)
     implementation(libs.androidx.junit.ktx)
 
+    //Load Images
+    implementation(libs.coil.compose)
+
 }

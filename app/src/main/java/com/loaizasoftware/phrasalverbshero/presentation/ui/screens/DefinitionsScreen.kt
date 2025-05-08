@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
@@ -26,11 +25,10 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -39,15 +37,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
+import com.loaizasoftware.core_ui.composables.AsyncImageWithLoader
+import com.loaizasoftware.core_ui.composables.ContainerWithAnim
 import com.loaizasoftware.core_ui.general.AppBar
 import com.loaizasoftware.core_ui.general.LoadingIndicator
 import com.loaizasoftware.phrasalverbshero.R
 import com.loaizasoftware.phrasalverbshero.domain.model.Example
 import com.loaizasoftware.phrasalverbshero.domain.model.Meaning
 import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
-import com.loaizasoftware.core_ui.composables.ContainerWithAnim
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.PhrasalVerbsViewModel
+import com.loaizasoftware.phrasalverbshero.utils.FileUtils
 
 
 @Composable
@@ -126,7 +125,7 @@ fun DefinitionCards(
                     Card(
                         Modifier
                             .padding(32.dp)
-                            .height(maxHeight * 0.75f)
+                            .height(maxHeight * 0.65f)
                             .width(maxWidth * 1f),
                         colors = CardDefaults.cardColors(
                             containerColor = Color(Color.White.value)
@@ -198,21 +197,11 @@ fun DefinitionCards(
                             )
                         } else {
 
-                            AsyncImage(
-                                model = meaning.examples?.getOrNull(0)?.imageUrl,
-                                contentDescription = "Image",
-                                contentScale = ContentScale.Crop, //To make the image fit inside the clip bounds
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(
-                                        top = 16.dp,
-                                        bottom = 32.dp,
-                                        start = 16.dp,
-                                        end = 16.dp
-                                    )
-                                    .background(Color.White)
-                                    .clip(RoundedCornerShape(16.dp)) //Rounded corners
+                            PhrasalVerbImage(
+                                imageName = meaning.examples?.getOrNull(0)?.imageUrl
+                                    ?: "default_image"
                             )
+
                         }
 
 
@@ -235,6 +224,21 @@ fun DefinitionCards(
             }
 
         }
+
+    }
+
+}
+
+@Composable
+fun PhrasalVerbImage(imageName: String) {
+    val imageUrl = produceState<String?>(initialValue = null, imageName) {
+        value = FileUtils.getImageUrl(imageName)
+    }
+
+    Box(modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center) {
+
+        AsyncImageWithLoader(imageUrl = imageUrl.value ?: "")
 
     }
 

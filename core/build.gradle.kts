@@ -44,4 +44,8 @@ dependencies {
     //Networking
     implementation(libs.retrofit)
 
+    //Firebase Storage
+    implementation (libs.firebase.storage)
+
+
 }

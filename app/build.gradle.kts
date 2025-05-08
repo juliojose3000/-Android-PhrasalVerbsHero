@@ -135,11 +135,6 @@ dependencies {
     implementation(libs.hilt.android) // Replace with the latest version
     implementation(libs.androidx.hilt.navigation.compose) // If you are using ViewModels
 
-    // ----------------------------
-    // IMAGES
-    // ----------------------------
-    implementation(libs.coil.compose)
-
 
     // ----------------------------
     // 📈 LOGGING & ANALYTICS

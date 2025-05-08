@@ -12,6 +12,7 @@ coreTesting = "2.2.0"
 dagger = "2.48.1"
 espressoCoreVersion = "3.5.1"
 firebaseBom = "33.10.0"
+firebaseStorage = "21.0.1"
 hiltAndroid = "2.51.1"
 hiltCompiler = "2.51.1"
 hiltNavigationCompose = "1.2.0"
@@ -79,6 +80,7 @@ dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = 
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
+firebase-storage = { module = "com.google.firebase:firebase-storage", version.ref = "firebaseStorage" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompiler" }
 jetbrains-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
