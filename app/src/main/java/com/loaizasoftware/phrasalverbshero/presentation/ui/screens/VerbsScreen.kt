@@ -43,11 +43,19 @@ fun VerbsScreen(viewModel: VerbViewModel, navController: NavHostController) {
                 .padding(contentPadding)
         ) {
 
-            SearchBar("", {}, {})
+            SearchBar(
+                query = viewModel.searchVerb.value,
+                onQueryChange = {
+                    viewModel.searchVerbs(it)
+                },
+                onClear = {
+                    viewModel.searchVerbs("")
+                }
+            )
 
             LoadingIndicator(isVisible = viewModel.isLoading.value)
 
-            if (!viewModel.isLoading.value && viewModel.verbsState.value.isNotEmpty()) {
+            if (!viewModel.isLoading.value && viewModel.filteredVerbs.value.isNotEmpty()) {
 
                 ContainerWithAnim {
 
@@ -56,7 +64,7 @@ fun VerbsScreen(viewModel: VerbViewModel, navController: NavHostController) {
                         modifier = Modifier.fillMaxSize()
                     ) {
 
-                        items(viewModel.verbsState.value) { verb ->
+                        items(viewModel.filteredVerbs.value) { verb ->
                             CardView(text = verb.name, id = verb.id) { verbId ->
                                 navController.navigate("phrasal_verbs/$verbId")
                             }

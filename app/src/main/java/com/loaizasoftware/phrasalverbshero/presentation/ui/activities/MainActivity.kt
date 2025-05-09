@@ -129,7 +129,7 @@ fun PhrasalVerbsApplication(verbViewModel: VerbViewModel, phrasalVerbsViewModel:
             //is first composed or when a specific key changes
             LaunchedEffect(key1 = true) {
 
-                if(verbViewModel.verbsState.value.isEmpty()) {
+                if(verbViewModel.filteredVerbs.value.isEmpty()) {
                     verbViewModel.loadVerbs()
                 }
 

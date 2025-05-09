@@ -20,8 +20,12 @@ open class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVer
     BaseViewModel() {
 
     private val _verbsState = mutableStateOf(emptyList<Verb>())
-    val verbsState: MutableState<List<Verb>> = _verbsState
+    private val _filteredVerbs = mutableStateOf(emptyList<Verb>())
+
+    val filteredVerbs: MutableState<List<Verb>> = _filteredVerbs
+
     val onErrorResponse: MutableState<String?> = mutableStateOf(null)
+    val searchVerb: MutableState<String> = mutableStateOf("")
 
     fun loadVerbs() {
         loadVerbsUsingRxJava()
@@ -42,7 +46,8 @@ open class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVer
                 isLoading.value = false
             }
             .subscribe({
-                verbsState.value = it
+                _verbsState.value = it
+                filteredVerbs.value = it
             }, {
                 //error.value = it
                 onErrorResponse.value = it.message
@@ -66,7 +71,7 @@ open class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVer
                 isLoading.value = false
 
                 if (response.isSuccessful) {
-                    verbsState.value = response.body() ?: emptyList()
+                    _verbsState.value = response.body() ?: emptyList()
                 } else {
                     sendEvent("Error: ${response.code()}")
                 }
@@ -82,7 +87,12 @@ open class VerbViewModel @Inject constructor(private val getVerbsUseCase: GetVer
     }
 
     fun getVerbById(verbId: Long): Verb? {
-        return verbsState.value.find { it.id == verbId }
+        return filteredVerbs.value.find { it.id == verbId }
+    }
+
+    fun searchVerbs(searchedVerb: String) {
+        searchVerb.value = searchedVerb
+        filteredVerbs.value = _verbsState.value.filter { it.name.contains(searchedVerb, ignoreCase = true) }
     }
 
 }
