@@ -1,6 +1,6 @@
 package com.loaizasoftware.core_ui.general
 
-import android.widget.Button
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -16,16 +16,16 @@ import androidx.compose.ui.unit.dp
 import com.loaizasoftware.core_ui.theme.Pink80
 
 @Composable
-fun PHButton(text: String, onClick: () -> Unit) {
+fun PHButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
 
     return Button(
         colors = ButtonDefaults.buttonColors(
             containerColor = Pink80, // ✅ Background color
             contentColor = Color.Black    // ✅ Text color
         ),
-        modifier = Modifier.padding(vertical = 16.dp, horizontal = 16.dp),
+        modifier = modifier,
         onClick = { onClick() },
-        shape = RoundedCornerShape(8.dp) // ✅ Adjust the roundness
+        shape = RoundedCornerShape(40.dp) // ✅ Adjust the roundness
     ) {
         Text(
             modifier = Modifier
@@ -41,5 +41,6 @@ fun PHButton(text: String, onClick: () -> Unit) {
 @Preview
 @Composable
 fun PHButtonPreview() {
-    PHButton(text = "Practice", onClick = {})
+    val modifier = Modifier.fillMaxWidth(0.5f)
+    PHButton(text = "Practice", modifier = modifier, onClick = {})
 }

@@ -14,12 +14,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.loaizasoftware.core_ui.theme.Purple80
 
 
 @Composable
-fun CardView(text: String, id: Long, onClick: (id: Long) -> Unit = {}) {
+fun CardView(text: String, id: Long, paddingBottom: Dp = 16.dp, onClick: (id: Long) -> Unit = {}) {
 
     val cardSize = 100.dp
 
@@ -27,7 +28,7 @@ fun CardView(text: String, id: Long, onClick: (id: Long) -> Unit = {}) {
         elevation = CardDefaults.elevatedCardElevation(4.dp),
         colors = CardDefaults.cardColors(containerColor = Purple80),
         modifier = Modifier
-            .padding(16.dp)
+            .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = paddingBottom)
             .width(cardSize)
             .height(cardSize),
         onClick = { onClick(id) }

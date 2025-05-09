@@ -2,6 +2,7 @@ package com.loaizasoftware.core_ui.composables
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,9 +20,14 @@ fun RetryButton(action: () -> Unit) {
         contentAlignment = Alignment.Center
     ) {
 
-        PHButton(text = LocalContext.current.getString(R.string.retry_button), onClick = {
-            action()
-        })
+        val modifier = Modifier.fillMaxWidth()
+
+        PHButton(
+            text = LocalContext.current.getString(R.string.retry_button),
+            modifier = modifier,
+            onClick = {
+                action()
+            })
 
     }
 

@@ -43,37 +43,42 @@ fun VerbsScreen(viewModel: VerbViewModel, navController: NavHostController) {
                 .padding(contentPadding)
         ) {
 
-            SearchBar(
-                query = viewModel.searchVerb.value,
-                onQueryChange = {
-                    viewModel.searchVerbs(it)
-                },
-                onClear = {
-                    viewModel.searchVerbs("")
-                }
-            )
-
             LoadingIndicator(isVisible = viewModel.isLoading.value)
 
             if (!viewModel.isLoading.value && viewModel.filteredVerbs.value.isNotEmpty()) {
 
                 ContainerWithAnim {
 
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(2), // Two columns
-                        modifier = Modifier.fillMaxSize()
-                    ) {
+                    Column {
 
-                        items(viewModel.filteredVerbs.value) { verb ->
-                            CardView(text = verb.name, id = verb.id) { verbId ->
-                                navController.navigate("phrasal_verbs/$verbId")
+                        SearchBar(
+                            query = viewModel.searchVerb.value,
+                            onQueryChange = {
+                                viewModel.searchVerbs(it)
+                            },
+                            onClear = {
+                                viewModel.searchVerbs("")
+                            }
+                        )
+
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(2), // Two columns
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+
+                            items(viewModel.filteredVerbs.value) { verb ->
+                                CardView(text = verb.name, id = verb.id) { verbId ->
+                                    navController.navigate("phrasal_verbs/$verbId")
+                                }
                             }
                         }
+
+
                     }
 
                 }
 
-            } else if(viewModel.onErrorResponse.value != null) {
+            } else if (viewModel.onErrorResponse.value != null) {
 
                 RetryButton(action = {
                     viewModel.loadVerbs()
