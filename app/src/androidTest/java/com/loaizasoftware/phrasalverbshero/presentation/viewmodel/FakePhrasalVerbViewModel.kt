@@ -1,16 +1,16 @@
 package com.loaizasoftware.phrasalverbshero.presentation.viewmodel
 
 import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
-import com.loaizasoftware.phrasalverbshero.domain.usecase.FakeGetMeaningsUseCase
+import com.loaizasoftware.phrasalverbshero.domain.usecase.FakeGetDefinitionsUseCase
 import com.loaizasoftware.phrasalverbshero.domain.usecase.FakeGetPhrasalVerbsUseCase
 
 
-class FakePhrasalVerbViewModel : PhrasalVerbsViewModel(FakeGetPhrasalVerbsUseCase(), FakeGetMeaningsUseCase()) {
+class FakePhrasalVerbViewModel : PhrasalVerbsViewModel(FakeGetPhrasalVerbsUseCase(), FakeGetDefinitionsUseCase()) {
     init {
         isLoading.value = false
         phrasalVerbsState.value = listOf(
-            PhrasalVerb(id = 1L, phrasalVerb = "Go off", meanings = emptyList()),
-            PhrasalVerb(id = 2L, phrasalVerb = "Go on", meanings = emptyList())
+            PhrasalVerb(id = 1L, phrasalVerb = "Go off", definitions = emptyList()),
+            PhrasalVerb(id = 2L, phrasalVerb = "Go on", definitions = emptyList())
         )
     }
 }

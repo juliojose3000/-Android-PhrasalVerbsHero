@@ -18,7 +18,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.loaizasoftware.phrasalverbshero.core.None
 import com.loaizasoftware.phrasalverbshero.data.api.ApiService
 import com.loaizasoftware.phrasalverbshero.data.repository.VerbRepositoryImpl
-import com.loaizasoftware.phrasalverbshero.domain.model.Meaning
+import com.loaizasoftware.phrasalverbshero.domain.model.Definition
 import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
 import com.loaizasoftware.phrasalverbshero.domain.model.Verb
 import com.loaizasoftware.phrasalverbshero.domain.usecase.GetVerbsUseCase
@@ -102,7 +102,7 @@ class FakeApiService : ApiService {
         throw UnsupportedOperationException("Not used in this test")
     }
 
-    override fun getPhrasalVerbMeanings(phrasalVerbId: Long): Single<List<Meaning>> {
+    override fun getPhrasalVerbDefinitions(phrasalVerbId: Long): Single<List<Definition>> {
         throw UnsupportedOperationException("Not used in this test")
     }
 }
@@ -118,7 +118,7 @@ class FakeGetVerbsUseCase : GetVerbsUseCase(FakeVerbRepositoryImpl()) {
 class FakeVerbViewModel : VerbViewModel(FakeGetVerbsUseCase()) {
     init {
         isLoading.value = false
-        verbsState.value = listOf(
+        filteredVerbs.value = listOf(
             Verb(id = 1L, name = "Go", phrasalVerbs = emptyList()),
             Verb(id = 2L, name = "Come", phrasalVerbs = emptyList())
         )

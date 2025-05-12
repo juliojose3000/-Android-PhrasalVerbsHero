@@ -1,7 +1,7 @@
 package com.loaizasoftware.phrasalverbshero.domain.model
 
-data class Meaning(
+data class Definition(
     val id: Long,
-    val meaning: String,
+    val definition: String,
     val examples: List<Example>? = null
 )

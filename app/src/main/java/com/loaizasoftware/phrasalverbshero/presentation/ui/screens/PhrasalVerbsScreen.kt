@@ -104,7 +104,7 @@ fun PhrasalVerbCards(
                 val paddingBottom = if (isTheLast) 150.dp else 16.dp
 
                 CardView(text = phrasalVerb.phrasalVerb, id = phrasalVerb.id, paddingBottom = paddingBottom) {
-                    navHostController.navigate("phrasal_verbs/${phrasalVerb.id}/meanings")
+                    navHostController.navigate("phrasal_verbs/${phrasalVerb.id}/definitions")
                 }
             }
 

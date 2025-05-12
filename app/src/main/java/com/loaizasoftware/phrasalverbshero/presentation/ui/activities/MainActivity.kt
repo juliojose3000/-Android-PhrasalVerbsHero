@@ -173,7 +173,7 @@ fun PhrasalVerbsApplication(verbViewModel: VerbViewModel, phrasalVerbsViewModel:
         }
 
 
-        composable(route = "phrasal_verbs/{phrasalVerbId}/meanings", arguments = listOf(navArgument("phrasalVerbId") {
+        composable(route = "phrasal_verbs/{phrasalVerbId}/definitions", arguments = listOf(navArgument("phrasalVerbId") {
             type = NavType.LongType
         })) {
 
@@ -186,7 +186,7 @@ fun PhrasalVerbsApplication(verbViewModel: VerbViewModel, phrasalVerbsViewModel:
             LaunchedEffect(key1 = phrasalVerbId) {
 
                 if(phrasalVerbsViewModel.selectedPhrasalVerb?.id != phrasalVerbId) {
-                    phrasalVerbsViewModel.loadPhrasalVerbMeanings(phrasalVerb.id)
+                    phrasalVerbsViewModel.loadPhrasalVerbDefinitions(phrasalVerb.id)
                 }
 
             }

@@ -3,5 +3,5 @@ package com.loaizasoftware.phrasalverbshero.domain.model
 data class PhrasalVerb(
     val id: Long,
     val phrasalVerb: String,
-    val meanings: List<Meaning>
+    val definitions: List<Definition>
 )

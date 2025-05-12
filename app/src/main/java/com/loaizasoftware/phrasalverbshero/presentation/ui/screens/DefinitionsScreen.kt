@@ -43,7 +43,7 @@ import com.loaizasoftware.core_ui.general.AppBar
 import com.loaizasoftware.core_ui.general.LoadingIndicator
 import com.loaizasoftware.phrasalverbshero.R
 import com.loaizasoftware.phrasalverbshero.domain.model.Example
-import com.loaizasoftware.phrasalverbshero.domain.model.Meaning
+import com.loaizasoftware.phrasalverbshero.domain.model.Definition
 import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.PhrasalVerbsViewModel
 import com.loaizasoftware.phrasalverbshero.utils.FileUtils
@@ -70,12 +70,12 @@ fun DefinitionsScreen(
         }
     ) { contentPadding ->
 
-        LoadingIndicator(isVisible = viewModel.isLoadingMeanings.value)
+        LoadingIndicator(isVisible = viewModel.isLoadingDefinitions.value)
 
-        if (!viewModel.isLoadingMeanings.value) {
+        if (!viewModel.isLoadingDefinitions.value) {
             DefinitionCards(
                 contentPadding = contentPadding,
-                meaningList = viewModel.phrasalVerbMeanings.value
+                definitionsList = viewModel.phrasalVerbDefinitions.value
             )
         }
 
@@ -86,14 +86,14 @@ fun DefinitionsScreen(
 @Composable
 fun DefinitionCards(
     contentPadding: PaddingValues,
-    meaningList: List<Meaning>,
+    definitionsList: List<Definition>,
     isPreview: Boolean = false
 ) {
 
     ContainerWithAnim {
 
         val pagerState = rememberPagerState(pageCount = {
-            meaningList.size
+            definitionsList.size
         })
 
         Column(
@@ -120,7 +120,7 @@ fun DefinitionCards(
                 ) { page ->
                     // Our page content
 
-                    val meaning = meaningList[page]
+                    val definition = definitionsList[page]
 
                     Card(
                         Modifier
@@ -151,7 +151,7 @@ fun DefinitionCards(
                                 .fillMaxWidth()
                                 .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
                                 .background(Color.White),
-                            text = meaning.meaning,
+                            text = definition.definition,
                             style = TextStyle(
                                 fontSize = 16.sp,
                                 textAlign = TextAlign.Center
@@ -176,7 +176,7 @@ fun DefinitionCards(
                                 .fillMaxWidth()
                                 .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
                                 .background(Color.White),
-                            text = meaning.examples?.getOrNull(0)?.exampleText
+                            text = definition.examples?.getOrNull(0)?.exampleText
                                 ?: "No example available",
                             style = TextStyle(
                                 fontSize = 16.sp,
@@ -198,7 +198,7 @@ fun DefinitionCards(
                         } else {
 
                             PhrasalVerbImage(
-                                imageName = meaning.examples?.getOrNull(0)?.imageUrl
+                                imageName = definition.examples?.getOrNull(0)?.imageUrl
                                     ?: "default_image"
                             )
 
@@ -212,12 +212,12 @@ fun DefinitionCards(
 
             }
 
-            if (meaningList.size > 1) {
+            if (definitionsList.size > 1) {
 
                 DotsIndicator(
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally),
-                    totalDots = meaningList.size,
+                    totalDots = definitionsList.size,
                     selectedIndex = pagerState.currentPage,
                 )
 
@@ -274,22 +274,22 @@ fun DotsIndicator(
 @Composable
 fun PreviewDefinitionsScreen() {
 
-    val meaningList = listOf(
-        Meaning(
+    val definitionLists = listOf(
+        Definition(
             1L,
-            "Meaning 1",
+            "Definition 1",
             listOf(
                 Example(
                     1L, "Example 1",
                     imageUrl = ""
                 )
             )
-        ), Meaning(2L, "Meaning 2")
+        ), Definition(2L, "Definition 2")
     )
 
     DefinitionCards(
         contentPadding = PaddingValues(0.dp),
-        meaningList = meaningList,
+        definitionsList = definitionLists,
         isPreview = true
     )
 

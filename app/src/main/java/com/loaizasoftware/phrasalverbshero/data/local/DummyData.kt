@@ -1,7 +1,7 @@
 package com.loaizasoftware.phrasalverbshero.data.local
 
 import com.loaizasoftware.phrasalverbshero.domain.model.Example
-import com.loaizasoftware.phrasalverbshero.domain.model.Meaning
+import com.loaizasoftware.phrasalverbshero.domain.model.Definition
 import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
 import com.loaizasoftware.phrasalverbshero.domain.model.Verb
 
@@ -17,7 +17,7 @@ class DummyData {
             1, "Take", arrayListOf(
                 PhrasalVerb(
                     1, "Take off", arrayListOf(
-                        Meaning(
+                        Definition(
                             1, "To remove something (clothes, etc.)", arrayListOf(
                                 Example(
                                     1,
@@ -26,7 +26,7 @@ class DummyData {
                                 )
                             )
                         ),
-                        Meaning(
+                        Definition(
                             2, "To leave the ground and start flying", arrayListOf(
                                 Example(
                                     2,
@@ -39,7 +39,7 @@ class DummyData {
                 ),
                 PhrasalVerb(
                     2, "Take in", arrayListOf(
-                        Meaning(
+                        Definition(
                             3, "To absorb information", arrayListOf(
                                 Example(
                                     3,
@@ -57,7 +57,7 @@ class DummyData {
             2, "Go", arrayListOf(
                 PhrasalVerb(
                     3, "Go on", arrayListOf(
-                        Meaning(
+                        Definition(
                             4, "To continue happening", arrayListOf(
                                 Example(
                                     4,
@@ -70,7 +70,7 @@ class DummyData {
                 ),
                 PhrasalVerb(
                     4, "Go over", arrayListOf(
-                        Meaning(
+                        Definition(
                             5, "To review or check something", arrayListOf(
                                 Example(
                                     5,
@@ -88,7 +88,7 @@ class DummyData {
             3, "Bring", arrayListOf(
                 PhrasalVerb(
                     5, "Bring up", arrayListOf(
-                        Meaning(
+                        Definition(
                             6, "To mention a topic", arrayListOf(
                                 Example(
                                     6,
@@ -106,7 +106,7 @@ class DummyData {
             4, "Put", arrayListOf(
                 PhrasalVerb(
                     6, "Put off", arrayListOf(
-                        Meaning(
+                        Definition(
                             7, "To delay or postpone", arrayListOf(
                                 Example(
                                     7,
@@ -119,7 +119,7 @@ class DummyData {
                 ),
                 PhrasalVerb(
                     7, "Put up with", arrayListOf(
-                        Meaning(
+                        Definition(
                             8, "To tolerate something unpleasant", arrayListOf(
                                 Example(
                                     8,
@@ -137,7 +137,7 @@ class DummyData {
             5, "Look", arrayListOf(
                 PhrasalVerb(
                     8, "Look after", arrayListOf(
-                        Meaning(
+                        Definition(
                             9, "To take care of someone or something", arrayListOf(
                                 Example(
                                     9,
@@ -150,7 +150,7 @@ class DummyData {
                 ),
                 PhrasalVerb(
                     9, "Look forward to", arrayListOf(
-                        Meaning(
+                        Definition(
                             10, "To anticipate something with excitement", arrayListOf(
                                 Example(
                                     10,
@@ -168,7 +168,7 @@ class DummyData {
             6, "Give", arrayListOf(
                 PhrasalVerb(
                     10, "Give up", arrayListOf(
-                        Meaning(
+                        Definition(
                             11, "To stop trying", arrayListOf(
                                 Example(
                                     11,
@@ -186,7 +186,7 @@ class DummyData {
             7, "Run", arrayListOf(
                 PhrasalVerb(
                     11, "Run out of", arrayListOf(
-                        Meaning(
+                        Definition(
                             12, "To have no more of something", arrayListOf(
                                 Example(
                                     12,
@@ -204,7 +204,7 @@ class DummyData {
             8, "Break", arrayListOf(
                 PhrasalVerb(
                     12, "Break down", arrayListOf(
-                        Meaning(
+                        Definition(
                             13, "To stop functioning (a machine)", arrayListOf(
                                 Example(
                                     13,
@@ -213,7 +213,7 @@ class DummyData {
                                 )
                             )
                         ),
-                        Meaning(
+                        Definition(
                             14, "To become emotionally upset", arrayListOf(
                                 Example(
                                     14,
@@ -231,7 +231,7 @@ class DummyData {
             9, "Turn", arrayListOf(
                 PhrasalVerb(
                     13, "Turn up", arrayListOf(
-                        Meaning(
+                        Definition(
                             15, "To appear unexpectedly", arrayListOf(
                                 Example(
                                     15,
@@ -249,7 +249,7 @@ class DummyData {
             10, "Set", arrayListOf(
                 PhrasalVerb(
                     14, "Set up", arrayListOf(
-                        Meaning(
+                        Definition(
                             16, "To arrange or establish something", arrayListOf(
                                 Example(
                                     16,
@@ -269,7 +269,7 @@ class DummyData {
             1, "Take", arrayListOf(
                 PhrasalVerb(
                     1, "Take off", arrayListOf(
-                        Meaning(
+                        Definition(
                             1, "To remove something (clothes, etc.)", arrayListOf(
                                 Example(
                                     1,
@@ -278,7 +278,7 @@ class DummyData {
                                 )
                             )
                         ),
-                        Meaning(
+                        Definition(
                             2, "To leave the ground and start flying", arrayListOf(
                                 Example(
                                     2,
@@ -291,7 +291,7 @@ class DummyData {
                 ),
                 PhrasalVerb(
                     2, "Take in", arrayListOf(
-                        Meaning(
+                        Definition(
                             3, "To absorb information", arrayListOf(
                                 Example(
                                     3,
@@ -309,7 +309,7 @@ class DummyData {
             2, "Go", arrayListOf(
                 PhrasalVerb(
                     3, "Go on", arrayListOf(
-                        Meaning(
+                        Definition(
                             4, "To continue happening", arrayListOf(
                                 Example(
                                     4,
@@ -322,7 +322,7 @@ class DummyData {
                 ),
                 PhrasalVerb(
                     4, "Go over", arrayListOf(
-                        Meaning(
+                        Definition(
                             5, "To review or check something", arrayListOf(
                                 Example(
                                     5,
@@ -340,7 +340,7 @@ class DummyData {
             3, "Bring", arrayListOf(
                 PhrasalVerb(
                     5, "Bring up", arrayListOf(
-                        Meaning(
+                        Definition(
                             6, "To mention a topic", arrayListOf(
                                 Example(
                                     6,
@@ -358,7 +358,7 @@ class DummyData {
             4, "Put", arrayListOf(
                 PhrasalVerb(
                     6, "Put off", arrayListOf(
-                        Meaning(
+                        Definition(
                             7, "To delay or postpone", arrayListOf(
                                 Example(
                                     7,
@@ -371,7 +371,7 @@ class DummyData {
                 ),
                 PhrasalVerb(
                     7, "Put up with", arrayListOf(
-                        Meaning(
+                        Definition(
                             8, "To tolerate something unpleasant", arrayListOf(
                                 Example(
                                     8,
@@ -389,7 +389,7 @@ class DummyData {
             5, "Look", arrayListOf(
                 PhrasalVerb(
                     8, "Look after", arrayListOf(
-                        Meaning(
+                        Definition(
                             9, "To take care of someone or something", arrayListOf(
                                 Example(
                                     9,
@@ -402,7 +402,7 @@ class DummyData {
                 ),
                 PhrasalVerb(
                     9, "Look forward to", arrayListOf(
-                        Meaning(
+                        Definition(
                             10, "To anticipate something with excitement", arrayListOf(
                                 Example(
                                     10,
@@ -420,7 +420,7 @@ class DummyData {
             6, "Give", arrayListOf(
                 PhrasalVerb(
                     10, "Give up", arrayListOf(
-                        Meaning(
+                        Definition(
                             11, "To stop trying", arrayListOf(
                                 Example(
                                     11,
@@ -438,7 +438,7 @@ class DummyData {
             7, "Run", arrayListOf(
                 PhrasalVerb(
                     11, "Run out of", arrayListOf(
-                        Meaning(
+                        Definition(
                             12, "To have no more of something", arrayListOf(
                                 Example(
                                     12,
@@ -456,7 +456,7 @@ class DummyData {
             8, "Break", arrayListOf(
                 PhrasalVerb(
                     12, "Break down", arrayListOf(
-                        Meaning(
+                        Definition(
                             13, "To stop functioning (a machine)", arrayListOf(
                                 Example(
                                     13,
@@ -465,7 +465,7 @@ class DummyData {
                                 )
                             )
                         ),
-                        Meaning(
+                        Definition(
                             14, "To become emotionally upset", arrayListOf(
                                 Example(
                                     14,
@@ -483,7 +483,7 @@ class DummyData {
             9, "Turn", arrayListOf(
                 PhrasalVerb(
                     13, "Turn up", arrayListOf(
-                        Meaning(
+                        Definition(
                             15, "To appear unexpectedly", arrayListOf(
                                 Example(
                                     15,
@@ -501,7 +501,7 @@ class DummyData {
             10, "Set", arrayListOf(
                 PhrasalVerb(
                     14, "Set up", arrayListOf(
-                        Meaning(
+                        Definition(
                             16, "To arrange or establish something", arrayListOf(
                                 Example(
                                     16,

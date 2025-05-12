@@ -67,9 +67,9 @@ class ApiClientTest {
 
     @Test
     fun `test API call returns correct response`() {
-        // ✅ Simulated JSON Response from the Fake Server {"id": 1, "phrasalVerb": "go on", "meanings": []}
+        // ✅ Simulated JSON Response from the Fake Server {"id": 1, "phrasalVerb": "go on", "definitions": []}
         val mockResponse = MockResponse()
-            .setBody("""[{"id": 1, "verb": "go", "phrasalVerbs": [{"id":1, "phrasalVerb": "go on", "meanings": []}]}]""".trimIndent())
+            .setBody("""[{"id": 1, "verb": "go", "phrasalVerbs": [{"id":1, "phrasalVerb": "go on", "definitions": []}]}]""".trimIndent())
             .setResponseCode(200)
         mockWebServer.enqueue(mockResponse) // ✅ Fake API Response
 
