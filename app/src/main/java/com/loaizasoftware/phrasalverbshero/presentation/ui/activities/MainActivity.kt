@@ -22,7 +22,9 @@ import com.loaizasoftware.phrasalverbshero.presentation.ui.screens.PhrasalVerbsS
 import com.loaizasoftware.phrasalverbshero.presentation.ui.screens.VerbsScreen
 import com.loaizasoftware.core_ui.theme.PhrasalVerbsHeroTheme
 import com.loaizasoftware.phrasalverbshero.presentation.ui.screens.DefinitionsScreen
+import com.loaizasoftware.phrasalverbshero.presentation.ui.screens.PracticeScreen
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.PhrasalVerbsViewModel
+import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.PracticeViewModel
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -30,7 +32,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint //Allows Dagger to inject dependencies into Android classes such as Activities, Fragments, and Services
-class MainActivity: BaseActivity() {
+class MainActivity : BaseActivity() {
 
     //When an object is annotated with @Inject it means that it will be provided by Dagger
     //verbViewModel is a dependency of the MainActivity class
@@ -40,6 +42,8 @@ class MainActivity: BaseActivity() {
 
     //@Inject
     private val phrasalVerbsViewModel: PhrasalVerbsViewModel by viewModels()
+
+    private val practiceViewModel: PracticeViewModel by viewModels()
 
     private lateinit var receiver: AirplaneModeReceiver
 
@@ -51,7 +55,7 @@ class MainActivity: BaseActivity() {
         enableEdgeToEdge()
         setContent {
             PhrasalVerbsHeroTheme {
-                PhrasalVerbsApplication(verbViewModel, phrasalVerbsViewModel)
+                PhrasalVerbsApplication(verbViewModel, phrasalVerbsViewModel, practiceViewModel)
             }
         }
 
@@ -119,7 +123,11 @@ class MainActivity: BaseActivity() {
 
 
 @Composable
-fun PhrasalVerbsApplication(verbViewModel: VerbViewModel, phrasalVerbsViewModel: PhrasalVerbsViewModel) {
+fun PhrasalVerbsApplication(
+    verbViewModel: VerbViewModel,
+    phrasalVerbsViewModel: PhrasalVerbsViewModel,
+    practiceViewModel: PracticeViewModel
+) {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "verbs_screen") {
         composable("verbs_screen") {
@@ -129,7 +137,7 @@ fun PhrasalVerbsApplication(verbViewModel: VerbViewModel, phrasalVerbsViewModel:
             //is first composed or when a specific key changes
             LaunchedEffect(key1 = true) {
 
-                if(verbViewModel.filteredVerbs.value.isEmpty()) {
+                if (verbViewModel.filteredVerbs.value.isEmpty()) {
                     verbViewModel.loadVerbs()
                 }
 
@@ -149,7 +157,7 @@ fun PhrasalVerbsApplication(verbViewModel: VerbViewModel, phrasalVerbsViewModel:
             //is first composed or when a specific key changes
             LaunchedEffect(key1 = verbId) {
 
-                if(phrasalVerbsViewModel.selectedVerbId != verbId) {
+                if (phrasalVerbsViewModel.selectedVerbId != verbId) {
                     phrasalVerbsViewModel.loadPhrasalVerbs(verbId)
                 }
 
@@ -163,7 +171,7 @@ fun PhrasalVerbsApplication(verbViewModel: VerbViewModel, phrasalVerbsViewModel:
                     BaseActivity.getInstance().getString(stringId)
                 },
                 practiceBtnOnClick = {
-                    BaseActivity.getInstance().showFunctionNotImplementedYetToast()
+                    navController.navigate("verb/practice/$verbId")
                 },
                 quizBtnOnClick = {
                     BaseActivity.getInstance().showFunctionNotImplementedYetToast()
@@ -173,9 +181,12 @@ fun PhrasalVerbsApplication(verbViewModel: VerbViewModel, phrasalVerbsViewModel:
         }
 
 
-        composable(route = "phrasal_verbs/{phrasalVerbId}/definitions", arguments = listOf(navArgument("phrasalVerbId") {
-            type = NavType.LongType
-        })) {
+        composable(
+            route = "phrasal_verbs/{phrasalVerbId}/definitions",
+            arguments = listOf(navArgument("phrasalVerbId") {
+                type = NavType.LongType
+            })
+        ) {
 
             val phrasalVerbId = it.arguments!!.getLong("phrasalVerbId")
             val phrasalVerb = phrasalVerbsViewModel.getPhrasalVerbById(phrasalVerbId)!!
@@ -185,7 +196,7 @@ fun PhrasalVerbsApplication(verbViewModel: VerbViewModel, phrasalVerbsViewModel:
             //is first composed or when a specific key changes
             LaunchedEffect(key1 = phrasalVerbId) {
 
-                if(phrasalVerbsViewModel.selectedPhrasalVerb?.id != phrasalVerbId) {
+                if (phrasalVerbsViewModel.selectedPhrasalVerb?.id != phrasalVerbId) {
                     phrasalVerbsViewModel.loadPhrasalVerbDefinitions(phrasalVerb.id)
                 }
 
@@ -194,6 +205,28 @@ fun PhrasalVerbsApplication(verbViewModel: VerbViewModel, phrasalVerbsViewModel:
             DefinitionsScreen(phrasalVerbsViewModel, phrasalVerb, navController) { stringId ->
                 BaseActivity.getInstance().getString(stringId)
             }
+        }
+
+        composable(route = "verb/practice/{verbId}", arguments = listOf(navArgument("verbId") {
+            type = NavType.LongType
+        })) {
+
+            val verbId = it.arguments!!.getLong("verbId")
+            val verb = verbViewModel.getVerbById(verbId)
+
+            //The loadPhrasalVerbs call is a side effect. It should not be called directly within
+            //the composable. Use LaunchedEffect to ensure it's called only once when the composable
+            //is first composed or when a specific key changes
+            LaunchedEffect(key1 = verbId) {
+                practiceViewModel.getSelectDefinitionsQuestions(verbId)
+            }
+
+            PracticeScreen(
+                viewModel = practiceViewModel,
+                verb = verb!!,
+                navHostController = navController
+            )
+
         }
 
 

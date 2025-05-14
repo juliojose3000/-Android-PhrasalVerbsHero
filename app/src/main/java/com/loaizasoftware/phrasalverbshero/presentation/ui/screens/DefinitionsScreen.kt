@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.loaizasoftware.core_ui.composables.AsyncImageWithLoader
 import com.loaizasoftware.core_ui.composables.ContainerWithAnim
+import com.loaizasoftware.core_ui.composables.DotsIndicator
 import com.loaizasoftware.core_ui.general.AppBar
 import com.loaizasoftware.core_ui.general.LoadingIndicator
 import com.loaizasoftware.phrasalverbshero.R
@@ -242,31 +243,6 @@ fun PhrasalVerbImage(imageName: String) {
 
     }
 
-}
-
-@Composable
-fun DotsIndicator(
-    totalDots: Int,
-    selectedIndex: Int,
-    modifier: Modifier = Modifier,
-    selectedColor: Color = Color.Blue,
-    unSelectedColor: Color = Color.LightGray
-) {
-    Row(
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-    ) {
-        repeat(totalDots) { index ->
-            val color = if (index == selectedIndex) selectedColor else unSelectedColor
-            Box(
-                modifier = Modifier
-                    .padding(4.dp)
-                    .size(8.dp)
-                    .background(color = color, shape = CircleShape)
-            )
-        }
-    }
 }
 
 

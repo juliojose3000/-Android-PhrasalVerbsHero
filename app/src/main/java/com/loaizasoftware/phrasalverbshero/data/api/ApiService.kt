@@ -2,6 +2,7 @@ package com.loaizasoftware.phrasalverbshero.data.api
 
 import com.loaizasoftware.phrasalverbshero.domain.model.Definition
 import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
+import com.loaizasoftware.phrasalverbshero.domain.model.Question
 import com.loaizasoftware.phrasalverbshero.domain.model.Verb
 import io.reactivex.Single
 import retrofit2.Call
@@ -21,5 +22,8 @@ interface ApiService {
 
     @GET("api/phrasalverbs/getDefinitions")
     fun getPhrasalVerbDefinitions(@Query("phrasalVerbId") phrasalVerbId: Long): Single<List<Definition>>
+
+    @GET("api/questions/getSelectDefinitionQuestions")
+    fun getQuestions(@Query("verbId") verbId: Long): Single<List<Question>>
 
 }

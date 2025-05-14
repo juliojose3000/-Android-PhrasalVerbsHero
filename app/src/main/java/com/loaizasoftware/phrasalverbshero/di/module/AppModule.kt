@@ -3,8 +3,10 @@ package com.loaizasoftware.phrasalverbshero.di.module
 import android.content.Context
 import com.loaizasoftware.phrasalverbshero.data.api.ApiClient
 import com.loaizasoftware.phrasalverbshero.data.repository.PhrasalVerbRepositoryImpl
+import com.loaizasoftware.phrasalverbshero.data.repository.QuestionRepositoryImpl
 import com.loaizasoftware.phrasalverbshero.data.repository.VerbRepositoryImpl
 import com.loaizasoftware.phrasalverbshero.domain.repository.PhrasalVerbRepository
+import com.loaizasoftware.phrasalverbshero.domain.repository.QuestionRepository
 import com.loaizasoftware.phrasalverbshero.domain.repository.VerbRepository
 import dagger.Module
 import dagger.Provides
@@ -33,6 +35,12 @@ class AppModule {
     @Provides //Provides an instance of VerbRepository
     fun providePhrasalVerbRepository(apiClient: ApiClient): PhrasalVerbRepository {
         return PhrasalVerbRepositoryImpl(apiClient.apiService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideQuestionRepository(apiClient: ApiClient): QuestionRepository {
+        return QuestionRepositoryImpl(apiClient.apiService)
     }
 
 }
