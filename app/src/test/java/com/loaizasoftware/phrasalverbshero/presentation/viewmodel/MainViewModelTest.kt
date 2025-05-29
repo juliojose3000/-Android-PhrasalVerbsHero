@@ -2,6 +2,7 @@ package com.loaizasoftware.phrasalverbshero.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.loaizasoftware.phrasalverbshero.data.repository.VerbRepositoryImpl
+import com.loaizasoftware.phrasalverbshero.domain.usecase.GetPrepsAdverbsUseCase
 import com.loaizasoftware.phrasalverbshero.domain.usecase.GetVerbsUseCase
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.plugins.RxJavaPlugins
@@ -29,6 +30,7 @@ class MainViewModelTest {
 
     //@Mock
     private lateinit var getVerbsUseCase: GetVerbsUseCase
+    private lateinit var getPrepsAdverbsUseCase: GetPrepsAdverbsUseCase
 
     private lateinit var viewModel: MainViewModel
 
@@ -50,7 +52,9 @@ class MainViewModelTest {
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
 
         getVerbsUseCase = GetVerbsUseCase(repository)
-        viewModel = MainViewModel(getVerbsUseCase)
+        getPrepsAdverbsUseCase = GetPrepsAdverbsUseCase(repository)
+
+        viewModel = MainViewModel(getVerbsUseCase = getVerbsUseCase, getPrepsAdverbsUseCase = getPrepsAdverbsUseCase)
 
     }
 

@@ -9,20 +9,8 @@ import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.loaizasoftware.phrasalverbshero.core.network.ApiResult
-import com.loaizasoftware.phrasalverbshero.core.network.safeApiCall
-import com.loaizasoftware.phrasalverbshero.data.api.ApiService
-import com.loaizasoftware.phrasalverbshero.data.repository.FakePhrasalVerbRepositoryImpl
-import com.loaizasoftware.phrasalverbshero.data.repository.PhrasalVerbRepositoryImpl
-import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
-import com.loaizasoftware.phrasalverbshero.domain.repository.PhrasalVerbRepository
-import com.loaizasoftware.phrasalverbshero.domain.usecase.GetPhrasalVerbsUseCase
 import com.loaizasoftware.phrasalverbshero.presentation.ui.screens.PhrasalVerbsScreen
-import com.loaizasoftware.phrasalverbshero.presentation.ui.verbs.FakeApiService
-import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.FakePhrasalVerbViewModel
-import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.PhrasalVerbsViewModel
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
+import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.FakePhrasalMainViewModel
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -35,13 +23,13 @@ class PhrasalVerbsScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private lateinit var fakeViewModel: FakePhrasalVerbViewModel
+    private lateinit var fakeViewModel: FakePhrasalMainViewModel
 
     private lateinit var navController: TestNavHostController
 
     @Before
     fun setup() {
-        fakeViewModel = FakePhrasalVerbViewModel()
+        fakeViewModel = FakePhrasalMainViewModel()
         navController = TestNavHostController(ApplicationProvider.getApplicationContext())
         navController.navigatorProvider.addNavigator(ComposeNavigator())
     }

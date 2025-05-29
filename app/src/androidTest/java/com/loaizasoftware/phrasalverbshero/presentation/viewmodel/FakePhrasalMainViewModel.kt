@@ -6,7 +6,7 @@ import com.loaizasoftware.phrasalverbshero.domain.usecase.FakeGetPhrasalVerbsByP
 import com.loaizasoftware.phrasalverbshero.domain.usecase.FakeGetPhrasalVerbsUseCase
 
 
-class FakePhrasalVerbViewModel : PhrasalVerbsViewModel(FakeGetPhrasalVerbsUseCase(), FakeGetDefinitionsUseCase(), FakeGetPhrasalVerbsByPart()) {
+class FakePhrasalMainViewModel : PhrasalVerbsViewModel(FakeGetPhrasalVerbsUseCase(), FakeGetDefinitionsUseCase(), FakeGetPhrasalVerbsByPart()) {
     init {
         isLoading.value = false
         phrasalVerbsState.value = listOf(
