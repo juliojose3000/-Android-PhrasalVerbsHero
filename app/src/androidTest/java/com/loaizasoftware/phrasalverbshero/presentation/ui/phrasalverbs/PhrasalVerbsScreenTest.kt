@@ -54,7 +54,9 @@ class PhrasalVerbsScreenTest {
                 viewModel = fakeViewModel,
                 verb = "go",
                 navHostController = navController,
-                getString = { _ -> "" }
+                getString = { _ -> "" },
+                practiceBtnOnClick = { },
+                quizBtnOnClick = { }
             )
         }
 

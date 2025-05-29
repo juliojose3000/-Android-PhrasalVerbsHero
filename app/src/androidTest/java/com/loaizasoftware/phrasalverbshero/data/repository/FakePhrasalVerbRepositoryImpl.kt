@@ -15,6 +15,10 @@ class FakePhrasalVerbRepositoryImpl(private val apiService: ApiService): Phrasal
         return apiService.getPhrasalVerbs(verbId)
     }
 
+    override fun getPhrasalVerbs(phrasalVerbPart: String): Single<List<PhrasalVerb>> {
+        return apiService.getPhrasalVerbs(phrasalVerbPart)
+    }
+
     override fun getPhrasalVerbsSafely(verbId: Long): Single<ApiResult<List<PhrasalVerb>>> {
         return Single.fromCallable {
             safeApiCall {
