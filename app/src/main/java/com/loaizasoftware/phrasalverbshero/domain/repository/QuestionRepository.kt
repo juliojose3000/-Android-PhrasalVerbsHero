@@ -5,6 +5,6 @@ import io.reactivex.Single
 
 interface QuestionRepository {
 
-    fun getQuestions(verbId: Long): Single<List<Question>>
+    fun getQuestions(verbId: String): Single<List<Question>>
 
 }

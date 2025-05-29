@@ -16,4 +16,9 @@ open class VerbRepositoryImpl(private val apiService: ApiService): VerbRepositor
         return apiService.getVerbsSingle()  // Just delegates to ApiService
     }
 
+    override fun getPrepsAdverbs(): Single<List<String>> {
+        return apiService.getPrepsAdverbs()
+    }
+
+
 }

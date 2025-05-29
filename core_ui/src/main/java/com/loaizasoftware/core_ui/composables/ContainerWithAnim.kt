@@ -33,14 +33,14 @@ import androidx.compose.ui.draw.alpha
  * @param content The composable content to be displayed with the fade-in animation.
  */
 @Composable
-fun ContainerWithAnim(content: @Composable () -> Unit) {
+fun ContainerWithAnim(durationMillis: Int = 500, content: @Composable () -> Unit) {
 
     val visible = remember { mutableStateOf(false) }
 
     // Animate alpha from 0f to 1f
     val alpha by animateFloatAsState(
         targetValue = if (visible.value) 1f else 0f,
-        animationSpec = tween(durationMillis = 500)
+        animationSpec = tween(durationMillis = durationMillis)
     )
 
     // Trigger fade-in once when this Composable enters composition

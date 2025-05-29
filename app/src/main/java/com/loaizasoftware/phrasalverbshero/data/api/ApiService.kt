@@ -20,10 +20,16 @@ interface ApiService {
     @GET("api/phrasalverbs/getByVerbId")
     fun getPhrasalVerbs(@Query("verbId") verbId: Long): Single<List<PhrasalVerb>>
 
+    @GET("api/phrasalverbs/getByPrepOrAdverb")
+    fun getPhrasalVerbs(@Query("prepositionAdverb") prepositionAdverb: String): Single<List<PhrasalVerb>>
+
     @GET("api/phrasalverbs/getDefinitions")
     fun getPhrasalVerbDefinitions(@Query("phrasalVerbId") phrasalVerbId: Long): Single<List<Definition>>
 
     @GET("api/questions/getSelectDefinitionQuestions")
-    fun getQuestions(@Query("verbId") verbId: Long): Single<List<Question>>
+    fun getQuestions(@Query("phrasalVerbPart") phrasalVerbPart: String): Single<List<Question>>
+
+    @GET("api/phrasalverbs/getAllPrepAndAdverbs")
+    fun getPrepsAdverbs(): Single<List<String>>
 
 }

@@ -7,9 +7,9 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class GetSelectDefinitionQuestionsUseCase @Inject constructor(private val repository: QuestionRepository):
-    UseCase<Single<List<Question>>, Long>() {
+    UseCase<Single<List<Question>>, String>() {
 
-    override fun run(params: Long): Single<List<Question>> {
+    override fun run(params: String): Single<List<Question>> {
         return repository.getQuestions(params)
     }
 

@@ -20,9 +20,11 @@ import com.loaizasoftware.core_ui.theme.Purple80
 
 
 @Composable
-fun CardView(text: String, id: Long, paddingBottom: Dp = 16.dp, onClick: (id: Long) -> Unit = {}) {
+fun CardView(text: String, id: Long? = null, paddingBottom: Dp = 16.dp, onClick: (phrasalVerbPart: Any) -> Unit = {}) {
 
     val cardSize = 100.dp
+
+    val actionParam = id ?: text
 
     Card(
         elevation = CardDefaults.elevatedCardElevation(4.dp),
@@ -31,7 +33,7 @@ fun CardView(text: String, id: Long, paddingBottom: Dp = 16.dp, onClick: (id: Lo
             .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = paddingBottom)
             .width(cardSize)
             .height(cardSize),
-        onClick = { onClick(id) }
+        onClick = { onClick( actionParam ) }
     ) {
 
         Box(

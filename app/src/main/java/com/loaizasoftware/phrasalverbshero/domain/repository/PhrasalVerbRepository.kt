@@ -9,6 +9,8 @@ interface PhrasalVerbRepository {
 
     fun getPhrasalVerbs(verbId: Long): Single<List<PhrasalVerb>>
 
+    fun getPhrasalVerbs(phrasalVerbPart: String): Single<List<PhrasalVerb>>
+
     fun getPhrasalVerbsSafely(verbId: Long): Single<ApiResult<List<PhrasalVerb>>>
 
     fun getPhrasalVerbDefinitions(phrasalVerbId: Long): Single<List<Definition>>

@@ -21,10 +21,34 @@ class PracticeViewModel @Inject constructor(private val getSelectDefinitionsUseC
 
     val shuffledAnswersList = mutableStateListOf<List<Answer>>() // Store shuffled answers for each question
 
-    @SuppressLint("CheckResult")
+    /*@SuppressLint("CheckResult")
     fun getSelectDefinitionsQuestions(verbId: Long) {
 
         getSelectDefinitionsUseCase.run(verbId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { isLoading.value = true }
+            .doFinally { isLoading.value = false }
+            .subscribe({
+
+                questionsList.addAll(it)
+
+                //Store all the questions answers shuffled on a mutableStateList
+                shuffledAnswersList.addAll(it.map { question ->
+                    question.getAllAnswers().shuffled() // Shuffle only once
+                })
+
+            }, {
+                error.value = it
+                Timber.e(it)
+            })
+
+    }*/
+
+    @SuppressLint("CheckResult")
+    fun getSelectDefinitionsQuestions(phrasalVerbPart: String) {
+
+        getSelectDefinitionsUseCase.run(phrasalVerbPart)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { isLoading.value = true }

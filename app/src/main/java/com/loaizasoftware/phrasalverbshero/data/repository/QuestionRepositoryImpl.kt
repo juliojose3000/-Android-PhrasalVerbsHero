@@ -7,8 +7,8 @@ import io.reactivex.Single
 
 class QuestionRepositoryImpl(private val apiService: ApiService): QuestionRepository {
 
-    override fun getQuestions(verbId: Long): Single<List<Question>> {
-        return apiService.getQuestions(verbId)
+    override fun getQuestions(phrasalVerbPart: String): Single<List<Question>> {
+        return apiService.getQuestions(phrasalVerbPart)
     }
 
 }

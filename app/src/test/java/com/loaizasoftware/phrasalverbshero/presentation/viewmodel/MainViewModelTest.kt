@@ -19,7 +19,7 @@ import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
 @ExperimentalCoroutinesApi
-class VerbViewModelTest {
+class MainViewModelTest {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -30,7 +30,7 @@ class VerbViewModelTest {
     //@Mock
     private lateinit var getVerbsUseCase: GetVerbsUseCase
 
-    private lateinit var viewModel: VerbViewModel
+    private lateinit var viewModel: MainViewModel
 
     private val testDispatcher = StandardTestDispatcher()
 
@@ -50,7 +50,7 @@ class VerbViewModelTest {
         RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
 
         getVerbsUseCase = GetVerbsUseCase(repository)
-        viewModel = VerbViewModel(getVerbsUseCase)
+        viewModel = MainViewModel(getVerbsUseCase)
 
     }
 

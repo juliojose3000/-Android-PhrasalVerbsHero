@@ -21,10 +21,10 @@ import com.loaizasoftware.core_ui.general.LoadingIndicator
 import com.loaizasoftware.core_ui.general.SearchBar
 import com.loaizasoftware.core_ui.composables.ContainerWithAnim
 import com.loaizasoftware.core_ui.composables.RetryButton
-import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
+import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.MainViewModel
 
 @Composable
-fun VerbsScreen(viewModel: VerbViewModel, navController: NavHostController) {
+fun MainScreen(viewModel: MainViewModel, navController: NavHostController) {
 
     Scaffold(modifier = Modifier.fillMaxSize(), containerColor = Color.White, topBar = {
 
@@ -45,9 +45,9 @@ fun VerbsScreen(viewModel: VerbViewModel, navController: NavHostController) {
 
             LoadingIndicator(isVisible = viewModel.isLoading.value)
 
-            if (!viewModel.isLoading.value && viewModel.filteredVerbs.value.isNotEmpty()) {
+            if (!viewModel.isLoading.value) {
 
-                ContainerWithAnim {
+                ContainerWithAnim(durationMillis = 1000) {
 
                     Column {
 
@@ -66,13 +66,14 @@ fun VerbsScreen(viewModel: VerbViewModel, navController: NavHostController) {
                             modifier = Modifier.fillMaxSize()
                         ) {
 
-                            items(viewModel.filteredVerbs.value) { verb ->
-                                CardView(text = verb.name, id = verb.id) { verbId ->
-                                    navController.navigate("phrasal_verbs/$verbId")
+                            items(viewModel.filteredVerbs.value) { phrasalVerbPart ->
+
+                                CardView(text = phrasalVerbPart) {
+                                    navController.navigate("phrasal_verbs/$phrasalVerbPart")
                                 }
+
                             }
                         }
-
 
                     }
 

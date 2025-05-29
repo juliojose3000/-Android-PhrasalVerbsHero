@@ -14,6 +14,10 @@ open class GetPhrasalVerbsUseCase @Inject constructor(private val repository: Ph
         return repository.getPhrasalVerbsSafely(params)
     }
 
+    fun get(params: String): Single<List<PhrasalVerb>> {
+        return repository.getPhrasalVerbs(params)
+    }
+
     override fun run(params: Long): Single<List<PhrasalVerb>> {
         return repository.getPhrasalVerbs(params)
     }

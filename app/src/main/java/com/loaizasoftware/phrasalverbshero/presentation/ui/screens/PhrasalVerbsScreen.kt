@@ -59,14 +59,18 @@ fun PhrasalVerbsScreen(
 
         if (!viewModel.isLoadingPhrasalVerbs.value) {
 
-            PhrasalVerbCards(
-                contentPadding,
-                viewModel,
-                navHostController,
-                getString,
-                practiceBtnOnClick,
-                quizBtnOnClick
-            )
+            ContainerWithAnim {
+
+                PhrasalVerbCards(
+                    contentPadding,
+                    viewModel,
+                    navHostController,
+                    getString,
+                    practiceBtnOnClick,
+                    quizBtnOnClick
+                )
+
+            }
 
         }
 

@@ -52,7 +52,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun PracticeScreen(
     viewModel: PracticeViewModel,
-    verb: Verb,
+    phrasalVerbPart: String,
     navHostController: NavHostController
 ) {
 
@@ -61,7 +61,7 @@ fun PracticeScreen(
         containerColor = Color.White,
         topBar = {
             AppBar(
-                title = "Practice of phrasal verbs with ${verb.name}",
+                title = "Practice of phrasal verbs with $phrasalVerbPart",
                 iconAppBar = Icons.AutoMirrored.Filled.ArrowBack
             ) {
                 navHostController.navigateUp()

@@ -22,8 +22,8 @@ import com.loaizasoftware.phrasalverbshero.domain.model.Definition
 import com.loaizasoftware.phrasalverbshero.domain.model.PhrasalVerb
 import com.loaizasoftware.phrasalverbshero.domain.model.Verb
 import com.loaizasoftware.phrasalverbshero.domain.usecase.GetVerbsUseCase
-import com.loaizasoftware.phrasalverbshero.presentation.ui.screens.VerbsScreen
-import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.VerbViewModel
+import com.loaizasoftware.phrasalverbshero.presentation.ui.screens.MainScreen
+import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.MainViewModel
 import io.reactivex.Single
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -39,13 +39,13 @@ class VerbsScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private lateinit var fakeViewModel: FakeVerbViewModel
+    private lateinit var fakeViewModel: FakeMainViewModel
 
     private lateinit var navController: TestNavHostController
 
     @Before
     fun setup() {
-        fakeViewModel = FakeVerbViewModel()
+        fakeViewModel = FakeMainViewModel()
         navController = TestNavHostController(ApplicationProvider.getApplicationContext())
         navController.navigatorProvider.addNavigator(ComposeNavigator())
     }
@@ -54,7 +54,7 @@ class VerbsScreenTest {
     fun verbs_are_displayed_correctly() {
         composeTestRule.setContent {
             navController.setLifecycleOwner(LocalLifecycleOwner.current)
-            VerbsScreen(viewModel = fakeViewModel, navController = navController)
+            MainScreen(viewModel = fakeViewModel, navController = navController)
         }
 
         composeTestRule.onAllNodesWithText("Go").assertCountEquals(1)
@@ -68,7 +68,7 @@ class VerbsScreenTest {
 
             NavHost(navController = navController, startDestination = "verbs_screen") {
                 composable("verbs_screen") {
-                    VerbsScreen(viewModel = fakeViewModel, navController = navController)
+                    MainScreen(viewModel = fakeViewModel, navController = navController)
                 }
                 composable(
                     "phrasal_verbs/{verbId}",
@@ -115,7 +115,7 @@ class FakeGetVerbsUseCase : GetVerbsUseCase(FakeVerbRepositoryImpl()) {
     }
 }
 
-class FakeVerbViewModel : VerbViewModel(FakeGetVerbsUseCase()) {
+class FakeMainViewModel : MainViewModel(FakeGetVerbsUseCase()) {
     init {
         isLoading.value = false
         filteredVerbs.value = listOf(

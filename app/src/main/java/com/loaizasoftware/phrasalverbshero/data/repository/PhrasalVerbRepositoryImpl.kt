@@ -27,4 +27,8 @@ class PhrasalVerbRepositoryImpl(private val apiService: ApiService): PhrasalVerb
         return apiService.getPhrasalVerbDefinitions(phrasalVerbId)
     }
 
+    override fun getPhrasalVerbs(phrasalVerbPart: String): Single<List<PhrasalVerb>> {
+        return apiService.getPhrasalVerbs(phrasalVerbPart)
+    }
+
 }

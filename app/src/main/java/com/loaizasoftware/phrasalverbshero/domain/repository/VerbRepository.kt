@@ -10,4 +10,6 @@ interface VerbRepository {
 
     fun getVerbsSingle(): Single<List<Verb>>
 
+    fun getPrepsAdverbs(): Single<List<String>>
+
 }
