@@ -19,6 +19,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -33,8 +35,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.loaizasoftware.core_ui.base.UiState
 import com.loaizasoftware.core_ui.composables.ContainerWithAnim
 import com.loaizasoftware.core_ui.composables.DotsIndicator
+import com.loaizasoftware.core_ui.composables.RetryButton
 import com.loaizasoftware.core_ui.general.AppBar
 import com.loaizasoftware.core_ui.general.LoadingIndicator
 import com.loaizasoftware.core_ui.general.PHButton
@@ -65,27 +69,38 @@ fun PracticeScreen(
                 iconAppBar = Icons.AutoMirrored.Filled.ArrowBack
             ) {
                 navHostController.navigateUp()
-                viewModel.questionsList.clear() // Clear questions when navigating back
-                viewModel.selectedAnswers.clear() // Clear selected answers when navigating back
-                viewModel.shuffledAnswersList.clear() // Clear shuffled answers when navigating back
+                viewModel.setUiState(UiState.OnBackPressed)
             }
         }
     ) { contentPadding ->
 
-        LoadingIndicator(isVisible = viewModel.isLoading.value)
+        val uiState by viewModel.uiState.collectAsState()
 
-        if (!viewModel.isLoading.value && viewModel.questionsList.isNotEmpty()) {
+        when(uiState) {
 
-            ContainerWithAnim {
+            is UiState.OnBackPressed -> {
+                viewModel.selectedAnswers.clear() // Clear selected answers when navigating back
+                viewModel.shuffledAnswersList.clear() // Clear shuffled answers when navigating back
+            }
+            is UiState.Loading -> {
+                LoadingIndicator(isVisible = true)
+            }
+            is UiState.Success -> {
 
-                SetupUI(
-                    contentPadding = contentPadding,
-                    questionsList = viewModel.questionsList,
-                    viewModel = viewModel
-                )
+                ContainerWithAnim {
+
+                    SetupUI(
+                        contentPadding = contentPadding,
+                        questionsList = (uiState as UiState.Success).data as List<Question>,
+                        viewModel = viewModel
+                    )
+
+                }
 
             }
-
+            is UiState.Error -> {
+                RetryButton { viewModel.getSelectDefinitionsQuestions(phrasalVerbPart) }
+            }
         }
 
     }
