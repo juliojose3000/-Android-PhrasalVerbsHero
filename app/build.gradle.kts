@@ -46,7 +46,7 @@ android {
             dimension = "environment"
             //applicationIdSuffix = ".qa"  // App ID will be different for QA
             versionNameSuffix = "-LOCAL"
-            buildConfigField ("String", "BASE_URL", "\"http://192.168.0.228:8080/phrasalverbshero/\"")
+            buildConfigField ("String", "BASE_URL", "\"http://192.168.0.183:8080/phrasalverbshero/\"")
         }
 
         create("qa") {
