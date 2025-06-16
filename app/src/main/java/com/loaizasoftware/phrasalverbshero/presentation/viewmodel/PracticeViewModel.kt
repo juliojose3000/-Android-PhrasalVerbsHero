@@ -3,14 +3,18 @@ package com.loaizasoftware.phrasalverbshero.presentation.viewmodel
 import android.annotation.SuppressLint
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateMapOf
+import androidx.lifecycle.viewModelScope
+import com.loaizasoftware.core_ui.base.UiEvent
 import com.loaizasoftware.core_ui.base.UiState
 import com.loaizasoftware.phrasalverbshero.domain.model.Answer
 import com.loaizasoftware.phrasalverbshero.domain.usecase.GetSelectDefinitionQuestionsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,8 +25,11 @@ class PracticeViewModel @Inject constructor(private val getSelectDefinitionsUseC
 
     val shuffledAnswersList = mutableStateListOf<List<Answer>>() // Store shuffled answers for each question
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
-    val uiState: StateFlow<UiState> = _uiState
+    private val _uiState = MutableStateFlow<UiState?>(UiState.Loading)
+    val uiState: StateFlow<UiState?> = _uiState
+
+    private val _uiEvent = MutableSharedFlow<UiEvent>()
+    val uiEvent: MutableSharedFlow<UiEvent> = _uiEvent
 
     /*@SuppressLint("CheckResult")
     fun getSelectDefinitionsQuestions(verbId: Long) {
@@ -48,7 +55,14 @@ class PracticeViewModel @Inject constructor(private val getSelectDefinitionsUseC
 
     }*/
 
-    fun setUiState(state: UiState) {
+    fun emitUiEvent(uiEvent: UiEvent) {
+        //_uiState.value = state
+        viewModelScope.launch {
+            _uiEvent.emit(uiEvent)
+        }
+    }
+
+    fun setUiState(state: UiState?) {
         _uiState.value = state
     }
 
@@ -78,7 +92,13 @@ class PracticeViewModel @Inject constructor(private val getSelectDefinitionsUseC
 
     // Method to update selected answer for each question
     fun updateSelectedAnswer(questionIndex: Int, answerId: Long?) {
+
         selectedAnswers[questionIndex] = answerId
+
+        viewModelScope.launch {
+            uiEvent.emit(UiEvent.ShowToast("Selected Answer: $answerId"))
+        }
+
     }
 
     override fun onCleared() {

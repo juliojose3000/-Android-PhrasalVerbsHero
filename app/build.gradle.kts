@@ -94,6 +94,9 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
 
+    //Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+
     //Animations
     implementation(libs.androidx.animation)
 

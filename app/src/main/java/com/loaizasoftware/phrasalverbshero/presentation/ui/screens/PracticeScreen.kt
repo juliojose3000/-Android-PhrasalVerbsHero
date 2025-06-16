@@ -1,5 +1,6 @@
 package com.loaizasoftware.phrasalverbshero.presentation.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -28,6 +30,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateMap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -35,10 +38,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.loaizasoftware.core_ui.base.UiEvent
 import com.loaizasoftware.core_ui.base.UiState
 import com.loaizasoftware.core_ui.composables.ContainerWithAnim
 import com.loaizasoftware.core_ui.composables.DotsIndicator
 import com.loaizasoftware.core_ui.composables.RetryButton
+import com.loaizasoftware.core_ui.ext.showToast
 import com.loaizasoftware.core_ui.general.AppBar
 import com.loaizasoftware.core_ui.general.LoadingIndicator
 import com.loaizasoftware.core_ui.general.PHButton
@@ -49,7 +54,6 @@ import com.loaizasoftware.core_ui.theme.Red40
 import com.loaizasoftware.phrasalverbshero.domain.model.Answer
 import com.loaizasoftware.phrasalverbshero.domain.model.Question
 import com.loaizasoftware.phrasalverbshero.domain.model.QuestionTypeEnum
-import com.loaizasoftware.phrasalverbshero.domain.model.Verb
 import com.loaizasoftware.phrasalverbshero.presentation.viewmodel.PracticeViewModel
 import kotlinx.coroutines.launch
 
@@ -69,19 +73,35 @@ fun PracticeScreen(
                 iconAppBar = Icons.AutoMirrored.Filled.ArrowBack
             ) {
                 navHostController.navigateUp()
-                viewModel.setUiState(UiState.OnBackPressed)
+                viewModel.emitUiEvent(UiEvent.GoBack)
             }
         }
     ) { contentPadding ->
 
         val uiState by viewModel.uiState.collectAsState()
+        val context = LocalContext.current
+
+        LaunchedEffect(Unit) {
+            viewModel.uiEvent.collect { event ->
+                when (event) {
+                    is UiEvent.GoBack -> {
+                        viewModel.setUiState(null) //Clear the UI state, useful when navigating back
+                        viewModel.selectedAnswers.clear() // Clear selected answers when navigating back
+                        viewModel.shuffledAnswersList.clear() // Clear shuffled answers when navigating back
+                    }
+                    is UiEvent.ShowToast -> {
+                        context showToast event.message
+                    }
+                    is UiEvent.Navigate -> {
+                        navHostController.navigate(event.route)
+                    }
+                }
+            }
+        }
+
 
         when(uiState) {
 
-            is UiState.OnBackPressed -> {
-                viewModel.selectedAnswers.clear() // Clear selected answers when navigating back
-                viewModel.shuffledAnswersList.clear() // Clear shuffled answers when navigating back
-            }
             is UiState.Loading -> {
                 LoadingIndicator(isVisible = true)
             }
@@ -100,6 +120,10 @@ fun PracticeScreen(
             }
             is UiState.Error -> {
                 RetryButton { viewModel.getSelectDefinitionsQuestions(phrasalVerbPart) }
+            }
+
+            null -> {
+                //Do nothing
             }
         }
 
