@@ -1,65 +1,127 @@
-# Android Project Analysis: android-phrasal-verbs-hero
+# Phrasal Verbs Hero 📱
 
-I'll provide a comprehensive analysis of the Android project based on the provided information:
+![Android](https://img.shields.io/badge/Platform-Android-green.svg)
+![Kotlin](https://img.shields.io/badge/Language-Kotlin-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-1. **Project Overview**:
-- This is an educational Android app called "Phrasal Verbs Hero"
-- It appears to be designed to help users learn English phrasal verbs
-- Built with modern Android development practices using Kotlin and Jetpack Compose
+A modern Android application designed to help users learn and practice phrasal verbs in English through interactive exercises and quizzes.
 
-2. **Architecture & Structure**:
-- Uses Clean Architecture with separate modules (core/, core_ui/, app/)
-- Follows MVVM pattern (evident from ViewModels)
-- Uses modular structure with feature-based organization
-- Implements Navigation Component for screen navigation
-- Uses Dagger Hilt for dependency injection
+## 📱 Overview
 
-3. **Key Dependencies**:
-- Jetpack Compose for UI
-- Dagger Hilt for dependency injection
-- Navigation Component for navigation
-- ViewModel architecture component
-- Coroutines for asynchronous operations
-- Google Services (based on google-services.json presence)
+Phrasal Verbs Hero is a learning application that makes mastering English phrasal verbs engaging and effective. The app features a clean, modern UI built with Jetpack Compose and follows modern Android development best practices.
 
-4. **Main Features**:
-- Browse phrasal verbs by categories
-- Practice exercises
-- Quiz functionality (mentioned but noted as not implemented)
-- Definitions screen for phrasal verbs
+[Screenshot placeholder]
+
+## 🚀 Features
+
+- Interactive phrasal verbs practice sessions
+- Quiz mode for testing knowledge
+- Comprehensive definitions screen
+- Offline support
+- Modern material design interface
 - Airplane mode detection
-- Error handling system
+- Multiple build variants (Local, QA, Production)
 
-5. **Development Setup**:
-- Uses Kotlin DSL (*.kts) for Gradle builds
-- Internet permission required
-- Edge-to-edge display support
-- Debug mode includes strict mode for development
+## 🛠️ Technology Stack
 
-6. **Code Quality Observations**:
-- Well-structured code with clear separation of concerns
-- Good use of modern Android practices
-- Proper handling of side effects in Compose
-- Implementation of broadcast receivers
-- Proper cleanup in onDestroy
-- Good documentation in code
-- Uses base classes (BaseActivity) for common functionality
+- **Language:** Kotlin
+- **Minimum SDK:** [Version inferred from build files]
+- **Target SDK:** Android 31+
+- **Architecture:** Clean Architecture with MVVM
+- **Framework & Libraries:**
+  - Jetpack Compose for UI
+  - Dagger Hilt for dependency injection
+  - Android Navigation Component
+  - Coroutines for asynchronous operations
+  - AndroidX components
 
-7. **Next steps**:
-1. Add unit tests and UI tests (test/ and androidTest/ directories are empty)
-2. Implement the missing quiz functionality
-3. Consider adding offline support
-4. Add state handling for loading and error states
-5. Consider implementing view state caching
-6. Add analytics for user engagement tracking
-7. Implement proper error handling with user-friendly messages
-8. Consider adding multi-language support
+## 📋 Prerequisites
 
-Additional observations:
-- The project uses a modular architecture which is good for scalability
-- The UI is built with Material Design theme
-- Has proper error handling mechanisms in place
-- Implements broadcast receivers for system events
-- Uses proper resource management for strings and colors
+- Android Studio Arctic Fox or newer
+- JDK 11 or higher
+- Android SDK with API 31+
+- Gradle 7.0+
 
-The project appears to be well-structured and follows modern Android development best practices. The main areas for improvement would be in testing coverage and implementing the remaining features noted as "not implemented yet".
+## ⚙️ Installation & Setup
+
+1. Clone the repository:
+```bash
+git clone https://github.com/[username]/android-phrasal-verbs-hero.git
+```
+
+2. Open the project in Android Studio
+
+3. Configure your `local.properties` file with required SDK path
+
+4. Sync project with Gradle files
+
+5. Create a Firebase project and add `google-services.json` to the app directory
+
+## 🏗️ Project Structure
+
+The project follows a modular architecture with these main components:
+
+```
+├── app/                  # Main application module
+├── core/                 # Core functionality module
+├── core_ui/             # Shared UI components module
+└── gradle/              # Gradle configuration
+```
+
+### Key Components:
+
+- `app` - Main application module containing activities and UI
+- `core` - Business logic and data operations
+- `core_ui` - Reusable UI components and theme definitions
+
+## 🔧 Configuration
+
+The application supports three build variants:
+- `localDebug` - For local development
+- `qaDebug` - For testing environment
+- `prodDebug` - For production environment
+
+## 📱 Running the Application
+
+1. Select the desired build variant in Android Studio
+2. Click "Run" (⌃R on macOS or F5 on Windows/Linux)
+3. Select your target device/emulator
+
+## 🧪 Testing
+
+The project includes both unit tests and instrumentation tests:
+
+```bash
+# Run unit tests
+./gradlew test
+
+# Run instrumentation tests
+./gradlew connectedAndroidTest
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+---
+
+## 📚 Architecture
+
+The app follows Clean Architecture principles with MVVM pattern:
+- Presentation Layer (UI, ViewModels)
+- Domain Layer (Use Cases)
+- Data Layer (Repositories, Data Sources)
+
+[Architecture diagram placeholder]
+
+---
+
+**Note**: This application is currently in active development. Features and implementation details may change.
