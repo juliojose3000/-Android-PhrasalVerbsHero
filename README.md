@@ -45,7 +45,7 @@ I'll provide a comprehensive analysis of the Android project based on the provid
 - Good documentation in code
 - Uses base classes (BaseActivity) for common functionality
 
-7. **Recommendations**:
+7. **Next steps**:
 1. Add unit tests and UI tests (test/ and androidTest/ directories are empty)
 2. Implement the missing quiz functionality
 3. Consider adding offline support
